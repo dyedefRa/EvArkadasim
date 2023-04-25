@@ -1,9 +1,8 @@
-﻿using System;
-using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Serilog;
-using Serilog.Events;
+using System;
 
 namespace EvArkadasim.Web
 {
@@ -11,20 +10,13 @@ namespace EvArkadasim.Web
     {
         public static int Main(string[] args)
         {
+            IConfigurationRoot configuration = new ConfigurationBuilder()
+                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                 .Build();
+
             Log.Logger = new LoggerConfiguration()
-#if DEBUG
-                .MinimumLevel.Debug()
-#else
-                .MinimumLevel.Information()
-#endif
-                .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
-                .MinimumLevel.Override("Microsoft.EntityFrameworkCore", LogEventLevel.Warning)
-                .Enrich.FromLogContext()
-                .WriteTo.Async(c => c.File("Logs/logs.txt"))
-#if DEBUG
-                .WriteTo.Async(c => c.Console())
-#endif
-                .CreateLogger();
+              .ReadFrom.Configuration(configuration)
+              .CreateLogger();
 
             try
             {
@@ -39,7 +31,7 @@ namespace EvArkadasim.Web
             }
             finally
             {
-                Log.CloseAndFlush();
+                //Log.CloseAndFlush();
             }
         }
 
@@ -47,7 +39,7 @@ namespace EvArkadasim.Web
             Host.CreateDefaultBuilder(args)
                 .ConfigureAppConfiguration(build =>
                 {
-                    build.AddJsonFile("appsettings.secrets.json", optional: true);
+                    build.AddJsonFile("appsettings.json", optional: true);
                 })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {

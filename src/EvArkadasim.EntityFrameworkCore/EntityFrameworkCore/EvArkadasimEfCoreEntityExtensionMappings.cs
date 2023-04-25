@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using EvArkadasim.Entities.Users;
+using Microsoft.EntityFrameworkCore;
 using Volo.Abp.Identity;
 using Volo.Abp.ObjectExtending;
 using Volo.Abp.Threading;
@@ -39,6 +40,34 @@ namespace EvArkadasim.EntityFrameworkCore
                  * See the documentation for more:
                  * https://docs.abp.io/en/abp/latest/Customizing-Application-Modules-Extending-Entities
                  */
+
+
+         //       ObjectExtensionManager.Instance
+         //.MapEfCoreProperty<IdentityUser, int?>(
+         //    nameof(AppUser.UserType),
+         //    (entityBuilder, propertyBuilder) =>
+         //    {
+         //        propertyBuilder.HasColumnName("UserType");
+         //    }
+         //);
+
+         //       ObjectExtensionManager.Instance
+         //         .MapEfCoreProperty<IdentityUser, int?>(
+         //             nameof(AppUser.Status),
+         //             (entityBuilder, propertyBuilder) =>
+         //             {
+         //                 propertyBuilder.HasColumnName("Status");
+         //             }
+         //         );
+
+         //       ObjectExtensionManager.Instance
+         //               .MapEfCoreProperty<IdentityUser, int?>(
+         //                   "ImageId",
+         //                   (entityBuilder, propertyBuilder) =>
+         //                   {
+         //                       propertyBuilder.HasColumnName("ImageId");
+         //                   }
+         //               );
             });
         }
     }

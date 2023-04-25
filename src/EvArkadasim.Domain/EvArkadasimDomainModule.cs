@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
-using EvArkadasim.MultiTenancy;
+﻿using EvArkadasim.MultiTenancy;
 using Volo.Abp.AuditLogging;
 using Volo.Abp.BackgroundJobs;
 using Volo.Abp.Emailing;
@@ -38,9 +36,9 @@ namespace EvArkadasim
                 options.IsEnabled = MultiTenancyConsts.IsEnabled;
             });
 
-#if DEBUG
-            context.Services.Replace(ServiceDescriptor.Singleton<IEmailSender, NullEmailSender>());
-#endif
+//#if DEBUG
+//            context.Services.Replace(ServiceDescriptor.Singleton<IEmailSender, NullEmailSender>());
+//#endif
         }
     }
 }

@@ -260,3 +260,4 @@ src/EvArkadasim.HttpApi.HostWithIds/Logs/*
 src/EvArkadasim.DbMigrator/Logs/*
 src/EvArkadasim.Blazor.Server/Logs/*
 src/EvArkadasim.Blazor.Server.Tiered/Logs/*
+*.jwk

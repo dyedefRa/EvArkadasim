@@ -1,17 +1,15 @@
-using System.Collections.Generic;
-using System.Globalization;
+using EvArkadasim.Localization;
+using EvArkadasim.Web;
 using Localization.Resources.AbpUi;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using Microsoft.Extensions.DependencyInjection;
-using EvArkadasim.Localization;
-using EvArkadasim.Web;
-using EvArkadasim.Web.Menus;
+using System.Collections.Generic;
+using System.Globalization;
 using Volo.Abp.AspNetCore.TestBase;
 using Volo.Abp.Localization;
 using Volo.Abp.Modularity;
-using Volo.Abp.UI.Navigation;
 using Volo.Abp.Validation.Localization;
 
 namespace EvArkadasim
@@ -34,7 +32,7 @@ namespace EvArkadasim
         public override void ConfigureServices(ServiceConfigurationContext context)
         {
             ConfigureLocalizationServices(context.Services);
-            ConfigureNavigationServices(context.Services);
+            //ConfigureNavigationServices(context.Services);
         }
 
         private static void ConfigureLocalizationServices(IServiceCollection services)
@@ -58,12 +56,12 @@ namespace EvArkadasim
             });
         }
 
-        private static void ConfigureNavigationServices(IServiceCollection services)
-        {
-            services.Configure<AbpNavigationOptions>(options =>
-            {
-                options.MenuContributors.Add(new EvArkadasimMenuContributor());
-            });
-        }
+        //private static void ConfigureNavigationServices(IServiceCollection services)
+        //{
+        //    services.Configure<AbpNavigationOptions>(options =>
+        //    {
+        //        options.MenuContributors.Add(new EvArkadasimMenuContributor());
+        //    });
+        //}
     }
 }

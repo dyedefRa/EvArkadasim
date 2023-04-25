@@ -1,10 +1,12 @@
-﻿namespace EvArkadasim.Web.Pages
+﻿using Microsoft.AspNetCore.Mvc;
+
+namespace EvArkadasim.Web.Pages
 {
     public class IndexModel : EvArkadasimPageModel
     {
-        public void OnGet()
+        public IActionResult OnGet()
         {
-            
+            return Redirect("~/Home/Index");
         }
     }
 }
