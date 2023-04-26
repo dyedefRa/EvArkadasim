@@ -1,5 +1,4 @@
 ﻿using EvArkadasim.Dtos.Files;
-using EvArkadasim.Dtos.UserDetails;
 using EvArkadasim.Enums;
 using System;
 using Volo.Abp.Application.Dtos;
@@ -18,12 +17,10 @@ namespace EvArkadasim.Dtos.Users
         public string PhoneNumber { get; set; }
         public bool PhoneNumberConfirmed { get; set; }
         public UserType? UserType { get; set; }
-        //Bire bir  Appuser id companyde tutuluyor.
-        public UserDetailDto UserDetail { get; set; }
+        public GenderType? Gender { get; set; }
+        public DateTime? BirthDate { get; set; }
         public int? ImageId { get; set; }
         public FileDto Image { get; set; }
-
         public Status? Status { get; set; }
-
     }
 }

@@ -1,0 +1,37 @@
+﻿@using EvArkadasim.Localization
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<EvArkadasimResource> L
+<section id="header">
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">
+                    <img src="/web/images/edura-logo.png" alt="@L[""]">
+                </a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+
+                    <li><a href="shop-cart.html"><i class="fa fa-user-plus fa-fw"></i> @L["SignUp"]</a></li>
+                    <li><a href="shop-cart.html"><i class="fa fa-sign-in fa-fw"></i>@L["SignIn"]</a></li>
+                    <li><a href="/Admin/Account/Login"><i class="fa fa-sign-in fa-fw"></i>@L["Admin"]</a></li>
+
+
+                    @*
+                    <li><a href="shop-cart.html"><i class="fa fa-user fa-fw"></i>@L["Profile"]</a></li>
+                    <li><a href="shop-cart.html"><i class="fa fa-envelope fa-fw"></i> @L["Message"] (2)</a></li>
+                    <li><a href="shop-cart.html"><i class="fa fa-sign-out fa-fw"></i>@L["SignOut"]</a></li>*@
+
+                </ul>
+
+            </div><!--/.nav-collapse -->
+        </div>
+    </nav>
+</section>

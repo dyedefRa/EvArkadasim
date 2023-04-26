@@ -1,1 +1,182 @@
-﻿@RenderBody()
+﻿@using Volo.Abp.AspNetCore.Mvc.AntiForgery
+@using Volo.Abp.AspNetCore.Mvc.UI.Components.LayoutHook
+@using Volo.Abp.AspNetCore.Mvc.UI.Layout
+@using Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic.Bundling
+@using Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic.Themes.Basic.Components.PageAlerts
+@using Volo.Abp.AspNetCore.Mvc.UI.Theming
+@using Volo.Abp.AspNetCore.Mvc.UI.Widgets.Components.WidgetScripts
+@using Volo.Abp.AspNetCore.Mvc.UI.Widgets.Components.WidgetStyles
+@using Volo.Abp.Localization
+@using EvArkadasim.Localization
+@using Microsoft.Extensions.Localization
+@inject IAbpAntiForgeryManager AbpAntiForgeryManager
+@inject IPageLayout PageLayout
+@inject IStringLocalizer<EvArkadasimResource> L
+@{
+    Layout = null;
+    AbpAntiForgeryManager.SetCookie();
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Mirrored from demos.codeniner.com/edura/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 13 Jul 2017 15:05:39 GMT -->
+<head>
+    <!-- METAS -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- TITLE -->
+    <title>@L["ProjectName"]</title>
+
+    <!-- FAVICON -->
+    <link rel="shortcut icon" href="~/web/images/favicon.png" />
+
+    <!-- LOAD MAIN CSS -->
+    <link href="~/web/style.css" rel="stylesheet" type="text/css">
+
+    <!-- LOAD COLOR STYLE (OPTONAL) CSS -->
+    <link href="~/web/styles/lunar.css" rel="stylesheet" type="text/css" id="colorstyle">
+
+    <!-- ABP CSS -->
+    <link href="~/libs/abp/core/abp.css" rel="stylesheet" />
+
+    <!-- LOAD CUSTOM CSS -->
+    <link href="~/web/custom.css" rel="stylesheet" type="text/css">
+
+    <!-- LOAD DEMO CSS -->
+    <link href="~/web/demo/demo.css" rel="stylesheet" type="text/css">
+
+    @await RenderSectionAsync("styles", false)
+
+</head>
+
+<body>
+    <!-- Preloader Start -->
+    <div id="preloader">
+        <i class="fa fa-spinner fa-spin preloader-animation" aria-hidden="true"></i>
+    </div>
+    <!-- Preloader End -->
+
+    <!-- WRAPPER START -->
+    <div id="wrapper">
+
+        <!-- HEADER START -->
+
+        <partial name="_Header" />
+
+        <!-- HEADER END -->
+        @await RenderSectionAsync("HomeSlider", false)
+
+        <!-- CONTENT START -->
+
+        <section id="home-content">
+            @RenderBody();
+        </section>
+
+        <!-- CONTENT END -->
+        <!-- CALL TO ACTION START -->
+        <section id="call-to-action">
+            <div class="parallax">
+                <div class="bg-mask-black"></div>
+                <div class="container text-white">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <h1>More than <b class="counter">100</b> happy clients! <small class="text-white">Are you interested?</small></h1>
+                        </div>
+                        <div class="col-md-2 text-center">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- CALL TO ACTION END -->
+        <!-- FOOTER START -->
+
+        <partial name="_Footer" />
+
+        <!-- FOOTER END -->
+
+
+    </div>
+    <!-- WRAPPER END -->
+    <!-- back to top button -->
+    <a id="back-to-top" href="#" class="btn btn-primary btn-lg back-to-top" role="button" title="Click to return on the top page" data-toggle="tooltip" data-placement="left"><span class="glyphicon glyphicon-chevron-up"></span></a>
+
+    <!-- ABP JS -->
+    @*    <abp-script-bundle name="@BasicThemeBundles.Scripts.Global" />
+    <script src="~/Abp/ApplicationConfigurationScript"></script>
+    <script src="~/Abp/ServiceProxyScript"></script>*@
+
+    <!-- MAIN JS FILES REQUIRED ON ALL PAGES -->
+    <script src="~/web/vendor/jquery/jquery.min.js"></script>
+
+    <script src="~/web/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/web/vendor/bootstrap-hover-dropdown/bootstrap-hover-dropdown.js"></script>
+    <script src="~/web/vendor/wow/wow.min.js"></script>
+    <script src="~/web/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+    <script src="~/web/vendor/SmoothScroll/SmoothScroll.min.js"></script>
+
+    <script src="~/web/vendor/waypoints/waypoints.min.js"></script>
+    <script src="~/web/vendor/counterup/jquery.counterup.min.js"></script>
+
+
+    <!-- ABP JS 2 VE EKSTRALAR -->
+    <script src="~/libs/jquery-validation/jquery.validate.min.js"></script>
+    <script src="~/libs/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js">
+    </script>
+    <script src="~/assets/js/jquery.mask.js"></script>
+    <script src="~/libs/abp/core/abp.js"></script>
+    <script src="~/libs/abp/jquery/abp.jquery.js"></script>
+    <script src="~/assets/js/select2.min.js"></script>
+    <script src="~/global_assets/js/plugins/forms/selects/bootstrap_multiselect.js"></script>
+    <script src="~/global_assets/js/plugins/forms/inputs/formatter.min.js"></script>
+    <script src="~/libs/sweetalert/sweetalert.min.js"></script>
+    <!-- BUNLAR ORGANIZASYONDAN GLEIYOR -->
+    <!-- HERO SLIDER-->
+    <script src="~/web/vendor/hero-slider/js/modernizr.js"></script>
+    <script src="~/web/vendor/hero-slider/js/main.js"></script>
+
+    <!-- OWL CAROUSEL -->
+    <script src="~/web/vendor/owl-carousel/owl.carousel.js"></script>
+
+    <!-- FILTERIZR -->
+    <script src="~/web/vendor/jquery/jquery.filterizr.js"></script>
+
+    <!-- EDURA JS REQUIRED ON ALL PAGES-->
+    <script src="~/web/edura.js"></script>
+
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '../../www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-81122143-3', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+
+    <!-- STYLE SWITCHER -->
+    <script src="~/web/demo/demo.js"></script>
+    <div id="styleswitcher">
+        <input id="settings-btn" class="settings-btn" type="checkbox">
+        <label for="settings-btn" class="settings-box-element"><i class="fa fa-2x fa-gear"></i></label>
+        <div class="buttons-wrapper settings-box-element">
+            <h4 class="text-uppercase">Change Color Style</h4>
+            <p><button id="demo-lunar" class="btn demo-btn demo-lunar">Lunar (Default)</button></p>
+            <p><button id="demo-blue" class="btn demo-btn demo-blue">Blue</button></p>
+            <p><button id="demo-green" class="btn demo-btn demo-green">Green</button></p>
+            <p><button id="demo-red" class="btn demo-btn demo-red">Red</button></p>
+            <p><button id="demo-orange" class="btn demo-btn demo-orange">Orange</button></p>
+        </div>
+    </div>
+
+
+    @await RenderSectionAsync("scripts", false)
+</body>
+</html>

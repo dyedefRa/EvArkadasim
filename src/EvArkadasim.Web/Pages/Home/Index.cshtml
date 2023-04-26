@@ -1,6 +1,151 @@
 ﻿@page
+@using EvArkadasim.Localization
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<EvArkadasimResource> L
 @model EvArkadasim.Web.Pages.Home.IndexModel
 @{
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
-<h1>ssfs</h1>
+
+@section HomeSlider {
+    <div id="home-slider" class="carousel slide">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+            <li data-target="#home-slider" data-slide-to="0" class="active"></li>
+            <li data-target="#home-slider" data-slide-to="1"></li>
+            <li data-target="#home-slider" data-slide-to="2"></li>
+        </ol>
+
+        <!-- Wrapper for Slides -->
+        <div class="carousel-inner">
+            <div class="item active">
+                <!-- Set the first background image using inline CSS below. -->
+                <div class="fill" style="background-image:url('/web/images/slides/slide3.jpg');"></div>
+                <div class="carousel-caption">
+                    <h1 class="text-uppercase">Edura Template</h1>
+                    <p class="lead text-uppercase">Fint the best solution</p>
+                </div>
+            </div>
+            <div class="item">
+                <!-- Set the second background image using inline CSS below. -->
+                <div class="fill" style="background-image:url('/web/images/slides/slide10.jpg');"></div>
+                <div class="carousel-caption">
+                    <h1 class="text-uppercase">Responsive Design</h1>
+                    <p class="lead text-uppercase">Looks great on any screen</p>
+                </div>
+            </div>
+            <div class="item">
+                <!-- Set the third background image using inline CSS below. -->
+                <div class="fill" style="background-image:url('/web/images/slides/slide11.jpg');"></div>
+                <div class="carousel-caption">
+                    <h1 class="text-uppercase">Multiple Layouts</h1>
+                    <p class="lead text-uppercase">Choose the best</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <a class="left carousel-control" href="#home-slider" data-slide="prev">
+            <span class="icon-prev"></span>
+        </a>
+        <a class="right carousel-control" href="#home-slider" data-slide="next">
+            <span class="icon-next"></span>
+        </a>
+
+    </div>
+}
+
+
+<div id="projects" class="container-fluid bg-gray padding35">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 text-center uppercase">
+                <h3>@L["Popular"] <b>@L["Cities"]</b></h3>
+            </div>
+
+            <div id="portfolio-carousel-home" class="owl-carousel">
+
+                <div class="portfolio-item">
+                    <div class="portfolio-top">
+                        <img alt="" class="img-responsive" src="~/web/images/portfolio/portfolio1.jpg">
+                        <div class="mask"></div>
+                        <span class="portfolio-tag"><i class="fa fa-tag fa-fw"></i> <a href="#">Scripts</a>, <a href="#">Technology</a></span>
+                        <ul class="list-unstyled list-inline">
+                            <li><a href="#"><i class="fa fa-search fa-fw"></i></a></li>
+                            <li><a href="#"><i class="fa fa-link fa-fw"></i></a></li>
+                        </ul>
+                    </div>
+                    <span class="portfolio-item-desc"><a href="#">Template Development</a></span>
+                </div>
+
+                <div class="portfolio-item">
+                    <div class="portfolio-top">
+                        <img alt="" class="img-responsive" src="~/web/images/portfolio/portfolio2.jpg">
+                        <div class="mask"></div>
+                        <span class="portfolio-tag"><i class="fa fa-tag fa-fw"></i> <a href="#">Technology</a></span>
+                        <ul class="list-unstyled list-inline">
+                            <li><a href="#"><i class="fa fa-search fa-fw"></i></a></li>
+                            <li><a href="#"><i class="fa fa-link fa-fw"></i></a></li>
+                        </ul>
+                    </div>
+                    <span class="portfolio-item-desc"><a href="#">Website Design</a></span>
+                </div>
+
+                <div class="portfolio-item">
+                    <div class="portfolio-top">
+                        <img alt="" class="img-responsive" src="~/web/images/portfolio/portfolio3.jpg">
+                        <div class="mask"></div>
+                        <span class="portfolio-tag"><i class="fa fa-tag fa-fw"></i> <a href="#">Scripts</a>, <a href="#">Development</a></span>
+                        <ul class="list-unstyled list-inline">
+                            <li><a href="#"><i class="fa fa-search fa-fw"></i></a></li>
+                            <li><a href="#"><i class="fa fa-link fa-fw"></i></a></li>
+                        </ul>
+                    </div>
+                    <span class="portfolio-item-desc"><a href="#">Mobile App</a></span>
+                </div>
+
+                <div class="portfolio-item">
+                    <div class="portfolio-top">
+                        <img alt="" class="img-responsive" src="~/web/images/portfolio/portfolio4.jpg">
+                        <div class="mask"></div>
+                        <span class="portfolio-tag"><i class="fa fa-tag fa-fw"></i> <a href="#">Web Design</a>, <a href="#">Technology</a></span>
+                        <ul class="list-unstyled list-inline">
+                            <li><a href="#"><i class="fa fa-search fa-fw"></i></a></li>
+                            <li><a href="#"><i class="fa fa-link fa-fw"></i></a></li>
+                        </ul>
+                    </div>
+                    <span class="portfolio-item-desc"><a href="#">App Development</a></span>
+                </div>
+
+                <div class="portfolio-item">
+                    <div class="portfolio-top">
+                        <img alt="" class="img-responsive" src="~/web/images/portfolio/portfolio5.jpg">
+                        <div class="mask"></div>
+                        <span class="portfolio-tag"><i class="fa fa-tag fa-fw"></i> <a href="#">Web Design</a>, <a href="#">Development</a></span>
+                        <ul class="list-unstyled list-inline">
+                            <li><a href="#"><i class="fa fa-search fa-fw"></i></a></li>
+                            <li><a href="#"><i class="fa fa-link fa-fw"></i></a></li>
+                        </ul>
+                    </div>
+                    <span class="portfolio-item-desc"><a href="#">Website Optimization</a></span>
+                </div>
+
+                <div class="portfolio-item">
+                    <div class="portfolio-top">
+                        <img alt="" class="img-responsive" src="~/web/images/portfolio/portfolio6.jpg">
+                        <div class="mask"></div>
+                        <span class="portfolio-tag"><i class="fa fa-tag fa-fw"></i> <a href="#">Technology</a>, <a href="#">Development</a></span>
+                        <ul class="list-unstyled list-inline">
+                            <li><a href="#"><i class="fa fa-search fa-fw"></i></a></li>
+                            <li><a href="#"><i class="fa fa-link fa-fw"></i></a></li>
+                        </ul>
+                    </div>
+                    <span class="portfolio-item-desc"><a href="#">Network Concept</a></span>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+

@@ -1,10 +1,11 @@
-﻿using EvArkadasim.Entities.Cities;
+﻿using EvArkadasim.Entities.AdvertFiles;
+using EvArkadasim.Entities.Adverts;
+using EvArkadasim.Entities.Cities;
 using EvArkadasim.Entities.Files;
 using EvArkadasim.Entities.Logs;
 using EvArkadasim.Entities.MailTemplates;
 using EvArkadasim.Entities.SentMails;
 using EvArkadasim.Entities.Towns;
-using EvArkadasim.Entities.UserDetails;
 using EvArkadasim.Entities.Users;
 using Microsoft.EntityFrameworkCore;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
@@ -56,9 +57,10 @@ namespace EvArkadasim.EntityFrameworkCore
 
         #endregion
 
+        public DbSet<Advert> Adverts { get; set; }
+        public DbSet<AdvertFile> AdvertFiles { get; set; }
 
         public DbSet<City> Cities { get; set; }
-        public DbSet<UserDetail> UserDetail { get; set; }
         public DbSet<File> Files { get; set; }
         public DbSet<Log> Logs { get; set; }
         public DbSet<MailTemplate> MailTemplates { get; set; }
@@ -102,12 +104,10 @@ namespace EvArkadasim.EntityFrameworkCore
                 b.ConfigureByConvention();
                 b.ConfigureAbpUser();
                 b.Property(a => a.UserType).HasColumnName("UserType").HasColumnType("int");
+                b.Property(a => a.Gender).HasColumnName("Gender").HasColumnType("int");
                 b.Property(a => a.Status).HasColumnName("Status").HasColumnType("int");
+                b.Property(a => a.BirthDate).HasColumnName("BirthDate").HasColumnType("datetime");
                 b.Property(a => a.ImageId).HasColumnName("ImageId").HasColumnType("int");
-                //b.HasOne(d => d.Image)
-                //    .WithMany(p => p.AppUsers)
-                //    .HasForeignKey(d => d.ImageId)
-                //    .HasConstraintName("FK_AbpUsers_AppFiles");
                 b.HasOne<IdentityUser>().WithOne().HasForeignKey<AppUser>(x => x.Id);
             });
 

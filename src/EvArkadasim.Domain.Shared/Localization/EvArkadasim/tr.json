@@ -3,6 +3,35 @@
   "texts": {
     "Menu:Home": "Ana sayfa",
     "Welcome": "Hoşgeldiniz",
-    "LongWelcomeMessage": "Uygulamaya hoşgeldiniz. Bu, ABP framework'ü üzerine bina edilmiş bir başlangıç projesidir. Daha fazla bilgi için abp.io adresini ziyaret edebilirsiniz."
+    "LongWelcomeMessage": "Uygulamaya hoşgeldiniz. Bu, ABP framework'ü üzerine bina edilmiş bir başlangıç projesidir. Daha fazla bilgi için abp.io adresini ziyaret edebilirsiniz.",
+
+
+
+    //GENEL
+    "ProjectName": "Evarkadasi",
+    "Popular": "Popüler",
+    "Cities": "Şehirler",
+    "SignUp": "Üye Ol",
+    "SignIn": "Giriş Yap",
+    "Profile": "Profilim",
+    "SignOut": "Çıkış Yap",
+    "Message": "Mesaj",
+
+    "UserManagement": "Kullanıcı Yönetimi",
+    "RoleManagement": "Rol Yönetimi",
+    "AdminPage": "Admin Ana Sayfa",
+    "PageManagement": "Sayfa Yönetimi",
+
+    //ENUMS
+    "Enum:Status:0": "Belirtilmedi",
+    "Enum:Status:-1": "Pasif",
+    "Enum:Status:1": "Aktif",
+    "Enum:Status:-255": "Silinmiş"
+
+
+
+
+
+
   }
 }

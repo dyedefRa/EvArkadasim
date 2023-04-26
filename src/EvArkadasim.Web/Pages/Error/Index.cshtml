@@ -5,10 +5,42 @@
 @inject IStringLocalizer<EvArkadasimResource> L
 @model EvArkadasim.Web.Pages.Error.IndexModel
 @{
-    Layout = "~/Pages/Shared/_LayoutLogin.cshtml";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
 }
+<!-- PAGE TITLE START -->
+<section id="title" class="container-fluid wow fadeInDown">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-6">
+                <h1>404 <small>Error</small></h1>
+            </div>
+            <div class="col-xs-6 text-right breadcrumbs">
+                <ul class="list-inline list-unstyled">
+                    <li><a href="index-2.html">Home</a></li>
+                    <li>/</li>
+                    <li>404 Error</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
 
-<div class="error-page">
+<section id="error" class="container">
+    <div class="row">
+        <div class="col-md-6 text-center">
+            <h1>404 <small>Error</small></h1>
+            <p class="lead">Page not found!</p>
+            <a href="#" class="btn btn-default"><i class="fa fa-arrow-left fa-fw"></i> Go Back</a>
+            <div class="space40"></div>
+        </div>
+        <div class="col-md-6 text-center wow bounceIn">
+            <i class="fa fa-warning erroicon"></i>
+            <div class="space40"></div>
+        </div>
+    </div>
+</section>
+
+@*<div class="error-page">
     <div class="container">
         <div class="row">
             <div class="col-12 col-sm-12 col-md-12 col-lg-12">
@@ -20,4 +52,4 @@
             </div>
         </div>
     </div>
-</div>
+</div>*@

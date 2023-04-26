@@ -113,10 +113,10 @@ namespace EvArkadasim.Services
                 }
             }
 
-            var newGroup = result.Groups.Where(x => x.Name == "EvArkadasim" || x.Name == "AbpIdentity").OrderBy(x => x.Name).ToList();
-            //newGroup.FirstOrDefault(x => x.Name == "AbpIdentity").DisplayName = _L["UserManagement"];
-            newGroup.FirstOrDefault(x => x.Name == "EvArkadasim").DisplayName = _L["PageManagement"];
-            result.Groups = newGroup;
+            //var newGroup = result.Groups.Where(x => x.Name == "EvArkadasim" || x.Name == "AbpIdentity").OrderBy(x => x.Name).ToList();
+            ////newGroup.FirstOrDefault(x => x.Name == "AbpIdentity").DisplayName = _L["UserManagement"];
+            //newGroup.FirstOrDefault(x => x.Name == "EvArkadasim").DisplayName = _L["PageManagement"];
+            //result.Groups = newGroup;
             return result;
         }
 
