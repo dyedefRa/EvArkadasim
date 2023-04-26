@@ -42,32 +42,34 @@ namespace EvArkadasim.EntityFrameworkCore
                  */
 
 
-         //       ObjectExtensionManager.Instance
-         //.MapEfCoreProperty<IdentityUser, int?>(
-         //    nameof(AppUser.UserType),
-         //    (entityBuilder, propertyBuilder) =>
-         //    {
-         //        propertyBuilder.HasColumnName("UserType");
-         //    }
-         //);
+                ObjectExtensionManager.Instance
+         .MapEfCoreProperty<IdentityUser, int?>(
+             nameof(AppUser.UserType),
+             (entityBuilder, propertyBuilder) =>
+             {
+                 propertyBuilder.HasColumnName("UserType");
+             }
+         );
 
-         //       ObjectExtensionManager.Instance
-         //         .MapEfCoreProperty<IdentityUser, int?>(
-         //             nameof(AppUser.Status),
-         //             (entityBuilder, propertyBuilder) =>
-         //             {
-         //                 propertyBuilder.HasColumnName("Status");
-         //             }
-         //         );
+                ObjectExtensionManager.Instance
+                  .MapEfCoreProperty<IdentityUser, int?>(
+                      nameof(AppUser.Status),
+                      (entityBuilder, propertyBuilder) =>
+                      {
+                          propertyBuilder.HasColumnName("Status");
+                      }
+                  );
 
-         //       ObjectExtensionManager.Instance
-         //               .MapEfCoreProperty<IdentityUser, int?>(
-         //                   "ImageId",
-         //                   (entityBuilder, propertyBuilder) =>
-         //                   {
-         //                       propertyBuilder.HasColumnName("ImageId");
-         //                   }
-         //               );
+                ObjectExtensionManager.Instance
+                        .MapEfCoreProperty<IdentityUser, int?>(
+                            "ImageId",
+                            (entityBuilder, propertyBuilder) =>
+                            {
+                                propertyBuilder.HasColumnName("ImageId");
+                            }
+                        );
+
+
             });
         }
     }

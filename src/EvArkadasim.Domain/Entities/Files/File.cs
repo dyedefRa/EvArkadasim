@@ -1,6 +1,5 @@
 ﻿using EvArkadasim.Entities.Users;
 using EvArkadasim.Enums;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Volo.Abp.Domain.Entities;
@@ -22,7 +21,8 @@ namespace EvArkadasim.Entities.Files
         public string FullPath { get; set; }
         public FileType FileType { get; set; }
         public Status Status { get; set; }
-        public virtual ICollection<AppUser> AppUsers { get; set; }
+        //public virtual ICollection<AppUser> AppUsers { get; set; }
+        public virtual AppUser User { get; set; }
 
     }
 }
