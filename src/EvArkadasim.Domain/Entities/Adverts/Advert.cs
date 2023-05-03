@@ -12,6 +12,7 @@ using Volo.Abp.Domain.Entities;
 namespace EvArkadasim.Entities.Adverts
 {
     //ILAN
+    //TODO Depozito tutarı ekle.
     [Table(EvArkadasimConsts.DbTablePrefix + "Adverts")]
     public class Advert : Entity<int>
     {

@@ -1,6 +1,5 @@
 ﻿using EvArkadasim.Entities.Users;
 using Microsoft.EntityFrameworkCore;
-using System;
 using Volo.Abp.Identity;
 using Volo.Abp.ObjectExtending;
 using Volo.Abp.Threading;

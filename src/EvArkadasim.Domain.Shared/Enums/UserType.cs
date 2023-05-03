@@ -1,8 +1,12 @@
-﻿namespace EvArkadasim.Enums
+﻿using System.ComponentModel;
+
+namespace EvArkadasim.Enums
 {
     public enum UserType
     {
+        [Description("admin")]
         Admin = 1,
-        User = 2,
+        [Description("user")]
+        User = 10
     }
 }

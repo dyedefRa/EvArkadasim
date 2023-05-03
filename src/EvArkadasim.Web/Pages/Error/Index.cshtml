@@ -6,50 +6,26 @@
 @model EvArkadasim.Web.Pages.Error.IndexModel
 @{
     Layout = "~/Pages/Shared/_Layout.cshtml";
+    var navigationModel = new EvArkadasim.Web.Models.NavigationModel() { BasePageName = "Home", BasePageLink = "/Home", CurrentPageName = "SorryAnErrorHasOccurred" };
 }
-<!-- PAGE TITLE START -->
-<section id="title" class="container-fluid wow fadeInDown">
-    <div class="container">
-        <div class="row">
-            <div class="col-xs-6">
-                <h1>404 <small>Error</small></h1>
-            </div>
-            <div class="col-xs-6 text-right breadcrumbs">
-                <ul class="list-inline list-unstyled">
-                    <li><a href="index-2.html">Home</a></li>
-                    <li>/</li>
-                    <li>404 Error</li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</section>
+
+<!-- NAVIGATION START -->
+
+<partial name="~/Pages/Admin/Shared/_Navigation.cshtml" model="navigationModel" />
+
+<!-- NAVIGATION END -->
 
 <section id="error" class="container">
     <div class="row">
         <div class="col-md-6 text-center">
-            <h1>404 <small>Error</small></h1>
-            <p class="lead">Page not found!</p>
-            <a href="#" class="btn btn-default"><i class="fa fa-arrow-left fa-fw"></i> Go Back</a>
+            <h1>@Model.Error.StatusCode.ToString() <small>Hatası</small></h1>
+            <p class="lead">@Model.Error.Message</p>
+            <a href="/Home" class="btn btn-default"><i class="fa fa-arrow-left fa-fw"></i>@L["ReturnHomePage"]</a>
             <div class="space40"></div>
         </div>
-        <div class="col-md-6 text-center wow bounceIn">
+        <div class="col-md-6 text-center wow bounceIn slow">
             <i class="fa fa-warning erroicon"></i>
             <div class="space40"></div>
         </div>
     </div>
 </section>
-
-@*<div class="error-page">
-    <div class="container">
-        <div class="row">
-            <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-                <div class="empty-page-content text-center" style="padding:240px 0;">
-                    <h1>@Model.ErrorMessage</h1>
-                    <br />
-                    <p><a href="/Home" class="btn btn--has-icon-after">@L["ReturnHomePage"]</a></p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>*@

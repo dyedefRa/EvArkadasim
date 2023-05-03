@@ -16,3 +16,7 @@ namespace EvArkadasim.Web
         }
     }
 }
+
+//mybreadcrumbs > deki Üye ol yada Giriş yap yazılarını kaldır? V  (_Navigation de var )
+
+// Mesaj ve proifl için svg üret fontawesome.

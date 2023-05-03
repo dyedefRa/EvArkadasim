@@ -1,5 +1,6 @@
 ﻿using EvArkadasim.Abstract;
 using EvArkadasim.Dtos.Users;
+using EvArkadasim.Dtos.Users.ViewModels;
 using EvArkadasim.Entities.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
@@ -30,20 +31,33 @@ namespace EvArkadasim.Services
             _appUserRepository = appUserRepository;
         }
 
-        // APPUSERREPOSITOYR BOS GELIYOR.
-        // TODOx 2
+
+        //TODOO 
+        //public async Task<bool> IsSafe(Guid userId)
+        //{
+        //    if (!CurrentUser.IsAuthenticated)
+        //    {
+        //        return false;
+        //    }
+
+        //    if (CurrentUser.Roles.Any(x => x == EnumExtensions.GetEnumDescription(UserType.Admin)))
+        //    {
+        //        return true;
+        //    }
+        //    if (true)
+        //    {
+
+        //    }
+        //    CurrentUser.Id.Value
+        //}
+
         [AllowAnonymous]
-        public async Task<CustomIdentityUserDto> GetUserByIdAsync(Guid userId)
+        public async Task<AppUserViewModel> GetUserByIdAsync(Guid userId)
         {
-            var identityUser = await _identityUserAppService.GetAsync(userId);
-            //var appUser = await _appUserRepository.Include(x => x.Image).FirstOrDefaultAsync(x => x.Id == userId);
-            var appUser = await _appUserRepository.FirstOrDefaultAsync(x => x.Id == userId);
-            var ss = await _appUserRepository.GetListAsync();
-            var result = ObjectMapper.Map<Volo.Abp.Identity.IdentityUserDto, CustomIdentityUserDto>(identityUser);
-            //result.ImageUrl = appUser?.Image?.FilePath;
-            //result.ImageId = appUser?.ImageId;
-            //result.UserType = appUser.UserType;
-            //result.Status = appUser.Status;
+            var appUser = await _appUserRepository.Include(x => x.Image).FirstOrDefaultAsync(x => x.Id == userId);
+            var result = ObjectMapper.Map<AppUser, AppUserViewModel>(appUser);
+
+            result.ImageUrl = appUser?.Image?.FilePath;
             return result;
         }
 
@@ -250,6 +264,10 @@ namespace EvArkadasim.Services
         //        return null;
         //    }
         //}
+
+
+
+
 
     }
 }

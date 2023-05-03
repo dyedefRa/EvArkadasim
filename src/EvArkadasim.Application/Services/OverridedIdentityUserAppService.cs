@@ -31,7 +31,7 @@ namespace EvArkadasim.Services
             _appUserRepository = appUserRepository;
         }
 
-
+        //Buraya düşüyor mu kontrol et
         public async Task<PagedResultDto<CustomIdentityUserDto>> GetUserListAsync(GetIdentityUsersInput input)
         {
 
@@ -56,7 +56,7 @@ namespace EvArkadasim.Services
 
         }
 
-        //Firma kendi adına hesap açarken mecburen authorize olmuyor. CompanyRegister
+        //Buraya düşüyor mu kontrol et
         [AllowAnonymous]
         public async override Task<IdentityUserDto> CreateAsync(IdentityUserCreateDto input)
         {

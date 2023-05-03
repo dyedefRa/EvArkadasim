@@ -2,6 +2,7 @@ using EvArkadasim.EntityFrameworkCore;
 using EvArkadasim.HangfireServices.Abstract;
 using EvArkadasim.HangfireServices.Concrete;
 using EvArkadasim.Localization;
+using EvArkadasim.Settings;
 using EvArkadasim.Web.Helpers;
 using Hangfire;
 using Microsoft.AspNetCore.Builder;
@@ -22,7 +23,6 @@ using Volo.Abp.AspNetCore.Mvc;
 using Volo.Abp.AspNetCore.Mvc.Localization;
 using Volo.Abp.AspNetCore.Mvc.UI.Bundling;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic;
-using Volo.Abp.AspNetCore.Mvc.UI.Theme.Shared;
 using Volo.Abp.AspNetCore.Serilog;
 using Volo.Abp.Autofac;
 using Volo.Abp.AutoMapper;
@@ -89,7 +89,6 @@ namespace EvArkadasim.Web
             ConfigureUrls(configuration);
             ConfigureBundles();
             ConfigureAuthentication(context, configuration);
-            ConfigureIdentityOptions();
             ConfigureAutoMapper();
             ConfigureVirtualFileSystem(hostingEnvironment);
             ConfigureLocalizationServices();
@@ -235,17 +234,6 @@ namespace EvArkadasim.Web
             });
         }
 
-        private void ConfigureIdentityOptions()
-        {
-            Configure<IdentityOptions>(options =>
-            {
-                options.Password.RequiredLength = 5;
-                options.Password.RequireNonAlphanumeric = false;
-                options.Password.RequireUppercase = false;
-                options.Password.RequireLowercase = false;
-                options.Password.RequireDigit = false;
-            });
-        }
 
         public override void OnApplicationInitialization(ApplicationInitializationContext context)
         {

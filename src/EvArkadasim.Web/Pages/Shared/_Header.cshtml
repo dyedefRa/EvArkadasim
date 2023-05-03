@@ -1,8 +1,10 @@
 ﻿@using EvArkadasim.Localization
 @using Microsoft.Extensions.Localization
+@using Volo.Abp.Users
 @inject IStringLocalizer<EvArkadasimResource> L
+@inject ICurrentUser CurrentUser
+
 <section id="header">
-    <!-- Fixed navbar -->
     <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -13,25 +15,36 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="/">
-                    <img src="/web/images/edura-logo.png" alt="@L[""]">
+                    <img src="/web/images/edura-logo.png" alt="@L["ImageFailedToLoad"]">
                 </a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
+                    @if (CurrentUser.IsAuthenticated)
+                    {
+                        <li><a href="shop-cart.html"><i class="fa fa-envelope fa-fw"></i> @L["Message"] (2)</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-user fa-fw"></i>@L["Profile"] [@CurrentUser.UserName]
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/Account/Manage">Hesap Bilgilerim</a></li>
+                                <li><a href="pricing.html">İlanlarım</a></li>
+                                <li><a href="/Account/Logout">@L["Logout"]</a></li>
+                            </ul>
+                        </li>
+                        @*                        <li><a href="shop-cart.html"><i class="fa fa-user fa-fw"></i>@L["Profile"]</a></li>
+                    *@                       @* <li><a href="/Account/Logout"><i class="fa fa-sign-out fa-fw"></i>@L["Logout"]</a></li>*@
 
-                    <li><a href="shop-cart.html"><i class="fa fa-user-plus fa-fw"></i> @L["SignUp"]</a></li>
-                    <li><a href="shop-cart.html"><i class="fa fa-sign-in fa-fw"></i>@L["SignIn"]</a></li>
-                    <li><a href="/Admin/Account/Login"><i class="fa fa-sign-in fa-fw"></i>@L["Admin"]</a></li>
-
-
-                    @*
-                    <li><a href="shop-cart.html"><i class="fa fa-user fa-fw"></i>@L["Profile"]</a></li>
-                    <li><a href="shop-cart.html"><i class="fa fa-envelope fa-fw"></i> @L["Message"] (2)</a></li>
-                    <li><a href="shop-cart.html"><i class="fa fa-sign-out fa-fw"></i>@L["SignOut"]</a></li>*@
-
+                    }
+                    else
+                    {
+                        <li><a href="/Account/Register"><i class="fa fa-user-plus fa-fw"></i> @L["Register"]</a></li>
+                        <li><a href="/Account/Login"><i class="fa fa-sign-in fa-fw"></i>@L["Login"]</a></li>
+                        <li><a href="/Admin/Account/Login"><i class="fa fa-sign-in fa-fw"></i>@L["Admin"]</a></li>
+                    }
                 </ul>
-
-            </div><!--/.nav-collapse -->
+            </div>
         </div>
     </nav>
 </section>

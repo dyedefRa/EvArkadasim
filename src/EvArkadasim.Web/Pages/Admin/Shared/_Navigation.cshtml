@@ -1,0 +1,20 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHtmlLocalizer<EvArkadasim.Localization.EvArkadasimResource> L
+@model EvArkadasim.Web.Models.NavigationModel
+
+<section id="title" class="container-fluid wow fadeInDown">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-6">
+                <h1> <small>@L[Model.CurrentPageName]</small></h1>
+            </div>
+            <div class="col-xs-6 text-right mybreadcrumbs">
+                <ul class="list-inline list-unstyled">
+                    <li><a href="@Model.BasePageLink">@L[Model.BasePageName]</a></li>
+                    <li>/</li>
+                    <li>@L[Model.CurrentPageName]</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>

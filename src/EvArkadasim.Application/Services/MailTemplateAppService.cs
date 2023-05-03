@@ -2,7 +2,6 @@
 using EvArkadasim.Dtos.MailTemplates;
 using EvArkadasim.Dtos.SentMails;
 using EvArkadasim.Entities.MailTemplates;
-using EvArkadasim.Models.MailModels;
 using EvArkadasim.Models.Settings;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Options;
@@ -215,5 +214,16 @@ namespace EvArkadasim.Services
                 return false;
             }
         }
+
+        #region MailResultModel
+
+        public class MailResultModel
+        {
+            public string Subject { get; set; }
+            public string Template { get; set; }
+            public bool Status { get; set; } = true;
+        }
+
+        #endregion
     }
 }

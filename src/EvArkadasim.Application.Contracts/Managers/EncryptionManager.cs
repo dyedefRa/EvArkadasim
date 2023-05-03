@@ -3,7 +3,7 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace EvArkadasim.Models
+namespace EvArkadasim.Managers
 {
     public static class EncryptionManager
     {

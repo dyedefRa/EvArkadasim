@@ -9,7 +9,7 @@ namespace EvArkadasim.Web.Pages.Error
     public class IndexModel : PageModel
     {
         [BindProperty]
-        public string ErrorMessage { get; set; }
+        public ErrorModel Error { get; set; } = new ErrorModel();
         private readonly IStringLocalizer<EvArkadasimResource> _L;
 
         public IndexModel(IStringLocalizer<EvArkadasimResource> L)
@@ -20,16 +20,25 @@ namespace EvArkadasim.Web.Pages.Error
         {
             if (httpStatusCode == 0 || httpStatusCode == (int)HttpStatusCode.NotFound) //0 || 404
             {
-                ErrorMessage = _L["404PageNotFound"];
+                Error.Message = _L["NotFoundPage"];
+                Error.StatusCode = (int)HttpStatusCode.NotFound;
             }
             else if (httpStatusCode == (int)HttpStatusCode.Unauthorized) //401 YETKISI YOK
             {
-                ErrorMessage = _L["UnauthorizedPage"];
+                Error.Message = _L["UnauthorizedPage"];
+                Error.StatusCode = (int)HttpStatusCode.Unauthorized;
             }
             else
             {
-                ErrorMessage = _L["UnexpectedErrorPage"];
+                Error.Message = _L["UnexpectedErrorPage"];
+                Error.StatusCode = 0;
             }
+        }
+
+        public class ErrorModel
+        {
+            public string Message { get; set; }
+            public int StatusCode { get; set; }
         }
     }
 }

@@ -1,0 +1,19 @@
+﻿--------------------------------------------------------------------
+1) Identity Password vs override için projede ara : IDENTITY OPTIONS OVERRIDE
+yada
+
+Şu classlara git
+
+Domain > Settings >
+1 EvArkadasimSettingDefinitionProvider
+2 EvArkadasimSettings
+-------------------------------------------------------
+2) Identity Property ekle   **************
+https://community.abp.io/posts/how-to-add-custom-property-to-the-user-entity-6ggxiddr
+1) AppUser a kolon ekle
+2) EvArkadasimEfCoreEntityExtensionMappings e kolon ekle
+3) EvArkadasimModuleExtensionConfigurator e kolon ekle.
+Account Register dan ekleniyor.
+
+tamamdır :)
+-------------------------------------------------------

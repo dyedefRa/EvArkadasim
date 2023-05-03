@@ -9,6 +9,6 @@ namespace EvArkadasim.Abstract
     {
         Task<List<SelectListItem>> GetCityLookupAsync();
         Task<List<SelectListItem>> GetTownLookupAsync(int cityId);
-        //Task<List<SelectListItem>> GetOrganizationLookupAsync();
+        List<SelectListItem> GetGenderLookup();
     }
 }

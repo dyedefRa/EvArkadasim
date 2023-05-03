@@ -9,14 +9,33 @@
 
     //GENEL
     "ProjectName": "Evarkadasi",
+    "Home": "Ana sayfa",
     "Popular": "Popüler",
     "Cities": "Şehirler",
-    "SignUp": "Üye Ol",
-    "SignIn": "Giriş Yap",
+    "Register": "Üye Ol",
+    "Login": "Giriş Yap",
     "Profile": "Profilim",
-    "SignOut": "Çıkış Yap",
+    "Logout": "Çıkış Yap",
     "Message": "Mesaj",
+    "Loading": "Yükleniyor...",
+    "Choose": "Seçiniz",
+    "Name": "Ad",
+    "Surname": "Soyad",
+    "UserName": "Kullanıcı Adı",
+    "Email": "Email",
+    "PhoneNumber": "Telefon",
+    "Password": "Parola",
+    "ConfirmPassword": "Parola Doğrulama",
+    "Gender": "Cinsiyet",
+    "Description": "Açıklama",
 
+
+    "ForgotYourPassword": "Parolamı Unuttum",
+    "WantToBeRegister": "Üye Olmak İstiyorum",
+    "LoginInstead": "Bunun yerine oturum aç",
+
+
+    //MENU
     "UserManagement": "Kullanıcı Yönetimi",
     "RoleManagement": "Rol Yönetimi",
     "AdminPage": "Admin Ana Sayfa",
@@ -26,11 +45,21 @@
     "Enum:Status:0": "Belirtilmedi",
     "Enum:Status:-1": "Pasif",
     "Enum:Status:1": "Aktif",
-    "Enum:Status:-255": "Silinmiş"
+    "Enum:Status:-255": "Silinmiş",
 
+    "Unstated": "Belirtilmedi",
+    "Male": "Erkek",
+    "Female": "Kadın",
+    "DoNotWantSpecify": "Belirtmek İstemiyorum",
 
-
-
+    //ERORS
+    "ReturnHomePage": "Ana sayfaya dön",
+    "NotFoundPage": "Sayfa Bulunamadı.",
+    "UnauthorizedPage": "Bu Sayfaya Erişim İzniniz Yok.",
+    "UnexpectedErrorPage": "Beklenmedik bir hata oluştu.",
+    "SorryAnErrorHasOccurred": "Üzgünüm, bir hata oluştu.",
+    "ImageFailedToLoad": "Resim Yüklenemedi.",
+    "GeneralIdentityError": "Bir hata oluştu.Lütfen girdilerinizi kontrol ediniz."
 
 
   }

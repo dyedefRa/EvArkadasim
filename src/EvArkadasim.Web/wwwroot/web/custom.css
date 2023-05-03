@@ -6,3 +6,15 @@
 .uppercase {
     text-transform: uppercase !important;
 }
+
+.btn-nice {
+    padding: 10px 40px;
+    font-size: 18px;
+    line-height: 1.3333333;
+/*    border-radius: 30px;
+*/}
+
+.mybreadcrumbs {
+    padding-top: 34px;
+    color: #888;
+}

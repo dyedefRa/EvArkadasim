@@ -1,6 +1,8 @@
 ﻿using EvArkadasim.Abstract;
 using EvArkadasim.Entities.Cities;
 using EvArkadasim.Entities.Towns;
+using EvArkadasim.Enums;
+using EvArkadasim.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -20,8 +22,6 @@ namespace EvArkadasim.Services
     {
         private readonly IRepository<City, int> _cityRepository;
         private readonly IRepository<Town, int> _townRepository;
-        private readonly IdentityUserManager _userManager;
-
 
         public LookupAppService(
             IRepository<City, int> cityRepository,
@@ -57,6 +57,21 @@ namespace EvArkadasim.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "LookupAppService > GetTownLookupAsync has error! ");
+                return null;
+            }
+        }
+
+        public List<SelectListItem> GetGenderLookup()
+        {
+            try
+            {
+                var list = ((GenderType[])Enum.GetValues(typeof(GenderType))).ToList();
+
+                return list.Select(x => new SelectListItem(x.ToDescription(), x.ToString())).ToList();
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "LookupAppService > GetGenderLookup has error! ");
                 return null;
             }
         }

@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Volo.Abp.Identity;
+﻿using System;
 using Volo.Abp.ObjectExtending;
 using Volo.Abp.Threading;
 
@@ -67,6 +66,63 @@ namespace EvArkadasim
              * See the documentation for more:
              * https://docs.abp.io/en/abp/latest/Module-Entity-Extensions
              */
+
+
+            ObjectExtensionManager.Instance.Modules()
+               .ConfigureIdentity(identity =>
+               {
+                   identity.ConfigureUser(user =>
+                   {
+                       user.AddOrUpdateProperty<int?>(
+                           "UserType",
+                           property =>
+                           {
+                           }
+                       );
+                   });
+               });
+
+            ObjectExtensionManager.Instance.Modules()
+            .ConfigureIdentity(identity =>
+            {
+                identity.ConfigureUser(user =>
+                {
+                    user.AddOrUpdateProperty<int?>(
+                        "Gender",
+                        property =>
+                        {
+                        }
+                    );
+                });
+            });
+
+            ObjectExtensionManager.Instance.Modules()
+         .ConfigureIdentity(identity =>
+         {
+             identity.ConfigureUser(user =>
+             {
+                 user.AddOrUpdateProperty<DateTime?>(
+                     "BirthDate",
+                     property =>
+                     {
+                     }
+                 );
+             });
+         });
+
+            ObjectExtensionManager.Instance.Modules()
+                .ConfigureIdentity(identity =>
+                {
+                    identity.ConfigureUser(user =>
+                    {
+                        user.AddOrUpdateProperty<int?>(
+                            "Status",
+                            property =>
+                            {
+                            }
+                        );
+                    });
+                });
         }
     }
 }
