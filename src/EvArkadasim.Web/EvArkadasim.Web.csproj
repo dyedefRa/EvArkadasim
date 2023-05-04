@@ -23,10 +23,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Pages\Error\Index.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Hangfire.SqlServer" Version="1.7.27" />
     <PackageReference Include="Serilog.AspNetCore" Version="4.1.0" />
     <PackageReference Include="Serilog.Sinks.Async" Version="1.4.0" />
@@ -46,6 +42,11 @@
     <PackageReference Include="Volo.Abp.Account.Web.IdentityServer" Version="4.4.4" />
     <PackageReference Include="Volo.Abp.TenantManagement.Web" Version="4.4.4" />
     <PackageReference Include="Volo.Abp.SettingManagement.Web" Version="4.4.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Pages\Account\" />
+    <Folder Include="Pages\Error\" />
   </ItemGroup>
 
 </Project>

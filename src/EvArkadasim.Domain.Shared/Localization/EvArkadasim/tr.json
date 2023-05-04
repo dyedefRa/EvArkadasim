@@ -13,8 +13,8 @@
     "Popular": "Popüler",
     "Cities": "Şehirler",
     "Register": "Üye Ol",
-    "Login": "Giriş Yap",
-    "Profile": "Profilim",
+    "Login": "GİRİŞ YAP",
+    "Profile": "PROFİLİM",
     "Logout": "Çıkış Yap",
     "Message": "Mesaj",
     "Loading": "Yükleniyor...",
@@ -27,8 +27,10 @@
     "Password": "Parola",
     "ConfirmPassword": "Parola Doğrulama",
     "Gender": "Cinsiyet",
+    "BirthDate": "Doğum Tarihi",
     "Description": "Açıklama",
-
+    "MyAccountInformation": "Hesap Bilgilerim",
+    "MyAdverts": "İlanlarım",
 
     "ForgotYourPassword": "Parolamı Unuttum",
     "WantToBeRegister": "Üye Olmak İstiyorum",
@@ -50,7 +52,10 @@
     "Unstated": "Belirtilmedi",
     "Male": "Erkek",
     "Female": "Kadın",
-    "DoNotWantSpecify": "Belirtmek İstemiyorum",
+
+    "Enum:GenderType:1": "Erkek",
+    "Enum:GenderType:2": "Kadın",
+
 
     //ERORS
     "ReturnHomePage": "Ana sayfaya dön",

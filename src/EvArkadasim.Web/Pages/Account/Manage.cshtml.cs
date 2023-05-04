@@ -1,19 +1,15 @@
 ﻿using EvArkadasim.Abstract;
-using EvArkadasim.Dtos.Users;
 using EvArkadasim.Dtos.Users.ViewModels;
 using EvArkadasim.Enums;
-using EvArkadasim.Services;
 using Microsoft.AspNetCore.Mvc;
+using Serilog;
 using System;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Threading.Tasks;
-using Volo.Abp;
 using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Form;
 using Volo.Abp.Identity;
 using Volo.Abp.Identity.Web.Pages.Identity;
-using Volo.Abp.ObjectMapping;
-using static EvArkadasim.Web.Pages.Account.RegisterModel;
 
 namespace EvArkadasim.Web.Pages.Account
 {
@@ -28,43 +24,98 @@ namespace EvArkadasim.Web.Pages.Account
 
         public ManageModel(
             IIdentityUserAppService identityUserAppService,
-            IUserAppService userAppService)
+            IUserAppService userAppService
+            )
         {
             _identityUserAppService = identityUserAppService;
             _userAppService = userAppService;
         }
 
-        public async Task OnGetAsync()
+        public async Task<IActionResult> OnGetAsync()
         {
-            if (!CurrentUser.IsAuthenticated)
+            try
             {
-                throw new UserFriendlyException("Kullanıcı bulunamadı.");
+                if (!CurrentUser.IsAuthenticated)
+                    return Redirect("~/Error?httpStatusCode=401");
 
+                var currentUser = await _userAppService.GetAppUserAsync(CurrentUser.Id.Value);
+                UserManageInputModel = ObjectMapper.Map<AppUserViewModel, UserManageModel>(currentUser.Data);
+                return Page();
             }
-            else
+            catch (Exception ex)
             {
-                //UserManageInputModel = new UserManageModel();
+                Log.Error(ex, "Account > Manage > OnGetAsync  has error!");
+                Alerts.Danger(L["GeneralIdentityError"].Value);
 
-                var currentUser = await _userAppService.GetUserByIdAsync(CurrentUser.Id.Value);
-                UserManageInputModel = ObjectMapper.Map<AppUserViewModel, UserManageModel>(currentUser);
-
+                return Page();
             }
         }
+
         public async Task<IActionResult> OnPostAsync()
         {
-            ValidateModel();
-            //var user = await UserManager.FindByIdAsync(CurrentUser.Id.Value.ToString());
-            //var result = await UserManager.ChangePasswordAsync(user, FormModel.CurrentPassword, FormModel.NewPassword);
-            //if (!result.Succeeded)
-            //{
-            //    Alerts.Warning("Şifreniz değiştirilemedi. Lütfen daha sonra tekrar deneyiniz.");
-            //    return Page();
-            //}
-            return Redirect("/");
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var currentUser = await _identityUserAppService.GetAsync(CurrentUser.Id.Value);
+                    var updateDto = ObjectMapper.Map<IdentityUserDto, IdentityUserUpdateDto>(currentUser);
+                    updateDto.Name = UserManageInputModel.Name;
+                    updateDto.Surname = UserManageInputModel.Surname;
+                    updateDto.Email = UserManageInputModel.Email;
+                    updateDto.PhoneNumber = UserManageInputModel.PhoneNumber;
+                    updateDto.ExtraProperties.Remove("BirthDate");
+                    updateDto.ExtraProperties.Add("BirthDate", UserManageInputModel.BirthDate);
+
+                    await _identityUserAppService.UpdateAsync(UserManageInputModel.Id, updateDto);
+
+                    return RedirectToAction("Manage", "Account");
+                }
+
+                Alerts.Danger(L["GeneralIdentityError"].Value);
+
+                return Page();
+
+            }
+            catch (AbpIdentityResultException ex)
+            {
+                var identityError = ex.IdentityResult;
+                if (!identityError.Succeeded && identityError.Errors.Any())
+                {
+                    var totalErrorCount = identityError.Errors.Count();
+                    if (identityError.Errors.Any(x => x.Code == "DuplicateUserName"))
+                    {
+                        Alerts.Danger($"'{UserManageInputModel.UserName}' kullanıcı adına sahip bir kullanıcı zaten var.");
+                        totalErrorCount--;
+                    }
+
+                    if (identityError.Errors.Any(x => x.Code == "DuplicateEmail"))
+                    {
+                        Alerts.Danger($"'{UserManageInputModel.Email}' mailine sahip bir kullanıcı zaten var.");
+                        totalErrorCount--;
+                    }
+
+                    if (totalErrorCount > 0)
+                    {
+                        Alerts.Danger(L["GeneralIdentityError"].Value);
+                    }
+                }
+
+                return Page();
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "CompanyRegisterModel > OnPostAsync has error! ");
+                Alerts.Danger(L["GeneralIdentityError"].Value);
+
+                return Page();
+            }
         }
 
         public class UserManageModel
         {
+            [HiddenInput]
+            public Guid Id { get; set; }
+            [DisabledInput]
             public string UserName { get; set; }
             [Required]
             public string Name { get; set; }
@@ -72,12 +123,13 @@ namespace EvArkadasim.Web.Pages.Account
             public string Surname { get; set; }
             [Required]
             [EmailAddress]
-            //[RegularExpression("^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$", ErrorMessage = "Must be a valid email")]
             public string Email { get; set; }
             [Required]
             [Phone]
             [StringLength(16, MinimumLength = 16, ErrorMessage = "Telefon alanı geçerli bir telefon numarası olmalıdır.")]
             public string PhoneNumber { get; set; }
+            public DateTime CreationTime { get; set; }
+            [DisabledInput]
             public GenderType Gender { get; set; }
             //[Required]
             public DateTime? BirthDate { get; set; }

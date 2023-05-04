@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Linq;
 
 namespace EvArkadasim.Extensions
@@ -68,6 +69,109 @@ namespace EvArkadasim.Extensions
         public static string ToAllDateString(this DateTime value)
         {
             return value.ToString("MM/dd/yyyy HH:mm");
+        }
+
+        public static string ToLocalDateString(this DateTime value)
+        {
+            return value.ToString("yyyy-MM-dd");
+        }
+
+        public static string ToTurkishDateString(this DateTime value)
+        {
+            return value.ToString("dd MMMM yyyy", new CultureInfo("tr-TR"));
+        }
+
+        public static string ToZodiacSign(this DateTime value)
+        {
+            int month = value.Month;
+            int day = value.Day;
+            string astro_sign = "";
+            if (month == 12)
+            {
+                if (day < 22)
+                    astro_sign = "Yay";
+                else
+                    astro_sign = "Oğlak";
+            }
+            else if (month == 1)
+            {
+                if (day < 20)
+                    astro_sign = "Oğlak";
+                else
+                    astro_sign = "Kova";
+            }
+            else if (month == 2)
+            {
+                if (day < 19)
+                    astro_sign = "Kova";
+                else
+                    astro_sign = "Balık";
+            }
+            else if (month == 3)
+            {
+                if (day < 21)
+                    astro_sign = "Balık";
+                else
+                    astro_sign = "Koç";
+            }
+            else if (month == 4)
+            {
+                if (day < 20)
+                    astro_sign = "Koç";
+                else
+                    astro_sign = "Boğa";
+            }
+            else if (month == 5)
+            {
+                if (day < 21)
+                    astro_sign = "Boğa";
+                else
+                    astro_sign = "İkizler";
+            }
+            else if (month == 6)
+            {
+                if (day < 21)
+                    astro_sign = "İkizler";
+                else
+                    astro_sign = "Yengeç";
+            }
+            else if (month == 7)
+            {
+                if (day < 23)
+                    astro_sign = "Yengeç";
+                else
+                    astro_sign = "Aslan";
+            }
+            else if (month == 8)
+            {
+                if (day < 23)
+                    astro_sign = "Aslan";
+                else
+                    astro_sign = "Başak";
+            }
+            else if (month == 9)
+            {
+                if (day < 23)
+                    astro_sign = "Başak";
+                else
+                    astro_sign = "Terazi";
+            }
+            else if (month == 10)
+            {
+                if (day < 23)
+                    astro_sign = "Terazi";
+                else
+                    astro_sign = "Akrep";
+            }
+            else if (month == 11)
+            {
+                if (day < 22)
+                    astro_sign = "Akrep";
+                else
+                    astro_sign = "Yay";
+            }
+
+            return astro_sign + " Burcu";
         }
     }
 }

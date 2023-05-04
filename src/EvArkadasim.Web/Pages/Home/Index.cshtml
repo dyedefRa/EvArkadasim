@@ -1,168 +1,78 @@
 ﻿@page
+@using Microsoft.AspNetCore.Mvc.Localization
 @using EvArkadasim.Localization
-@using Microsoft.Extensions.Localization
-@inject IStringLocalizer<EvArkadasimResource> L
+@using EvArkadasim.Extensions
+@inject IHtmlLocalizer<EvArkadasimResource> L
 @model EvArkadasim.Web.Pages.Home.IndexModel
 @{
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-@section HomeSlider {
-    <div id="home-slider" class="carousel slide">
-        <!-- Indicators -->
-        <ol class="carousel-indicators">
-            <li data-target="#home-slider" data-slide-to="0" class="active"></li>
-            <li data-target="#home-slider" data-slide-to="1"></li>
-            <li data-target="#home-slider" data-slide-to="2"></li>
-        </ol>
 
-        <!-- Wrapper for Slides -->
-        <div class="carousel-inner">
-            <div class="item active">
-                <!-- Set the first background image using inline CSS below. -->
-                <div class="fill" style="background-image:url('/web/images/slides/slide3.jpg');"></div>
-                <div class="carousel-caption">
-                    <h1 class="text-uppercase">Edura Template</h1>
-                    <p class="lead text-uppercase">Fint the best solution</p>
+ <!--Home slider-->
+            <div class="slideshow slideshow-wrapper pb-section">
+                <div class="home-slideshow">
+                    <div class="slide slideshow--medium">
+                        <div class="blur-up lazyload">
+                            <img class="blur-up lazyload" data-src="/web/images/slideshow-banners/home5-banner1.jpg" src="/web/images/slideshow-banners/home5-banner1.jpg" alt="The One" title="The One" />
+                            <div class="slideshow__text-wrap slideshow__overlay classic middle">
+                                <div class="slideshow__text-content classic left">
+                                    <div class="container">
+                                        <div class="wrap-caption left">
+                                            <h2 class="h1 mega-title slideshow__title">The One</h2>
+                                            <span class="mega-subtitle slideshow__subtitle">Complete your daring new look<br>with the one</span>
+                                            <span class="btn">Shop now</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slide slideshow--medium">
+                        <div class="blur-up lazyload">
+                            <img class="blur-up lazyload" data-src="/web/images/slideshow-banners/home5-banner2.jpg" src="/web/images/slideshow-banners/home5-banner2.jpg" alt="Editors Picks" title="Editors Picks" />
+                            <div class="slideshow__text-wrap slideshow__overlay classic top">
+                                <div class="slideshow__text-content classic top">
+                                    <div class="container">
+                                        <div class="wrap-caption center">
+                                            <h2 class="h1 mega-title slideshow__title">Editors Picks</h2>
+                                            <span class="mega-subtitle slideshow__subtitle">The Editors Essential Mascara Guide</span>
+                                            <span class="btn">Shop now</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="item">
-                <!-- Set the second background image using inline CSS below. -->
-                <div class="fill" style="background-image:url('/web/images/slides/slide10.jpg');"></div>
-                <div class="carousel-caption">
-                    <h1 class="text-uppercase">Responsive Design</h1>
-                    <p class="lead text-uppercase">Looks great on any screen</p>
-                </div>
-            </div>
-            <div class="item">
-                <!-- Set the third background image using inline CSS below. -->
-                <div class="fill" style="background-image:url('/web/images/slides/slide11.jpg');"></div>
-                <div class="carousel-caption">
-                    <h1 class="text-uppercase">Multiple Layouts</h1>
-                    <p class="lead text-uppercase">Choose the best</p>
-                </div>
-            </div>
-        </div>
+            <!--End Home slider-->
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $('body').addClass('home5-cosmetic');
 
-        <!-- Controls -->
-        <a class="left carousel-control" href="#home-slider" data-slide="prev">
-            <span class="icon-prev"></span>
-        </a>
-        <a class="right carousel-control" href="#home-slider" data-slide="next">
-            <span class="icon-next"></span>
-        </a>
+            //#region Filter
+           
+            //#endregion
 
-    </div>
+            //abp.ajax({
+            //    type: 'GET',
+            //    url: '/api/identity/users'
+            //}).then(function (result) {
+            //    console.log(result);
+            //}).catch(function () {
+            //    alert("request failed :(");
+            //});
+
+
+            //abp.ajax({
+            //    url: abp.appPath + 'Portal/Catalog/SwitchCustomer',
+            //    data: JSON.stringify(info),
+            //    success: function (data) {
+            //        console.log('Data Returned: ' + data.personId);
+            //    }
+            //});
+        });
+    </script>
 }
-
-
-<div id="projects" class="container-fluid bg-gray padding35">
-    <div class="container">
-        <div class="row">
-            <div class="col-xs-12 text-center uppercase">
-                <h3>POPÜLER <b>ŞEHİRLER</b></h3>
-            </div>
-
-            <div id="portfolio-carousel-home" class="owl-carousel">
-
-                <div class="portfolio-item">
-                    <div class="portfolio-top">
-                        <img alt="" class="img-responsive" src="~/web/images/portfolio/portfolio1.jpg">
-                        <div class="mask"></div>
-                        <span class="portfolio-tag"><i class="fa fa-tag fa-fw"></i> <a href="#">Scripts</a>, <a href="#">Technology</a></span>
-                        <ul class="list-unstyled list-inline">
-                            <li><a href="#"><i class="fa fa-search fa-fw"></i></a></li>
-                            <li><a href="#"><i class="fa fa-link fa-fw"></i></a></li>
-                        </ul>
-                    </div>
-                    <span class="portfolio-item-desc"><a href="#">Template Development</a></span>
-                </div>
-
-                <div class="portfolio-item">
-                    <div class="portfolio-top">
-                        <img alt="" class="img-responsive" src="~/web/images/portfolio/portfolio2.jpg">
-                        <div class="mask"></div>
-                        <span class="portfolio-tag"><i class="fa fa-tag fa-fw"></i> <a href="#">Technology</a></span>
-                        <ul class="list-unstyled list-inline">
-                            <li><a href="#"><i class="fa fa-search fa-fw"></i></a></li>
-                            <li><a href="#"><i class="fa fa-link fa-fw"></i></a></li>
-                        </ul>
-                    </div>
-                    <span class="portfolio-item-desc"><a href="#">Website Design</a></span>
-                </div>
-
-                <div class="portfolio-item">
-                    <div class="portfolio-top">
-                        <img alt="" class="img-responsive" src="~/web/images/portfolio/portfolio3.jpg">
-                        <div class="mask"></div>
-                        <span class="portfolio-tag"><i class="fa fa-tag fa-fw"></i> <a href="#">Scripts</a>, <a href="#">Development</a></span>
-                        <ul class="list-unstyled list-inline">
-                            <li><a href="#"><i class="fa fa-search fa-fw"></i></a></li>
-                            <li><a href="#"><i class="fa fa-link fa-fw"></i></a></li>
-                        </ul>
-                    </div>
-                    <span class="portfolio-item-desc"><a href="#">Mobile App</a></span>
-                </div>
-
-                <div class="portfolio-item">
-                    <div class="portfolio-top">
-                        <img alt="" class="img-responsive" src="~/web/images/portfolio/portfolio4.jpg">
-                        <div class="mask"></div>
-                        <span class="portfolio-tag"><i class="fa fa-tag fa-fw"></i> <a href="#">Web Design</a>, <a href="#">Technology</a></span>
-                        <ul class="list-unstyled list-inline">
-                            <li><a href="#"><i class="fa fa-search fa-fw"></i></a></li>
-                            <li><a href="#"><i class="fa fa-link fa-fw"></i></a></li>
-                        </ul>
-                    </div>
-                    <span class="portfolio-item-desc"><a href="#">App Development</a></span>
-                </div>
-
-                <div class="portfolio-item">
-                    <div class="portfolio-top">
-                        <img alt="" class="img-responsive" src="~/web/images/portfolio/portfolio5.jpg">
-                        <div class="mask"></div>
-                        <span class="portfolio-tag"><i class="fa fa-tag fa-fw"></i> <a href="#">Web Design</a>, <a href="#">Development</a></span>
-                        <ul class="list-unstyled list-inline">
-                            <li><a href="#"><i class="fa fa-search fa-fw"></i></a></li>
-                            <li><a href="#"><i class="fa fa-link fa-fw"></i></a></li>
-                        </ul>
-                    </div>
-                    <span class="portfolio-item-desc"><a href="#">Website Optimization</a></span>
-                </div>
-
-                <div class="portfolio-item">
-                    <div class="portfolio-top">
-                        <img alt="" class="img-responsive" src="~/web/images/portfolio/portfolio6.jpg">
-                        <div class="mask"></div>
-                        <span class="portfolio-tag"><i class="fa fa-tag fa-fw"></i> <a href="#">Technology</a>, <a href="#">Development</a></span>
-                        <ul class="list-unstyled list-inline">
-                            <li><a href="#"><i class="fa fa-search fa-fw"></i></a></li>
-                            <li><a href="#"><i class="fa fa-link fa-fw"></i></a></li>
-                        </ul>
-                    </div>
-                    <span class="portfolio-item-desc"><a href="#">Network Concept</a></span>
-                </div>
-
-            </div>
-
-        </div>
-    </div>
-</div>
-
-
-<!-- CALL TO ACTION START -->
-<section id="call-to-action">
-    <div class="parallax">
-        <div class="bg-mask-black"></div>
-        <div class="container text-white">
-            <div class="row">
-                <div class="col-md-10">
-                    <h1>More than <b class="counter">100</b> happy clients! <small class="text-white">Are you interested?</small></h1>
-                </div>
-                <div class="col-md-2 text-center">
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- CALL TO ACTION END -->

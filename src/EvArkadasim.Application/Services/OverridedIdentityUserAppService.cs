@@ -56,12 +56,76 @@ namespace EvArkadasim.Services
 
         }
 
-        //Buraya düşüyor mu kontrol et
+        /// <summary>
+        /// /Account/Register kullanıyor.
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        [AllowAnonymous]
+        public async override Task<IdentityUserDto> GetAsync(Guid id)
+        {
+            /*var addedUser =*/
+            return await base.GetAsync(id);
+            //if (addedUser!=null)
+            //{
+            //    if (input.RoleNames.Any(x=>x=="gamer"))
+            //    {
+            //        var userGameList = await _gameRepository.Where(x => x.Status == Enums.Status.Active).Select(x => new UserGame
+            //        {
+            //            GameId = x.Id,
+            //            GameUniqueId = string.Empty,
+            //            TypeId = 0,
+            //            UserId = addedUser.Id
+
+            //        }).ToListAsync();
+            //        await _userGameRepository.InsertManyAsync(userGameList);
+            //    }
+
+
+            //}
+            //return addedUser;
+        }
+
+        /// <summary>
+        /// /Account/Register kullanıyor.
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         [AllowAnonymous]
         public async override Task<IdentityUserDto> CreateAsync(IdentityUserCreateDto input)
         {
             /*var addedUser =*/
             return await base.CreateAsync(input);
+            //if (addedUser!=null)
+            //{
+            //    if (input.RoleNames.Any(x=>x=="gamer"))
+            //    {
+            //        var userGameList = await _gameRepository.Where(x => x.Status == Enums.Status.Active).Select(x => new UserGame
+            //        {
+            //            GameId = x.Id,
+            //            GameUniqueId = string.Empty,
+            //            TypeId = 0,
+            //            UserId = addedUser.Id
+
+            //        }).ToListAsync();
+            //        await _userGameRepository.InsertManyAsync(userGameList);
+            //    }
+
+
+            //}
+            //return addedUser;
+        }
+
+        /// <summary>
+        /// /Account/Register kullanıyor.
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        [AllowAnonymous]
+        public async override Task<IdentityUserDto> UpdateAsync(Guid id,IdentityUserUpdateDto input)
+        {
+            /*var addedUser =*/
+            return await base.UpdateAsync(id, input);
             //if (addedUser!=null)
             //{
             //    if (input.RoleNames.Any(x=>x=="gamer"))

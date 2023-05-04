@@ -8,7 +8,7 @@ namespace EvArkadasim.Enums
         Male = 1,
         [Description("Kadın")]
         Female = 2,
-        [Description("Belirtmek İstemiyorum")]
-        DoNotWantSpecify = 3
+        //[Description("Belirtmek İstemiyorum")]
+        //DoNotWantSpecify = 3
     }
 }

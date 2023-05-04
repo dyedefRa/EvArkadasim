@@ -20,21 +20,24 @@ namespace EvArkadasim
 
         #endregion
 
-        public static string GetFullImagePath(string imagePath)
-        {
-            return "~/web/images/" + imagePath;
-        }
+        //public static string GetFullImagePath(string imagePath)
+        //{
+        //    return "~/web/images/" + imagePath;
+        //}
         public static class DEFAULT
         {
+            public static string MaleAvatarImageUrl = "/web/images/avatar-male.png";
+            public static string FemaleAvatarImageUrl = "/web/images/avatar-female.png";
+
             /// <summary>
             /// Filtrelerde kullanılan default tarih değeri
             /// </summary>
-            public static DateTime DefaultDate = new DateTime(2000, 01, 01);
+            //public static DateTime DefaultDate = new DateTime(2000, 01, 01);
 
             /// <summary>
             /// Bir Firma oluştugu andan itibaren 3 ay aktif olsun.
             /// </summary>
-            public static int DefaultCompanyValidDateAddingMonth = 3;
+            //public static int DefaultCompanyValidDateAddingMonth = 3;
 
         }
     }

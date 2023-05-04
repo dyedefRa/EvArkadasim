@@ -56,10 +56,9 @@ namespace EvArkadasim.Web.Pages.Account
                 {
                     var input = ObjectMapper.Map<UserRegisterModel, IdentityUserCreateDto>(UserRegisterInputModel);
 
-
                     input.ExtraProperties.Add("UserType", (int)UserType.User);
                     input.ExtraProperties.Add("Gender", (int)UserRegisterInputModel.Gender);
-                    input.ExtraProperties.Add("BirthDate", DateTime.Now);
+                    input.ExtraProperties.Add("BirthDate", UserRegisterInputModel.BirthDate);
                     input.ExtraProperties.Add("Status", (int)Status.Active);
 
                     input.RoleNames = new string[] { EnumExtensions.GetEnumDescription(UserType.User) };
@@ -77,7 +76,7 @@ namespace EvArkadasim.Web.Pages.Account
                 }
                 else
                 {
-                    ModelState.AddModelError("email", L["GeneralIdentityError"].Value);
+                    Alerts.Danger(L["GeneralIdentityError"].Value);
                 }
             }
             catch (AbpIdentityResultException ex)
@@ -89,26 +88,26 @@ namespace EvArkadasim.Web.Pages.Account
                     var totalErrorCount = identityError.Errors.Count();
                     if (identityError.Errors.Any(x => x.Code == "DuplicateUserName"))
                     {
-                        ModelState.AddModelError("userName", $"'{UserRegisterInputModel.UserName}' kullanıcı adına sahip bir kullanıcı zaten var.");
+                        Alerts.Danger($"'{UserRegisterInputModel.UserName}' kullanıcı adına sahip bir kullanıcı zaten var.");
                         totalErrorCount--;
                     }
 
                     if (identityError.Errors.Any(x => x.Code == "DuplicateEmail"))
                     {
-                        ModelState.AddModelError("email", $"'{UserRegisterInputModel.Email}' mailine sahip bir kullanıcı zaten var.");
+                        Alerts.Danger($"'{UserRegisterInputModel.Email}' mailine sahip bir kullanıcı zaten var.");
                         totalErrorCount--;
                     }
 
                     if (totalErrorCount > 0)
                     {
-                        ModelState.AddModelError("email", L["GeneralIdentityError"].Value);
+                        Alerts.Danger(L["GeneralIdentityError"].Value);
                     }
                 }
             }
             catch (Exception ex)
             {
                 Log.Error(ex, "CompanyRegisterModel > OnPostAsync has error! ");
-                ModelState.AddModelError("email", L["GeneralIdentityError"].Value);
+                Alerts.Danger(L["GeneralIdentityError"].Value);
             }
 
             return Page();

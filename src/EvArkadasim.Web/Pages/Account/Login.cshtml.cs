@@ -1,7 +1,6 @@
-﻿using EvArkadasim.Entities.Users;
+﻿using EvArkadasim.Abstract;
 using EvArkadasim.Enums;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Serilog;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -9,7 +8,6 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using Volo.Abp.Account.Web.Pages.Account;
 using Volo.Abp.Auditing;
-using Volo.Abp.Domain.Repositories;
 
 namespace EvArkadasim.Web.Pages.Account
 {
@@ -18,15 +16,15 @@ namespace EvArkadasim.Web.Pages.Account
         [BindProperty]
         public UserLoginModel UserLoginInputModel { get; set; }
         private readonly IAuditingManager _auditingManager;
-        private readonly IRepository<AppUser> _appUserRepository;
+        private readonly IUserAppService _userAppService;
 
         public LoginModel(
              IAuditingManager auditingManager,
-            IRepository<AppUser> appUserRepository
+             IUserAppService userAppService
             )
         {
             _auditingManager = auditingManager;
-            _appUserRepository = appUserRepository;
+            _userAppService = userAppService;
         }
 
         public void OnGet()
@@ -48,15 +46,16 @@ namespace EvArkadasim.Web.Pages.Account
                         return Page();
                     }
 
-                    var mustBeNormalUser = await _appUserRepository.FirstOrDefaultAsync(x => x.Id == userResult.Id);
-                    if (mustBeNormalUser.Status != Status.Active)
+                    var currentUser = _userAppService.GetAppUserAsync(userResult.Id).Result.Data;
+
+                    if (currentUser.Status != Status.Active)
                     {
                         await SignInManager.SignOutAsync();
                         Alerts.Warning("Hesabınız aktif değil.");
                         _auditingManager.Current.Log.Comments.Add("Hesabınız aktif değil.{ " + userResult.UserName + " }");
                         return Page();
                     }
-                    if (mustBeNormalUser.UserType != UserType.User)
+                    if (currentUser.UserType != UserType.User)
                     {
                         await SignInManager.SignOutAsync();
                         Alerts.Warning("Kullanıcı hesabınızla giriş yapınız.");

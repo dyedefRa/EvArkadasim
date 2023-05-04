@@ -2,8 +2,11 @@
 using EvArkadasim.Dtos.Users;
 using EvArkadasim.Dtos.Users.ViewModels;
 using EvArkadasim.Entities.Users;
+using EvArkadasim.Models.Results.Abstract;
+using EvArkadasim.Models.Results.Concrete;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 using System;
 using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
@@ -52,13 +55,34 @@ namespace EvArkadasim.Services
         //}
 
         [AllowAnonymous]
-        public async Task<AppUserViewModel> GetUserByIdAsync(Guid userId)
+        public async Task<IDataResult<AppUserViewModel>> GetAppUserAsync(Guid userId)
         {
-            var appUser = await _appUserRepository.Include(x => x.Image).FirstOrDefaultAsync(x => x.Id == userId);
-            var result = ObjectMapper.Map<AppUser, AppUserViewModel>(appUser);
+            try
+            {
+                var appUser = await _appUserRepository.Include(x => x.Image).FirstOrDefaultAsync(x => x.Id == userId);
+                if (appUser != null)
+                {
+                    var result = ObjectMapper.Map<AppUser, AppUserViewModel>(appUser);
+                    if (appUser.Image != null)
+                    {
+                        result.ImageUrl = appUser.Image.FilePath;
+                    }
+                    else
+                    {
+                        result.ImageUrl = appUser.Gender.Value == Enums.GenderType.Male ? EvArkadasimConsts.DEFAULT.MaleAvatarImageUrl : EvArkadasimConsts.DEFAULT.FemaleAvatarImageUrl;
+                    }
 
-            result.ImageUrl = appUser?.Image?.FilePath;
-            return result;
+                    return new SuccessDataResult<AppUserViewModel>(result);
+                }
+
+                return new ErrorDataResult<AppUserViewModel>();
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "OverridedIdentityUserAppService > GetAppUserAsync has error! ");
+
+                return new ErrorDataResult<AppUserViewModel>();
+            }
         }
 
         //public async Task<AppUserDto> CreateCustomAsync(CreateUpdateAppUserDto input)
