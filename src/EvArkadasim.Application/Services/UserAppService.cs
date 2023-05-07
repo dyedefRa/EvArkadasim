@@ -2,9 +2,12 @@
 using EvArkadasim.Dtos.Users;
 using EvArkadasim.Dtos.Users.ViewModels;
 using EvArkadasim.Entities.Users;
+using EvArkadasim.Enums;
+using EvArkadasim.Models.Pages.Account;
 using EvArkadasim.Models.Results.Abstract;
 using EvArkadasim.Models.Results.Concrete;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using System;
@@ -21,17 +24,21 @@ namespace EvArkadasim.Services
         protected IIdentityUserAppService _identityUserAppService { get; }
         private IdentityUserManager _identityUserManager { get; set; }
         private readonly IRepository<AppUser> _appUserRepository;
+        private readonly IFileAppService _fileAppService;
+
 
         public UserAppService(
             IRepository<AppUser, Guid> repository,
             IIdentityUserAppService identityUserAppService,
             IdentityUserManager identityUserManager,
-             IRepository<AppUser> appUserRepository
+             IRepository<AppUser> appUserRepository,
+             IFileAppService fileAppService
             ) : base(repository)
         {
             _identityUserManager = identityUserManager;
             _identityUserAppService = identityUserAppService;
             _appUserRepository = appUserRepository;
+            _fileAppService = fileAppService;
         }
 
 
@@ -79,9 +86,86 @@ namespace EvArkadasim.Services
             }
             catch (Exception ex)
             {
-                Log.Error(ex, "OverridedIdentityUserAppService > GetAppUserAsync has error! ");
+                Log.Error(ex, "UserAppService > GetAppUserAsync has error! ");
 
                 return new ErrorDataResult<AppUserViewModel>();
+            }
+        }
+
+
+        /// <summary>
+        /// Account/Manage Kullanıyor.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="image"></param>
+        /// <returns></returns>
+        public async Task<IDataResult<string>> ChangeProfileImageAsync(Guid userId, IFormFile image)
+        {
+            try
+            {
+                if (!(image != null && image.ContentType.Contains("image")))
+                    return new ErrorDataResult<string>("Resim uygun değil.");
+
+                var user = await _appUserRepository.FirstOrDefaultAsync(x => x.Id == userId && !x.IsDeleted);
+
+                if (user.ImageId.HasValue)
+                    await _fileAppService.DeleteFileAsync(user.ImageId.Value);
+
+                var fileResult = await _fileAppService.SaveFileAsync(image, UploadType.Profile);
+                if (!fileResult.Success)
+                {
+                    await CurrentUnitOfWork.RollbackAsync();
+
+                    return new ErrorDataResult<string>("Dosya yüklenirken sorun oluştu.");
+                }
+                user.ImageId = fileResult.Data.Id;
+                var updatedData = await _appUserRepository.UpdateAsync(user);
+                if (updatedData == null)
+                {
+                    await CurrentUnitOfWork.RollbackAsync();
+
+                    return new ErrorDataResult<string>("Profil fotoğrafı güncellenemedi.");
+                }
+
+
+                return new SuccessDataResult<string>();
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "UserAppService > ChangeProfileImageAsync has error! ");
+
+                return new ErrorDataResult<string>("Profil fotoğrafı yüklendirken bir hata oluştu.");
+            }
+        }
+
+
+        /// <summary>
+        /// Account/Manage Kullanıyor.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="image"></param>
+        /// <returns></returns>
+        public async Task<IDataResult<string>> ManageProfileAsync(Guid userId, ManageProfileModel input)
+        {
+            try
+            {
+                var currentUser = await _identityUserAppService.GetAsync(userId);
+                var updateDto = ObjectMapper.Map<IdentityUserDto, IdentityUserUpdateDto>(currentUser);
+                updateDto.Name = input.Name;
+                updateDto.Surname = input.Surname;
+                updateDto.Email = input.Email;
+                updateDto.PhoneNumber = input.PhoneNumber;
+                updateDto.ExtraProperties.Remove("BirthDate");
+                updateDto.ExtraProperties.Add("BirthDate", input.BirthDate);
+                await _identityUserAppService.UpdateAsync(userId, updateDto);
+
+                return new SuccessDataResult<string>();
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "UserAppService > ManageProfileAsync has error! ");
+
+                return new ErrorDataResult<string>("Profil fotoğrafı yüklenirken bir hata oluştu.");
             }
         }
 

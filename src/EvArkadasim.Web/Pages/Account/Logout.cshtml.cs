@@ -19,7 +19,7 @@ namespace EvArkadasim.Web.Pages.Account
         {
             await _signInManager.SignOutAsync();
 
-            return Redirect("~/Home/Index");
+            return Redirect("~/Home");
         }
     }
 }

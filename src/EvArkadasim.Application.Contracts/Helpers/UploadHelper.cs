@@ -17,7 +17,7 @@ namespace EvArkadasim.Helpers
             if (file.Length <= 0)
                 return new ErrorDataResult<FileDto>("Dosya boş.");
 
-            string relatedSettingFolder = EnumExtensions.GetEnumDescription(uploadType);
+            string relatedSettingFolder = $"wwwroot/uploads/{EnumExtensions.GetEnumDescription(uploadType)}/";
 
             var uploads = Path.Combine(Directory.GetCurrentDirectory(), relatedSettingFolder);
             string fileName = GenerateFileName(file.FileName);
@@ -38,6 +38,18 @@ namespace EvArkadasim.Helpers
             media.FileSize = file.Length;
             media.Status = Status.Active;
             return new SuccessDataResult<FileDto>(media);
+        }
+
+        public static IDataResult<string> Delete(string path)
+        {
+            if (File.Exists(path))
+            {
+                File.Delete(path);
+
+                return new SuccessDataResult<string>();
+            }
+
+            return new ErrorDataResult<string>("Dosya yok.");
         }
 
         private static string GenerateFileName(string fileName) => string.Format($"{Guid.NewGuid()}_{DateTime.Now.ToString("dd-M-yyyy-HH-mm-ss")}{Path.GetExtension(fileName)}");

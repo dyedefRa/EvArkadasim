@@ -1,6 +1,9 @@
 ﻿using EvArkadasim.Abstract;
 using EvArkadasim.Dtos.Users.ViewModels;
 using EvArkadasim.Enums;
+using EvArkadasim.Models.Pages.Account;
+using EvArkadasim.Models.Results.Concrete;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
 using System;
@@ -21,14 +24,17 @@ namespace EvArkadasim.Web.Pages.Account
 
         private readonly IIdentityUserAppService _identityUserAppService;
         private readonly IUserAppService _userAppService;
+        private readonly IFileAppService _fileAppService;
 
         public ManageModel(
             IIdentityUserAppService identityUserAppService,
-            IUserAppService userAppService
+            IUserAppService userAppService,
+            IFileAppService fileAppService
             )
         {
             _identityUserAppService = identityUserAppService;
             _userAppService = userAppService;
+            _fileAppService = fileAppService;
         }
 
         public async Task<IActionResult> OnGetAsync()
@@ -57,18 +63,16 @@ namespace EvArkadasim.Web.Pages.Account
             {
                 if (ModelState.IsValid)
                 {
-                    var currentUser = await _identityUserAppService.GetAsync(CurrentUser.Id.Value);
-                    var updateDto = ObjectMapper.Map<IdentityUserDto, IdentityUserUpdateDto>(currentUser);
-                    updateDto.Name = UserManageInputModel.Name;
-                    updateDto.Surname = UserManageInputModel.Surname;
-                    updateDto.Email = UserManageInputModel.Email;
-                    updateDto.PhoneNumber = UserManageInputModel.PhoneNumber;
-                    updateDto.ExtraProperties.Remove("BirthDate");
-                    updateDto.ExtraProperties.Add("BirthDate", UserManageInputModel.BirthDate);
+                    ManageProfileModel input = new ManageProfileModel();
+                    input.Name = UserManageInputModel.Name;
+                    input.Surname = UserManageInputModel.Surname;
+                    input.Email = UserManageInputModel.Email;
+                    input.PhoneNumber = UserManageInputModel.PhoneNumber;
+                    input.BirthDate = UserManageInputModel.BirthDate;
+                    var result = await _userAppService.ManageProfileAsync(CurrentUser.Id.Value, input);
+                    if (result.Success)
+                        return RedirectToAction("Manage", "Account");
 
-                    await _identityUserAppService.UpdateAsync(UserManageInputModel.Id, updateDto);
-
-                    return RedirectToAction("Manage", "Account");
                 }
 
                 Alerts.Danger(L["GeneralIdentityError"].Value);
@@ -87,13 +91,11 @@ namespace EvArkadasim.Web.Pages.Account
                         Alerts.Danger($"'{UserManageInputModel.UserName}' kullanıcı adına sahip bir kullanıcı zaten var.");
                         totalErrorCount--;
                     }
-
                     if (identityError.Errors.Any(x => x.Code == "DuplicateEmail"))
                     {
                         Alerts.Danger($"'{UserManageInputModel.Email}' mailine sahip bir kullanıcı zaten var.");
                         totalErrorCount--;
                     }
-
                     if (totalErrorCount > 0)
                     {
                         Alerts.Danger(L["GeneralIdentityError"].Value);
@@ -108,6 +110,29 @@ namespace EvArkadasim.Web.Pages.Account
                 Alerts.Danger(L["GeneralIdentityError"].Value);
 
                 return Page();
+            }
+        }
+
+        public async Task<JsonResult> OnPostChangeProfileImage(IFormFile image)
+        {
+            try
+            {
+                if (!CurrentUser.IsAuthenticated)
+                    return new JsonResult(new ErrorResult(L["GeneralUploadError"].Value));
+
+                var result = await _userAppService.ChangeProfileImageAsync(CurrentUser.Id.Value, image);
+                if (result.Success)
+                    return new JsonResult(new SuccessResult());
+
+                return new JsonResult(new ErrorResult(result.Data));
+
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Account > Manage > OnGetAsync  has error!");
+                Alerts.Danger(L["GeneralUploadError"].Value);
+
+                return new JsonResult(new ErrorResult(L["GeneralUploadError"].Value));
             }
         }
 
@@ -131,10 +156,7 @@ namespace EvArkadasim.Web.Pages.Account
             public DateTime CreationTime { get; set; }
             [DisabledInput]
             public GenderType Gender { get; set; }
-            //[Required]
             public DateTime? BirthDate { get; set; }
-
-            public int? ImageId { get; set; }
             public string ImageUrl { get; set; }
 
         }

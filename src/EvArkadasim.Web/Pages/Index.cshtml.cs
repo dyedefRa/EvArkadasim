@@ -6,7 +6,7 @@ namespace EvArkadasim.Web.Pages
     {
         public IActionResult OnGet()
         {
-            return Redirect("~/Home/Index");
+            return Redirect("~/Home");
         }
     }
 }

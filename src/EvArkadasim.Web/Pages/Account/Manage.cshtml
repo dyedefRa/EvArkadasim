@@ -8,33 +8,15 @@
 @{
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
-
-@*<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                ...
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
+<div class="page section-header">
+    <div class="bredcrumbWrap mb-00">
+        <div class="container breadcrumbs">
+            <a class="bread breadfirst" href="/Home" title="@L["Home"]"><i class="fa fa-home fa-fw"></i> @L["Home"]</a><span style="font-size: 14px;" aria-hidden="true">›</span>
+            <span class="bread breadsecond"><i class="fa fa-cog fa-fw"></i> @L["MyAccountInformation"]</span>
         </div>
     </div>
 </div>
-
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-    Launch demo modal
-</button>
-*@
-<div class="container" style="margin-top:50px; margin-bottom:70px;">
+<div class="container" style="margin-top:120px; margin-bottom:190px;">
     <div class="main-body">
         <form method="post" href="/Account/Manage">
             <abp-input asp-for="UserManageInputModel.Id" />
@@ -42,98 +24,50 @@
             @(await Component.InvokeAsync<Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic.Themes.Basic.Components.PageAlerts.PageAlertsViewComponent>())
             <div class="row">
                 <div class="col-lg-4">
-                    <div class="my-card">
+                    <div class="my-card" style="height:338.33px">
                         <div class="card-body">
                             <div class="d-flex flex-column align-items-center text-center">
-                                <img src="@Model.UserManageInputModel.ImageUrl" alt="@L["User"]" class="rounded-circle p-1 @(Model.UserManageInputModel.Gender==GenderType.Male?"bg-primary":"bg-pink")" width="110">
+                                <img src="@Model.UserManageInputModel.ImageUrl" alt="@L["User"]" id="profileImage" style="cursor: pointer" class="rounded-circle p-1 @(Model.UserManageInputModel.Gender==GenderType.Male?"bg-primary":"bg-pink")" width="110" height="110">
                                 <div class="mt-3">
                                     <h4>@Model.UserManageInputModel.UserName</h4>
                                     <p class="text-secondary mb-1">@Model.UserManageInputModel.Name @Model.UserManageInputModel.Surname</p>
-                                    <p class="text-secondary mb-1">@Model.UserManageInputModel.BirthDate.Value.ToZodiacSign()</p>
-
-                                    <p class="text-muted font-size-sm">@Model.UserManageInputModel.CreationTime.ToTurkishDateString()'den beri üye</p>
-                                    <button class="btn btn-green">
-                                        Follow
+                                    @if (Model.UserManageInputModel.BirthDate.HasValue)
+                                    {
+                                        <p class="text-secondary mb-1">@Model.UserManageInputModel.BirthDate.Value.ToZodiacSign()</p>
+                                    }
+                                    <p></p>
+                                    <p class="text-muted font-size-sm">@Model.UserManageInputModel.CreationTime.ToTurkishDateString()'den beri üyesiniz</p>
+                                    @*   <button type="button" id="btnChangePassword" class="btn btn-blue">
+                                    @L["Şifre Değiş"]
+                                    </button>*@
+                                    <button type="button" id="btnChangeProfileImage" class="btn btn-green">
+                                        @L["SelectImage"]
                                     </button>
-                                    <button class="btn btn-blue">
-                                        Message
-                                    </button>
+                                    <input type="file" id="fileImage" hidden accept="image/*" />
                                 </div>
                             </div>
-                            <hr class="my-4">
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                    <div class="col-sm-12">
-                                        <p></p>
-                                        <p>Web Design</p>
-                                        <div class="progress mb-3" style="height: 5px">
-                                            <div class="progress-bar bg-primary" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                        <p>Website Markup</p>
-                                        <div class="progress mb-3" style="height: 5px">
-                                            <div class="progress-bar bg-danger" role="progressbar" style="width: 72%" aria-valuenow="72" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                        <p>One Page</p>
-                                        <div class="progress mb-3" style="height: 5px">
-                                            <div class="progress-bar bg-success" role="progressbar" style="width: 89%" aria-valuenow="89" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                        <p>Mobile Template</p>
-                                        <div class="progress mb-3" style="height: 5px">
-                                            <div class="progress-bar bg-warning" role="progressbar" style="width: 55%" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                        <p>Backend API</p>
-                                        <div class="progress" style="height: 5px">
-                                            <div class="progress-bar bg-info" role="progressbar" style="width: 66%" aria-valuenow="66" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                        <p></p>
-
-                                    </div>
-                                </li>
-                                @*<li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github me-2 icon-inline"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>Github</h6>
-                                <span class="text-secondary">bootdey</span>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-twitter me-2 icon-inline text-info"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>Twitter</h6>
-                                <span class="text-secondary">bootdey</span>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-instagram me-2 icon-inline text-danger"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>Instagram</h6>
-                                <span class="text-secondary">bootdey</span>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-facebook me-2 icon-inline text-primary"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>Facebook</h6>
-                                <span class="text-secondary">bootdey</span>
-                                </li>*@
-                            </ul>
+                            @*                            <hr class="my-4">
+                            *@
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-8">
-                    <div class="my-card">
+                    <div class="my-card" id="my-card">
                         <div class="card-body">
-                            <div class="row">
-                                <div class="form-group col-md-12 col-lg-6 col-xl-6">
-                                    <abp-input asp-for="UserManageInputModel.UserName" label="@L["UserName"]" />
-                                </div>
-                                <div class="form-group col-md-6 col-lg-6 col-xl-6">
-                                    <abp-input asp-for="UserManageInputModel.Email" label="@L["Email"]" />
-                                </div>
-                            </div>
                             <div class="row">
                                 <div class="form-group col-md-12 col-lg-6 col-xl-6">
                                     <abp-input asp-for="UserManageInputModel.Name" label="@L["Name"]" />
                                 </div>
-                                <div class="form-group col-md-6 col-lg-6 col-xl-6">
+                                <div class="form-group col-md-12 col-lg-6 col-xl-6">
                                     <abp-input asp-for="UserManageInputModel.Surname" label="@L["Surname"]" />
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-12 col-lg-6 col-xl-6">
-                                    <abp-input asp-for="UserManageInputModel.PhoneNumber" class="mobilephone" placeholder="0(5__) ___-____" label="@L["PhoneNumber"]" />
+                                    <abp-input asp-for="UserManageInputModel.Email" label="@L["Email"]" />
                                 </div>
-                                <div class="form-group col-md-6 col-lg-6 col-xl-6">
-                                    <abp-input asp-for="UserManageInputModel.Gender" value="@Model.UserManageInputModel.Gender.ToDescription()" label="@L["Gender"]" />
+                                <div class="form-group col-md-12 col-lg-6 col-xl-6">
+                                    <abp-input asp-for="UserManageInputModel.PhoneNumber" class="mobilephone" placeholder="0(5__) ___-____" label="@L["PhoneNumber"]" />
                                 </div>
                             </div>
                             <div class="row">
@@ -141,107 +75,18 @@
                                     <abp-input asp-for="UserManageInputModel.BirthDate" label="@L["BirthDate"]" />
                                 </div>
                             </div>
-
-                            @* <div class="row mb-3">
-                            <div class="col-sm-3">
-                            <h6 class="mb-0">@L["PhoneNumber"]</h6>
-                            </div>
-                            <div class="col-sm-9 text-secondary">
-                            <input type="text" asp-for="UserManageInputModel.PhoneNumber" class="form-control mobilephone" placeholder="0(5__) ___-____">
-                            </div>
-                            </div>
-                            <div class="row mb-3">
-                            <div class="col-sm-3">
-                            <h6 class="mb-0">@L["Gender"]</h6>
-                            </div>
-                            <div class="col-sm-9 text-secondary">
-                            <input type="text" asp-for="UserManageInputModel.Gender" value="@Model.UserManageInputModel.Gender.ToDescription()" class="form-control" disabled>
-                            </div>
-                            </div>*@
-                            <div class="row">
-                                <div class="col-sm-3"></div>
-                                <div class="col-sm-9 text-secondary text-right">
-                                    <abp-button text="@L["Save"]" type="submit" class="btn-nice" button-type="Primary" />
-                                </div>
-                            </div>
                         </div>
                     </div>
-                 @*   <div class="row">
-                        <div class="col-sm-12">
-                            <div class="my-card">
-                                <div class="card-body">
-                                    <h5 class="d-flex align-items-center mb-3">Project Status</h5>
-                                    <p>Web Design</p>
-                                    <div class="progress mb-3" style="height: 5px">
-                                        <div class="progress-bar bg-primary" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                    <p>Website Markup</p>
-                                    <div class="progress mb-3" style="height: 5px">
-                                        <div class="progress-bar bg-danger" role="progressbar" style="width: 72%" aria-valuenow="72" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                    <p>One Page</p>
-                                    <div class="progress mb-3" style="height: 5px">
-                                        <div class="progress-bar bg-success" role="progressbar" style="width: 89%" aria-valuenow="89" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                    <p>Mobile Template</p>
-                                    <div class="progress mb-3" style="height: 5px">
-                                        <div class="progress-bar bg-warning" role="progressbar" style="width: 55%" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                    <p>Backend API</p>
-                                    <div class="progress" style="height: 5px">
-                                        <div class="progress-bar bg-info" role="progressbar" style="width: 66%" aria-valuenow="66" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>*@
+                </div>
+            </div>
+            <div class="row" style="float:right">
+                <div class="col">
+                    <abp-button text="@L["Save"]" type="submit" class="btn-blue" />
                 </div>
             </div>
         </form>
-
     </div>
 </div>
-@*</div>
-*@
-@* <form method="post" href="/Account/Manage">
-        @Html.AntiForgeryToken()
-        @Html.ValidationSummary(false, "", new { @class = "text-danger",style="font-size:15px;" })
-        <div class="row">
-            <div class="form-group col-md-6 col-lg-6 col-xl-6">
-                <abp-input asp-for="UserManageInputModel.Name" class="input-lg" label="@L["Name"]" />
-            </div>
-            <div class="form-group col-md-6 col-lg-6 col-xl-6">
-                <abp-input asp-for="UserManageInputModel.Surname" class="input-lg" label="@L["Surname"]" />
-            </div>
-        </div>
-        <div class="row">
-            <div class="form-group col-md-6 col-lg-6 col-xl-6">
-                <abp-input asp-for="UserManageInputModel.UserName" class="input-lg" label="@L["UserName"]" />
-            </div>
-            <div class="form-group col-md-6 col-lg-6 col-xl-6">
-                <abp-input asp-for="UserManageInputModel.Email" class="input-lg" label="@L["Email"]" />
-            </div>
-        </div>
-        <div class="row">
-            <div class="form-group col-md-6 col-lg-6 col-xl-6">
-                <abp-input asp-for="UserManageInputModel.PhoneNumber" class="mobilephone input-lg" placeholder="0(5__) ___-____" label="@L["PhoneNumber"]" />
-            </div>
-            <div class="form-group col-md-6 col-lg-6 col-xl-6">
-                <abp-select asp-for="UserManageInputModel.Gender" class="input-lg" label="@L["Gender"]">
-                    <option disabled selected>@L["Choose"]</option>
-                </abp-select>
-            </div>
-        </div>
-        <div class="row" style="margin-top:40px;">
-            <div class="text-center col-12 col-sm-12 col-md-12 col-lg-12 mt-2">
-                <abp-button text="@L["Register"]" type="submit" class="btn-nice" button-type="Primary" />
-                <p style="margin-top:20px;">
-                    <a href="/Account/Login">@L["LoginInstead"]</a>
-                </p>
-            </div>
-        </div>
-    </form>
-</div>*@
 
 @section scripts {
     <script>
@@ -249,11 +94,48 @@
             $('body').addClass('home5-cosmetic');
             $('.header-wrap').removeClass('classicHeader');
             $('#UserManageInputModel_BirthDate').attr('type', 'date');
+
         @if (Model.UserManageInputModel.BirthDate.HasValue)
         {
             @:$('#UserManageInputModel_BirthDate').val('@Model.UserManageInputModel.BirthDate.Value.ToLocalDateString()');
+        }});
+
+
+        $('#btnChangeProfileImage,#profileImage').click(function () {
+            $('#fileImage').trigger('click');
+        });
+
+        document.getElementById('fileImage').addEventListener('change', function (e) {
+            if (e.target.files[0]) {
+                var formData = new FormData();
+                formData.append('image', e.target.files[0]);
+                $.ajax({
+                    url: '/Account/Manage?handler=ChangeProfileImage',
+                    type: "POST",
+                    contentType: false,
+                    processData: false,
+                    data: formData,
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader("RequestVerificationToken", $('input:hidden[name="__RequestVerificationToken"]').val());
+                    },
+                    success: function (result) {
+                        if (result.success) {
+                            pageLoadAndAfterAlert_Post("imageAlert", AlertType.success, "Profil resminiz başarıyla değiştirildi");
+                        }
+                        else {
+                            toastr.error(result.message)
+                        }
+                    },
+                    error: function (err) {
+                    }
+                });
+            }
+        });
+
+        window.onload = function () {
+            pageLoadAndAfterAlert_Get("imageAlert")
         }
 
-                                                                                                                                                 });
+
     </script>
 }

@@ -13,7 +13,8 @@
     "Popular": "Popüler",
     "Cities": "Şehirler",
     "Register": "Üye Ol",
-    "Login": "GİRİŞ YAP",
+    "LoginB": "GİRİŞ YAP",
+    "Login": "Giriş Yap",
     "Profile": "PROFİLİM",
     "Logout": "Çıkış Yap",
     "Message": "Mesaj",
@@ -31,6 +32,8 @@
     "Description": "Açıklama",
     "MyAccountInformation": "Hesap Bilgilerim",
     "MyAdverts": "İlanlarım",
+    "SelectImage": "Profil Resmi Seç",
+    "Search": "Ara",
 
     "ForgotYourPassword": "Parolamı Unuttum",
     "WantToBeRegister": "Üye Olmak İstiyorum",
@@ -59,12 +62,13 @@
 
     //ERORS
     "ReturnHomePage": "Ana sayfaya dön",
-    "NotFoundPage": "Sayfa Bulunamadı.",
+    "NotFoundPage": "Sayfa Bulunamadı",
     "UnauthorizedPage": "Bu Sayfaya Erişim İzniniz Yok.",
     "UnexpectedErrorPage": "Beklenmedik bir hata oluştu.",
     "SorryAnErrorHasOccurred": "Üzgünüm, bir hata oluştu.",
     "ImageFailedToLoad": "Resim Yüklenemedi.",
-    "GeneralIdentityError": "Bir hata oluştu.Lütfen girdilerinizi kontrol ediniz."
+    "GeneralIdentityError": "Bir hata oluştu.Lütfen girdilerinizi kontrol ediniz.",
+    "GeneralUploadError": "Bir hata oluştu.Lütfen tekrar deneyiniz."
 
 
   }

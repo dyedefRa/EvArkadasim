@@ -6,14 +6,16 @@
 @{
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
-
-<div class="page section-header text-center">
-    <div class="page-title">
-        <div class="wrapper"><h1 class="page-width"><i class="fa fa-user-plus fa-fw"></i> @L["Register"]</h1></div>
+<div class="page section-header">
+    <div class="bredcrumbWrap mb-00">
+        <div class="container breadcrumbs">
+            <a class="bread breadfirst" href="/Home" title="@L["Home"]"><i class="fa fa-home fa-fw"></i> @L["Home"]</a><span style="font-size: 14px;" aria-hidden="true">›</span>
+            <a class="bread breadsecond" href="#" onClick="return false;" title="@L["Register"]"><i class="fa fa-user-plus fa-fw"></i> @L["Register"]</a>
+        </div>
     </div>
 </div>
 
-<div class="container">
+<div class="container" style="margin-top:60px;">
     <div class="row">
         <div class="col-12 col-sm-12 col-md-6 col-lg-6 main-col offset-md-3">
             <div class="mb-4">
@@ -78,7 +80,7 @@
         $(document).ready(function () {
             $('body').addClass('home5-cosmetic');
             $('.header-wrap').removeClass('classicHeader');
-            $('#UserRegisterInputModel_BirthDate').attr('type','date');
+            $('#UserRegisterInputModel_BirthDate').attr('type', 'date');
         });
     </script>
 }

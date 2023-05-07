@@ -15,10 +15,8 @@ namespace EvArkadasim.Web
             #region User
             CreateMap<UserRegisterModel, IdentityUserCreateDto>();//Account/Register
 
-            CreateMap<AppUserViewModel, UserManageModel>(); //Account/Manage
+            CreateMap<AppUserViewModel, UserManageModel>(); //Account/Manage/OnGetAsync
 
-
-            CreateMap<IdentityUserDto, IdentityUserUpdateDto>(); //Account/Manage
             #endregion
         }
     }

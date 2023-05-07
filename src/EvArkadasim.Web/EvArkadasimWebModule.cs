@@ -111,7 +111,7 @@ namespace EvArkadasim.Web
                             context.Response.StatusCode = 401;
                         }
                         else
-                            context.Response.Redirect(basePath + "/Home/Index");
+                            context.Response.Redirect(basePath + "/Home");
 
                         return Task.CompletedTask;
                     });

@@ -40,6 +40,33 @@ namespace EvArkadasim.Services
             }
         }
 
+        public async Task<IDataResult<string>> DeleteFileAsync(int id, bool deleteInServer = true)
+        {
+            try
+            {
+                if (deleteInServer)
+                {
+                    var file = await Repository.GetAsync(id);
+                    if (file != null)
+                    {
+                        UploadHelper.Delete(file.FullPath);
+                    }
+                }
+
+                await Repository.DeleteAsync(id);
+                //await SoftDeleteAsync(id);
+                return new SuccessDataResult<string>();
+
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "FileAppService > DeleteFileAsync");
+                return new ErrorDataResult<string>("Hata oluştu.");
+            }
+        }
+
+
+
         //Company EDİT kullandık mı?
         //public async Task<IDataResult<bool>> UploadCompanyFileAndFillCompanyDtoAsync(CreateUpdateCompanyDto createUpdateCompanyDto, IFormFile file, FileType fileType)
         //{
