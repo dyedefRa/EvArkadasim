@@ -22,19 +22,13 @@ namespace EvArkadasim.Web.Pages.Account
         [BindProperty]
         public UserManageModel UserManageInputModel { get; set; }
 
-        private readonly IIdentityUserAppService _identityUserAppService;
         private readonly IUserAppService _userAppService;
-        private readonly IFileAppService _fileAppService;
 
         public ManageModel(
-            IIdentityUserAppService identityUserAppService,
-            IUserAppService userAppService,
-            IFileAppService fileAppService
+            IUserAppService userAppService
             )
         {
-            _identityUserAppService = identityUserAppService;
             _userAppService = userAppService;
-            _fileAppService = fileAppService;
         }
 
         public async Task<IActionResult> OnGetAsync()

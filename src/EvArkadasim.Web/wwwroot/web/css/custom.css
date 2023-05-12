@@ -25,6 +25,10 @@
     background-color: lightpink;
 }
 
+/*#toast-container > .toast {
+    background-image: none !important;
+}*/
+
 /*Account Manage >>>>>>>*/
 .my-card {
     position: relative;
@@ -56,7 +60,7 @@
 .bread {
     font-size: 13px !important;
     text-decoration: none !important;
-    cursor:pointer;
+    cursor: pointer;
 }
 
 .breadfirst:hover {
@@ -67,12 +71,16 @@
     color: gray;
 }
 
-.mb-40{
-    margin-bottom:-40px !important;
+.mb-40 {
+    margin-bottom: -40px !important;
 }
 
 .mb-00 {
     margin-bottom: 0px !important;
+}
+
+.mt-00 {
+    margin-top: 0px !important;
 }
 /*BREAD <<<<<<<<<<<<<<< */
 
@@ -600,7 +608,7 @@ a.add img {
 }
 
 li.repaly .time {
-    margin-right: 20px;
+    margin-right: 10px;
 }
 
 .divider {
@@ -856,4 +864,18 @@ button:focus {
         border-bottom-left-radius: 6px;
     }
 }
+
+/*-----*/
+.modal-body p {
+    position: relative;
+    padding-right:20px !important;
+}
+
+    .modal-body p span {
+        position: absolute;
+        top: 0px;
+        right: 5px;
+        font-weight:100;
+        cursor:pointer;
+    }
 /*MESSAGE <<<<<<<<<<<<<<<<<<<*/

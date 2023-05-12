@@ -34,6 +34,7 @@
     "MyAdverts": "İlanlarım",
     "SelectImage": "Profil Resmi Seç",
     "Search": "Ara",
+    "Messages": "Mesajlar",
 
     "ForgotYourPassword": "Parolamı Unuttum",
     "WantToBeRegister": "Üye Olmak İstiyorum",
@@ -45,6 +46,15 @@
     "RoleManagement": "Rol Yönetimi",
     "AdminPage": "Admin Ana Sayfa",
     "PageManagement": "Sayfa Yönetimi",
+    "MesageManagement": "Mesaj Yönetimi",
+    "MesageManagementSee": "Görme",
+
+    //MESSAGE
+    "Mute": "Sessize Al",
+    "Block": "Blokla",
+    "DeleteMessage": "Mesajı Sil",
+    "WriteMessage": "Mesaj yaz..",
+    "Send": "Gönder",
 
     //ENUMS
     "Enum:Status:0": "Belirtilmedi",
@@ -63,13 +73,20 @@
     //ERORS
     "ReturnHomePage": "Ana sayfaya dön",
     "NotFoundPage": "Sayfa Bulunamadı",
-    "UnauthorizedPage": "Bu Sayfaya Erişim İzniniz Yok.",
+    "UnauthorizedPageB": "BU SAYFAYA ERİŞİM İZNİNİZ YOK",
+    "YouMustLogin": "Lütfen tekrardan giriş yapınız",
+    "NotAllowedProcess": "Bu işlemi yapmaya izniniz yok",
     "UnexpectedErrorPage": "Beklenmedik bir hata oluştu.",
     "SorryAnErrorHasOccurred": "Üzgünüm, bir hata oluştu.",
     "ImageFailedToLoad": "Resim Yüklenemedi.",
     "GeneralIdentityError": "Bir hata oluştu.Lütfen girdilerinizi kontrol ediniz.",
-    "GeneralUploadError": "Bir hata oluştu.Lütfen tekrar deneyiniz."
+    "GeneralUploadError": "Bir hata oluştu.Lütfen tekrar deneyiniz.",
+    "GeneralError": "Bir hata oluştu.",
 
+
+    //SUCCESS
+    "SuccessfullyCompleted": "İşleminiz başarıyla tamamlandı",
+    "MessageSuccessfullyDeleted": "Mesaj başarıyla silindi"
 
   }
 }

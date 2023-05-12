@@ -4,15 +4,17 @@ using EvArkadasim.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Volo.Abp.EntityFrameworkCore;
 
 namespace EvArkadasim.Migrations
 {
     [DbContext(typeof(EvArkadasimDbContext))]
-    partial class EvArkadasimDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230507141030_Message-MessageContent-Added")]
+    partial class MessageMessageContentAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -272,23 +274,23 @@ namespace EvArkadasim.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("CreatedById")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("MessageType")
+                    b.Property<int>("FirstReceivedById")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("ReceiverId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("MessageType")
+                        .HasColumnType("int");
 
                     b.Property<int>("ReceiverStatus")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("ReceiverStatusDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<Guid>("SenderId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("SenderStatus")
                         .HasColumnType("int");
@@ -300,10 +302,6 @@ namespace EvArkadasim.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ReceiverId");
-
-                    b.HasIndex("SenderId");
 
                     b.ToTable("AppMessages");
                 });
@@ -2506,25 +2504,6 @@ namespace EvArkadasim.Migrations
                         .IsRequired();
 
                     b.Navigation("Message");
-                });
-
-            modelBuilder.Entity("EvArkadasim.Entities.Messages.Message", b =>
-                {
-                    b.HasOne("EvArkadasim.Entities.Users.AppUser", "Receiver")
-                        .WithMany()
-                        .HasForeignKey("ReceiverId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("EvArkadasim.Entities.Users.AppUser", "Sender")
-                        .WithMany()
-                        .HasForeignKey("SenderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Receiver");
-
-                    b.Navigation("Sender");
                 });
 
             modelBuilder.Entity("EvArkadasim.Entities.Towns.Town", b =>

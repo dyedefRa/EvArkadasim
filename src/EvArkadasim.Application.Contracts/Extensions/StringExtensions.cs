@@ -83,6 +83,10 @@ namespace EvArkadasim.Extensions
 
         public static string ToZodiacSign(this DateTime value)
         {
+            if (value == null)
+            {
+                return "";
+            }
             int month = value.Month;
             int day = value.Day;
             string astro_sign = "";
@@ -172,6 +176,54 @@ namespace EvArkadasim.Extensions
             }
 
             return astro_sign + " Burcu";
+        }
+
+        public static string ToMessageSendDateString(this DateTime value)
+        {
+            var now = DateTime.Now;
+
+            var totalMinutes = (now - value).TotalMinutes;
+
+            if (totalMinutes <= 3)
+            {
+                return "Şimdi";
+            }
+            if (totalMinutes <= 5)
+            {
+                return "Az önce";
+            }
+            else if (totalMinutes <= 60)
+            {
+                return Math.Ceiling(totalMinutes).ToString() + " dakika önce";
+            }
+
+            var totalHours = (now - value).TotalHours;
+            if (totalHours <= 23)
+            {
+                return Math.Ceiling(totalHours).ToString() + " saat önce";
+            }
+
+            var totalDays = (now - value).TotalDays;
+            if (totalDays <= 29)
+            {
+               return Math.Ceiling(totalDays).ToString() + " gün önce";
+            }
+
+            var totalMonth = GetMonthDifference(now, value);
+
+            if (totalMonth <= 11)
+            {
+                return Math.Ceiling(totalDays).ToString() + " ay önce";
+            }
+
+            return "Yıllar önce";
+
+        }
+
+        private static int GetMonthDifference(DateTime startDate, DateTime endDate)
+        {
+            int monthsApart = 12 * (startDate.Year - endDate.Year) + startDate.Month - endDate.Month;
+            return Math.Abs(monthsApart);
         }
     }
 }

@@ -11,6 +11,13 @@ namespace EvArkadasim.Permissions
             var myGroup = context.AddGroup(EvArkadasimPermissions.GroupName);
             //Define your own permissions here. Example:
             //myGroup.AddPermission(EvArkadasimPermissions.MyPermission1, L("Permission:MyPermission1"));
+
+            var messagePermission = myGroup.AddPermission(EvArkadasimPermissions.Message.Default, L("MesageManagement"));
+            messagePermission.AddChild(EvArkadasimPermissions.Message.See, L("MesageManagementSee"));
+            //messagePermission.AddChild(EvArkadasimPermissions.Message.Create, L("Permission:Documents.Create"));
+            //messagePermission.AddChild(EvArkadasimPermissions.Message.Edit, L("Permission:Documents.Edit"));
+            //messagePermission.AddChild(EvArkadasimPermissions.Message.Delete, L("Permission:Documents.Delete"));
+
         }
 
         private static LocalizableString L(string name)

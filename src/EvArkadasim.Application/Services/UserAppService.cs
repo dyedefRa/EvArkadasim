@@ -70,15 +70,7 @@ namespace EvArkadasim.Services
                 if (appUser != null)
                 {
                     var result = ObjectMapper.Map<AppUser, AppUserViewModel>(appUser);
-                    if (appUser.Image != null)
-                    {
-                        result.ImageUrl = appUser.Image.FilePath;
-                    }
-                    else
-                    {
-                        result.ImageUrl = appUser.Gender.Value == Enums.GenderType.Male ? EvArkadasimConsts.DEFAULT.MaleAvatarImageUrl : EvArkadasimConsts.DEFAULT.FemaleAvatarImageUrl;
-                    }
-
+                    result.ImageUrl = _fileAppService.SetDefaultImageIfFileIsNull(appUser.ImageId, appUser.Gender.Value);
                     return new SuccessDataResult<AppUserViewModel>(result);
                 }
 

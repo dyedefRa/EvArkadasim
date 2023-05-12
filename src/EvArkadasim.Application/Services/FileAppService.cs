@@ -5,6 +5,7 @@ using EvArkadasim.Helpers;
 using EvArkadasim.Models.Results.Abstract;
 using EvArkadasim.Models.Results.Concrete;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Serilog;
 using System;
 using System.Linq;
@@ -65,6 +66,33 @@ namespace EvArkadasim.Services
             }
         }
 
+        public string SetDefaultImageIfFileIsNull(int? imageId, GenderType genderType)
+        {
+            try
+            {
+                if (!imageId.HasValue)
+                {
+                    return genderType == GenderType.Male ? EvArkadasimConsts.DEFAULT.MaleAvatarImageUrl : EvArkadasimConsts.DEFAULT.FemaleAvatarImageUrl;
+
+                }
+
+                var image = Repository.FindAsync(imageId.Value).Result;
+                if (image != null)
+                {
+                    return image.FilePath;
+                }
+                else
+                {
+                    return genderType == GenderType.Male ? EvArkadasimConsts.DEFAULT.MaleAvatarImageUrl : EvArkadasimConsts.DEFAULT.FemaleAvatarImageUrl;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "FileAppService > SetDefaultImageIfFileNullAsync");
+                return "";
+            }
+        }
 
 
         //Company EDİT kullandık mı?

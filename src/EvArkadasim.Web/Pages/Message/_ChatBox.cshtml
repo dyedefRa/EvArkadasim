@@ -1,0 +1,262 @@
+﻿@using EvArkadasim.Localization
+@using Microsoft.Extensions.Localization
+@using Volo.Abp.Json;
+@inject IStringLocalizer<EvArkadasimResource> L
+@model EvArkadasim.Web.Pages.Message.IndexModel
+@{
+}
+<div class="chatlist">
+    <div class="modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="chat-header">
+                <div class="msg-search">
+                    <input type="text" class="form-control" placeholder="@L["Search"]">
+                    @*                                        <a class="add" href="#"><img class="img-fluid" src="https://mehedihtml.com/chatbox/assets/img/add.svg" alt="add"></a>
+                    *@
+                </div>
+
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="Open-tab" data-bs-toggle="tab" data-bs-target="#Open" type="button" role="tab" aria-controls="Open" aria-selected="true">@L["Messages"]</button>
+                    </li>
+                    @*   <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="Closed-tab" data-bs-toggle="tab" data-bs-target="#Closed" type="button" role="tab" aria-controls="Closed" aria-selected="false">Closed</button>
+                    </li>*@
+                </ul>
+            </div>
+            <div class="modal-body" style="overflow-y: auto;">
+                <!-- chat-list -->
+                <div class="chat-lists">
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="Open" role="tabpanel" aria-labelledby="Open-tab">
+                            <!-- chat-list -->
+                            <div class="chat-list">
+                                @if (Model.MessageViewModel.Count > 0)
+                                {
+                                    foreach (var message in Model.MessageViewModel)
+                                    {
+                                        <a href="#" class="d-flex align-items-center" onclick="uploadMessageContents('@message.Id')">
+                                            <div class="flex-shrink-0">
+                                                <img class="img-fluid rounded-circle" src="/uploads/profile/eecc75a5-bac7-4ef7-bd1f-ab472edf38f1_06-5-2023-04-23-03.png" alt="@L["ImageFailedToLoad"]" title="@L["User"]" width="40" height="40" style="margin-right:5px;">
+                                                @*    <span class="active"></span>*@
+
+                                            </div>
+                                            <div class="flex-grow-1 ms-3">
+                                                <h3 style="font-size:14px;">@message.ShownUserFullName</h3>
+
+                                                <p style="font-size:14px;">@message.ShownUserZodiacSign</p>
+
+                                            </div>
+                                        </a>
+                                    }
+                                }
+                                else
+                                {
+                                    <p>Mesajınız yok.</p>
+                                }
+
+                            </div>
+                            <!-- chat-list -->
+                        </div>
+                        @* <div class="tab-pane fade" id="Closed" role="tabpanel" aria-labelledby="Closed-tab">
+
+                        <!-- chat-list -->
+                        <div class="chat-list">
+                        <a href="#" class="d-flex align-items-center">
+                        <div class="flex-shrink-0">
+                        <img class="img-fluid" src="https://mehedihtml.com/chatbox/assets/img/user.png" alt="user img">
+                        <span class="active"></span>
+                        </div>
+                        <div class="flex-grow-1 ms-3">
+                        <h3>Mehedi Hasan</h3>
+                        <p>front end developer</p>
+                        </div>
+                        </a>
+                        <a href="#" class="d-flex align-items-center">
+                        <div class="flex-shrink-0">
+                        <img class="img-fluid" src="https://mehedihtml.com/chatbox/assets/img/user.png" alt="user img">
+                        </div>
+                        <div class="flex-grow-1 ms-3">
+                        <h3>Ryhan</h3>
+                        <p>front end developer</p>
+                        </div>
+                        </a>
+
+                        </div>
+                        <!-- chat-list -->
+                        </div>*@
+                    </div>
+
+                </div>
+                <!-- chat-list -->
+            </div>
+        </div>
+    </div>
+</div>
+<div class="chatbox" style="height:580px;">
+    <div class="modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="msg-head">
+                <div class="row">
+                    <div class="col-8" id="areaMessageHeader" hidden>
+                        <div class="d-flex align-items-center">
+                            @*                            <span class="chat-icon"><img class="img-fluid" src="https://mehedihtml.com/chatbox/assets/img/arroleftt.svg" alt="image title"></span>
+                            *@                            <div class="flex-shrink-0">
+                                <img id="userImageUrl" class="img-fluid rounded-circle" src="/uploads/profile/eecc75a5-bac7-4ef7-bd1f-ab472edf38f1_06-5-2023-04-23-03.png" alt="@L["ImageFailedToLoad"]" title="@L["User"]" width="45" height="45" style="margin-right:10px;">
+                            </div>
+                            <input id="userId" type="text" hidden value="0" />
+                            <div class="flex-grow-1 ms-3">
+                                <h3 id="userFullName">@Model.UserViewModel.Name @Model.UserViewModel.Surname</h3>
+                                @*                                <p>front end developer</p>
+                                *@
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <ul class="moreoption" id="areaMessageOption" hidden>
+                            <li class="navbar nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#"><i class="fa fa-bell-slash"></i> @L["Mute"]</a></li>
+                                    <li><a class="dropdown-item" href="#"><i class="fa fa-ban fa-fw"></i> @L["Block"]</a></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item" href="#"><i class="fa fa-trash fa-fw"></i> @L["DeleteMessage"]</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="modal-body" style="overflow-y: auto;">
+                <div class="msg-body" id="areaMessageContent" hidden>
+                    <ul id="messageContents">
+                        @* @{
+                        var messageContents = Model.MessageViewModel?.FirstOrDefault()?.MessageContents;
+                        }
+
+                        @if (messageContents != null && messageContents.Count > 0)
+                        {
+
+                        var isNeedToday = true;
+
+                        foreach (var messageContent in messageContents)
+                        {
+
+                        if (messageContent.SenderId == Model.UserViewModel.Id)
+                        {
+                        @if (DateTime.Now == messageContent.CreatedDate && isNeedToday)
+                        {
+                        <li>
+                        <div class="divider">
+                        <h6>@L["Today"]</h6>
+                        </div>
+                        </li>
+                        isNeedToday = false;
+                        }
+
+                        <li class="repaly">
+                        <p>@messageContent.Content</p>
+                        <span class="time">@messageContent.CreatedDate.ToTurkishDateString()</span>
+                        </li>
+                        }
+                        else
+                        {
+                        @if (DateTime.Now == messageContent.CreatedDate && isNeedToday)
+                        {
+                        <li>
+                        <div class="divider">
+                        <h6>@L["Today"]</h6>
+                        </div>
+                        </li>
+                        isNeedToday = false;
+                        }
+
+                        <li class="sender">
+                        <p>@messageContent.Content</p>
+                        <span class="time">@messageContent.CreatedDate.ToTurkishDateString()</span>
+                        </li>
+                        }
+                        }
+                        }*@
+
+                        @*  <li class="sender">
+                        <p> Hey, Are you there? </p>
+                        <span class="time">10:06 am</span>
+                        </li>
+                        <li class="sender">
+                        <p> Hey, Are you there? </p>
+                        <span class="time">10:16 am</span>
+                        </li>
+                        <li class="repaly">
+                        <p>yes!</p>
+                        <span class="time">10:20 am</span>
+                        </li>
+                        <li class="sender">
+                        <p> Hey, Are you there? </p>
+                        <span class="time">10:26 am</span>
+                        </li>
+                        <li class="sender">
+                        <p> Hey, Are you there? </p>
+                        <span class="time">10:32 am</span>
+                        </li>
+                        <li class="repaly">
+                        <p>How are you?</p>
+                        <span class="time">10:35 am</span>
+                        </li>
+                        <li>
+                        <div class="divider">
+                        <h6>Today</h6>
+                        </div>
+                        </li>
+
+                        <li class="repaly">
+                        <p> yes, tell me</p>
+                        <span class="time">10:36 am</span>
+                        </li>
+                        <li class="repaly">
+                        <p>yes... on it</p>
+                        <span class="time">junt now</span>
+                        </li>*@
+
+                    </ul>
+                </div>
+            </div>
+
+            <div class="send-box">
+                <form action="">
+                    @Html.AntiForgeryToken()
+
+                    <textarea id="txtMessage" readonly class="form-control messageAlert" rows="2" placeholder="@L["WriteMessage"]" style="resize: none;"></textarea>
+
+                    <button id="btnSend" readonly class="btn btn-primary messageAlert" type="button"><i class="fa fa-paper-plane" aria-hidden="true"></i> @L["Send"]</button>
+                </form>
+
+                @*                    <div class="send-btns">
+                <div class="attach">
+                <div class="button-wrapper">
+                <span class="label">
+                <img class="img-fluid" src="https://mehedihtml.com/chatbox/assets/img/upload.svg" alt="image title"> attached file
+                </span><input type="file" name="upload" id="upload" class="upload-box" placeholder="Upload File" aria-label="Upload File">
+                </div>
+
+                <select class="form-control" id="exampleFormControlSelect1">
+                <option>Select template</option>
+                <option>Template 1</option>
+                <option>Template 2</option>
+                </select>
+
+                <div class="add-apoint">
+                <a href="#" data-toggle="modal" data-target="#exampleModal4"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewbox="0 0 16 16" fill="none"><path d="M8 16C3.58862 16 0 12.4114 0 8C0 3.58862 3.58862 0 8 0C12.4114 0 16 3.58862 16 8C16 12.4114 12.4114 16 8 16ZM8 1C4.14001 1 1 4.14001 1 8C1 11.86 4.14001 15 8 15C11.86 15 15 11.86 15 8C15 4.14001 11.86 1 8 1Z" fill="#7D7D7D" /><path d="M11.5 8.5H4.5C4.224 8.5 4 8.276 4 8C4 7.724 4.224 7.5 4.5 7.5H11.5C11.776 7.5 12 7.724 12 8C12 8.276 11.776 8.5 11.5 8.5Z" fill="#7D7D7D" /><path d="M8 12C7.724 12 7.5 11.776 7.5 11.5V4.5C7.5 4.224 7.724 4 8 4C8.276 4 8.5 4.224 8.5 4.5V11.5C8.5 11.776 8.276 12 8 12Z" fill="#7D7D7D" /></svg> Appoinment</a>
+                </div>
+                </div>
+                </div>*@
+
+            </div>
+        </div>
+    </div>
+</div>
+

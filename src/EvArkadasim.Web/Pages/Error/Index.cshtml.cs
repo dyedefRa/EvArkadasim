@@ -25,7 +25,7 @@ namespace EvArkadasim.Web.Pages.Error
             }
             else if (httpStatusCode == (int)HttpStatusCode.Unauthorized) //401 YETKISI YOK
             {
-                ErrorMessage = _L["UnauthorizedPage"];
+                ErrorMessage = _L["UnauthorizedPageB"];
             }
             else
             {

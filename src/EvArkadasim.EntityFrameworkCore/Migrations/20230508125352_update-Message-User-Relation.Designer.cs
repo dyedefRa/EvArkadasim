@@ -4,15 +4,17 @@ using EvArkadasim.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Volo.Abp.EntityFrameworkCore;
 
 namespace EvArkadasim.Migrations
 {
     [DbContext(typeof(EvArkadasimDbContext))]
-    partial class EvArkadasimDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230508125352_update-Message-User-Relation")]
+    partial class updateMessageUserRelation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -278,7 +280,7 @@ namespace EvArkadasim.Migrations
                     b.Property<int>("MessageType")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("ReceiverId")
+                    b.Property<Guid?>("ReceiverId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("ReceiverStatus")
@@ -2512,9 +2514,7 @@ namespace EvArkadasim.Migrations
                 {
                     b.HasOne("EvArkadasim.Entities.Users.AppUser", "Receiver")
                         .WithMany()
-                        .HasForeignKey("ReceiverId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ReceiverId");
 
                     b.HasOne("EvArkadasim.Entities.Users.AppUser", "Sender")
                         .WithMany()
