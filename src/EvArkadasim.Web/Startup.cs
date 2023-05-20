@@ -24,3 +24,6 @@ namespace EvArkadasim.Web
 
 //Anasayfa 3 dropdows
 //Login vs breadcumb yada navigation.
+
+//Tüm imagelere title ve alt ver
+//Pagedeki validatetoken ları kontrol et Auto yapma Validatetoken yap ve uygula.

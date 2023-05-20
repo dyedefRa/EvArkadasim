@@ -16,4 +16,12 @@ https://community.abp.io/posts/how-to-add-custom-property-to-the-user-entity-6gg
 Account Register dan ekleniyor.
 
 tamamdır :)
+
+Projenin ilk başında bunu ekleme önce AbpUser oluştur yani 
+db migrater çalıştır
+migrate update et 
+en son yukardaki guncellemelerı yapıp tekrar migrate update yap
+-------------------------------------------------------
+Message/Index Chat Box >> 
+https://codepen.io/mehedihtml/pen/ZExjpeo yani >> https://mehedihtml.com/chatbox/
 -------------------------------------------------------

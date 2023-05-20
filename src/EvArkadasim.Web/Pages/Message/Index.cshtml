@@ -7,7 +7,25 @@
 @{
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
+<style>
+    :root {
+        --borderWidth: 3px;
+        --height: 12px;
+        --width: 7px;
+        --borderColor: #78b13f;
+    }
 
+    .check {
+        display: inline-block;
+        transform: rotate(45deg);
+        height: var(--height);
+        width: var(--width);
+        border-bottom: var(--borderWidth) solid var(--borderColor);
+        border-right: var(--borderWidth) solid var(--borderColor);
+    }
+</style>
+
+@*<div class="check"></div>*@
 <div class="page section-header mb-00">
     <div class="bredcrumbWrap mb-00">
         <div class="container breadcrumbs">
@@ -22,8 +40,7 @@
         <div class="row">
             <div class="col-12">
                 @(await Component.InvokeAsync<Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic.Themes.Basic.Components.PageAlerts.PageAlertsViewComponent>())
-                <div class="chat-area" style="height:850px;">
-                    @*PROFIL*@
+                <div class="chat-area bg-azure" style="height:850px;">
                     <div class="profile">
                         <div class="col-lg-12">
                             <div class="my-card" style="height:200px;margin-top: 1.5rem;">
@@ -42,26 +59,25 @@
                             </div>
                         </div>
                     </div>
-                    @*BURAYA ILAN DETAYLARI VE KULLANICI SKOrLARI*@
                     <div class="chatlist">
                         <div class="modal-dialog-scrollable">
                             <div class="modal-content">
-                                <div class="chat-header">
+                                <div class="chat-header bg-azure">
                                     <div class="msg-search">
-                                        <input type="text" class="form-control" placeholder="@L["Search"]">
+                                        <input type="text" class="form-control" id="txtSearch" placeholder="@L["Search"]">
                                         @* <a class="add" href="#"><img class="img-fluid" src="https://mehedihtml.com/chatbox/assets/img/add.svg" alt="add"></a>*@
                                     </div>
 
                                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                                         <li class="nav-item" role="presentation">
-                                            <button class="nav-link active" id="Open-tab" data-bs-toggle="tab" data-bs-target="#Open" type="button" role="tab" aria-controls="Open" aria-selected="true">@L["Messages"]</button>
+                                            <button class="nav-link active bg-azure" id="Open-tab" data-bs-toggle="tab" data-bs-target="#Open" type="button" role="tab" aria-controls="Open" aria-selected="true">@L["Messages"]</button>
                                         </li>
-                                        @*   <li class="nav-item" role="presentation">
+                                        @*<li class="nav-item" role="presentation">
                                         <button class="nav-link" id="Closed-tab" data-bs-toggle="tab" data-bs-target="#Closed" type="button" role="tab" aria-controls="Closed" aria-selected="false">Closed</button>
                                         </li>*@
                                     </ul>
                                 </div>
-                                <div class="modal-body" style="overflow-y: auto;">
+                                <div class="modal-body bg-azure" style="overflow-y: auto;">
                                     <div class="chat-lists">
                                         <div class="tab-content" id="myTabContent">
                                             <div class="tab-pane fade show active" id="Open" role="tabpanel" aria-labelledby="Open-tab">
@@ -70,21 +86,52 @@
                                                     {
                                                         foreach (var message in Model.MessageViewModel)
                                                         {
-                                                            <a href="#" class="d-flex align-items-center" onclick="uploadMessageContents('@message.Id')">
+                                                            <a href="#" class="d-flex align-items-center person" onclick="uploadMessageContents('@message.Id')">
                                                                 <div class="flex-shrink-0">
                                                                     <img class="img-fluid rounded-circle" src="@message.ShownUserImageUrl" alt="@L["ImageFailedToLoad"]" title="@L["User"]" width="40" height="40" style="margin-right:5px;">
-                                                                    @*    <span class="active"></span>*@
+                                                                    @if (message.ShownUserLastSeenDate == "Çevrimiçi") //TODO DUZELTILECek
+                                                                    {
+                                                                        <span class="active"></span>
+                                                                    }
                                                                 </div>
                                                                 <div class="flex-grow-1 ms-3">
-                                                                    <h3 style="font-size:14px;">@message.ShownUserFullName</h3>
-                                                                    <p style="font-size:14px;">@message.ShownUserZodiacSign</p>
+                                                                    <h3 style="font-size:14px;">
+                                                                        <span class="person-name">
+                                                                            @message.ShownUserFullName
+                                                                            @if (message.IsBlocked)
+                                                                            {
+                                                                                <i class="fa fa-ban fa-fw ban-colour"></i>
+
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                if (message.IsMuted)
+                                                                                {
+                                                                                    <i class="fa fa-bell-slash fa-fw"></i>
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    if (message.UnSeenMessageCount > 0)
+                                                                                    {
+                                                                                        <span class="message-unseen message-unseen-@message.Id">(@message.UnSeenMessageCount)</span>
+                                                                                    }
+                                                                                }
+                                                                            }
+
+                                                                        </span>
+                                                                        <span class="time">@message.ShownUserLastSeenDate</span>
+
+                                                                    </h3>
+
+                                                                    @*<p style="font-size:14px;">@message.ShownUserZodiacSign</p>*@
                                                                 </div>
                                                             </a>
+                                                            <hr style="margin:0 0 15px 0" />
                                                         }
                                                     }
                                                     else
                                                     {
-                                                        <p>Mesajınız yok.</p>
+                                                        <p>@L["NoPeopleToShow"].Value</p>
                                                     }
                                                 </div>
                                             </div>
@@ -92,12 +139,12 @@
                                             <div class="chat-list">
                                             <a href="#" class="d-flex align-items-center">
                                             <div class="flex-shrink-0">
-                                            <img class="img-fluid" src="https://mehedihtml.com/chatbox/assets/img/user.png" alt="user img">
+                                            <img class="img-fluid" src="" alt="user img">
                                             <span class="active"></span>
                                             </div>
                                             <div class="flex-grow-1 ms-3">
-                                            <h3>Mehedi Hasan</h3>
-                                            <p>front end developer</p>
+                                            <h3>**</h3>
+                                            <p>**</p>
                                             </div>
                                             </a>
                                             </div>
@@ -111,12 +158,12 @@
                     <div class="chatbox" style="height:580px;">
                         <div class="modal-dialog-scrollable">
                             <div class="modal-content">
-                                <div id="messageModalContent"></div>
-                                <div class="send-box">
+                                <div id="messageModalContent" class="bg-azure"></div>
+                                <div class="send-box bg-azure">
                                     <form action="">
-                                        @Html.AntiForgeryToken()
-                                        <textarea readonly class="form-control messageAlert" id="message" rows="2" placeholder="@L["WriteMessage"]" style="resize: none;"></textarea>
-                                        <button readonly class="btn btn-primary messageAlert" id="btnSend" type="button"><i class="fa fa-paper-plane" aria-hidden="true"></i> @L["Send"]</button>
+                                        @*@Html.AntiForgeryToken()*@
+                                        <textarea readonly class="form-control messageAlert" id="txtMessage" rows="2" placeholder="@L["WriteMessage"]" style="resize: none;"></textarea>
+                                        <button readonly class="btn btn-primary messageAlert" id="btnSendMessage" type="button"><i class="fa fa-paper-plane" aria-hidden="true"></i> @L["Send"]</button>
                                     </form>
                                 </div>
                             </div>
@@ -134,56 +181,76 @@
 </script>
 
 <script id="templateMessage" type="text/x-jquery-tmpl">
-         <div class="msg-head" style="min-height: 100px;">
-                    <div class="row">
-                        <div class="col-8" id="areaMessageHeader">
-                            <div class="d-flex align-items-center">
-                                <div class="flex-shrink-0">
-                                    <img class="img-fluid rounded-circle" src="${shownUserImageUrl}" alt="@L["ImageFailedToLoad"]" title="@L["User"]" width="50" height="50" style="margin-right:10px;">
-                                </div>
-    @*                            <input id="userId" type="text" hidden value="0" />
-    *@                            <div class="flex-grow-1 ms-3">
-                                    <h3>${shownUserFullName}</h3>
-    @*                                <p>front end developer</p>
-                                    *@
+             <div class="msg-head" style="min-height: 100px;">
+                        <div class="row">
+                            <div class="col-8" id="areaMessageHeader">
+                                <div class="d-flex align-items-center">
+                                    <div class="flex-shrink-0">
+                                        <img class="img-fluid rounded-circle" src="${shownUserImageUrl}" alt="@L["ImageFailedToLoad"]" title="@L["User"]" width="50" height="50" style="margin-right:10px;">
+                                    </div>
+    @*<input id="userId" type="text" hidden value="0" />*@
+                                    <div class="flex-grow-1 ms-3">
+                                        <h3>${shownUserFullName}</h3>
+    @*<p>front end developer</p>*@
+                                    </div>
                                 </div>
                             </div>
+                            <div class="col-4">
+                                <ul class="moreoption">
+                                    <li class="navbar nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></a>
+                                        <ul class="dropdown-menu">
+                                                 {{if isBlocked}}
+                                                            <li><a class="dropdown-item reply-colour" onclick="changeMessageStatus('@EvArkadasim.Enums.MessageStatus.Default')" href="javascript:;"><i class="fa fa-reply fa-fw"></i> @L["NoBlock"]</a></li>
+                                                 {{else}}
+                                                          {{if isMuted}}
+                                                            <li><a class="dropdown-item reply-colour" onclick="changeMessageStatus('@EvArkadasim.Enums.MessageStatus.Default')" href="javascript:;"><i class="fa fa-reply fa-fw"></i> @L["NoMute"]</a></li>
+                                                          {{else}}
+                                                            <li><a class="dropdown-item" onclick="changeMessageStatus('@EvArkadasim.Enums.MessageStatus.Muted')" href="javascript:;"><i class="fa fa-bell-slash"></i> @L["Mute"]</a></li>
+                                                            <li><a class="dropdown-item ban-colour" onclick="changeMessageStatus('@EvArkadasim.Enums.MessageStatus.Blocked')" href="javascript:;"><i class="fa fa-ban fa-fw"></i> @L["Block"]</a></li>
+                                                          {{/if}}
+                                                 {{/if}}
+
+                                            <li>
+                                                <hr class="dropdown-divider">
+                                            </li>
+                                            <li><a class="dropdown-item delete-colour" onclick="changeMessageStatus('@EvArkadasim.Enums.MessageStatus.Deleted')" href="javascript:;"><i class="fa fa-trash fa-fw"></i> @L["DeleteMessage"]</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
-                        <div class="col-4">
-                            <ul class="moreoption" id="areaMessageOption">
-                                <li class="navbar nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></a>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="#"><i class="fa fa-bell-slash"></i> @L["Mute"]</a></li>
-                                        <li><a class="dropdown-item" href="#"><i class="fa fa-ban fa-fw"></i> @L["Block"]</a></li>
-                                        <li>
-                                            <hr class="dropdown-divider">
-                                        </li>
-                                        <li><a class="dropdown-item" href="#"><i class="fa fa-trash fa-fw"></i> @L["DeleteMessage"]</a></li>
-                                    </ul>
-                                </li>
+                    </div>
+             <div class="modal-body" style="overflow-y: scroll; height:400px;">
+                        <div class="msg-body">
+                            <ul>
+    @* <li> <div class="divider"><h6>@L["Today"]</h6></div></li>*@
+                              {{if messageContents.length>0 }}
+                                  {{each messageContents}}
+                                         {{if isMine}}
+                                                  <li  class="repaly" id="content-hover-${id}">
+                                                     <p> <span class="quit" onclick="deleteMessageContent('${id}')">x</span> ${content}
+                                                     {{if isSeen}}
+                                                         <span class="seen check"></span>
+                                                     {{else}}
+                                                         <span class="seen check" style="border-color:darkgray"></span>
+                                                     {{/if}}
+                                                     </p>
+                                                     <span class="time">${messageSendDate}</span>
+                                                  </li>
+                                         {{else}}
+                                                  <li class="sender" id="content-hover-${id}">
+                                                     <p> <span class="quit" onclick="deleteMessageContent('${id}')">x</span> ${content}</p>
+                                                     <span class="time">${messageSendDate}</span>
+                                                  </li>
+                                               {{/if}}
+                                  {{/each}}
+                             {{else}}
+                                <li class="emptyMessage"> @L["NoMessagesToShow"].Value </li>
+                             {{/if}}
                             </ul>
                         </div>
                     </div>
-                </div>
-         <div class="modal-body" style="overflow-y: scroll; height:400px;">
-                    <div class="msg-body">
-                        <ul>
-    @* <li> <div class="divider"><h6>@L["Today"]</h6></div></li>*@
-                          {{if messageContents }}
-                              {{each messageContents}}
-                                        {{if isMine}} <li  class="repaly" id="content-hover-${id}">   {{else}}    <li class="sender" id="content-hover-${id}">  {{/if}}
-                                        <p> <span onclick="deleteOneMessageContents('${id}')">x</span> ${content}</p>
-                                            <span class="time" style="font-weight: 100;">${messageSendDate}</span>
-                                    </li>
-
-                              {{/each}}
-                         {{else}}
-                            <li> Gösterilecek mesaj yok </li>
-                         {{/if}}
-                        </ul>
-                    </div>
-                </div>
 </script>
 
 @section scripts {
@@ -207,60 +274,143 @@
         });
 
 
+        //#region ChatBox
 
+        var selectedMessageId = 0;
+        var selectedUserId = 0;
 
-        //_ChatBoxPartial
         $('.messageAlert').click(function (e) {
             e.preventDefault();
             if ($(this).prop('readonly') || $(this).attr('readonly')) {
-                toastr.info('Lütfen kişi seçin');
+                toastr.info('@L["PleaseSelectPerson"].Value');
             }
         });
 
+        $('#btnSendMessage').click(function (e) {
+            var messageContent = $('#txtMessage').val();
+            if (selectedMessageId !== 0 && selectedUserId !== 0 && messageContent.replace(/\s/g, '') !== '') {
+                evArkadasim.services.message.insertMessageContent(selectedMessageId, selectedUserId, messageContent)
+                    .done(function (result) {
+                        if (result.success) {
+                            $('.emptyMessage').remove();
+                            $('.msg-body ul').append('<li  class="repaly" id="content-hover-' + result.data.id + '"><p><span onclick="deleteMessageContent(' + result.data.id + ')">x</span>' + result.data.content + '<span class="seen check" style="border-color:darkgray"></span></p><span class="time"> ' + result.data.messageSendDate + ' </span></li>');
+                            $('.modal-body').animate({ scrollTop: 9999 }, "fast");
+                            resetTxtMessage();
+                        }
+                        else {
+                            toastr.error(result.message)
+                        }
+                    })
+                    .fail(function () {
+                        toastr.error('@L["UnexpectedError"].Value');
+                    });
+            }
+        });
+
+        //Muteler,Bloklar yada Siler.
+        function changeMessageStatus(status) {
+
+            var infoMessage = "";
+            switch (status) {
+                case '@EvArkadasim.Enums.MessageStatus.Default':
+                    infoMessage = "@L["AreYouSureUndoAction"].Value"
+                    break;
+                case '@EvArkadasim.Enums.MessageStatus.Muted':
+                    infoMessage = "@L["AreYouSureMuteNotification"].Value"
+                    break;
+                case '@EvArkadasim.Enums.MessageStatus.Blocked':
+                    infoMessage = "@L["AreYouSureBlockPerson"].Value"
+                    break;
+                case '@EvArkadasim.Enums.MessageStatus.Deleted':
+                    infoMessage = "@L["AreYouSureDeleteAllMessage"].Value"
+                    break;
+                // varsayılan kod bloğu
+            }
+
+            if (!infoMessage) {
+                toastr.error('@L["UnexpectedError"].Value');
+                return;
+            }
+
+            toastr.info("<br /><br /><button type='button' id='confirmDeleteMessage' class='btn clear'>@L["Yes"].Value</button>", infoMessage,
+                {
+                    closeButton: true,
+                    allowHtml: true,
+                    onShown: function (toast) {
+                        $("#confirmDeleteMessage").click(function () {
+                            if (selectedMessageId !== 0 && selectedUserId !== 0) {
+                                evArkadasim.services.message.changeMessageStatus(selectedMessageId, selectedUserId, status)
+                                    .done(function (result) {
+                                        if (result.success) {
+                                            //reload yap.
+                                            //loaddan sonra mesaj gösterebilirsin.
+                                        }
+                                        else {
+                                            toastr.error(result.message)
+                                        }
+                                    })
+                                    .fail(function () {
+                                        toastr.error('@L["UnexpectedError"].Value');
+                                    });
+                            }
+                        });
+                    }
+                });
+        };
+
         function uploadMessageContents(messageId) {
-
             allowMessage();
-
-            var formData = new FormData();
-            formData.append('MessageId', messageId);
-            $.ajax({
-                url: '/Message/Index?handler=UploadMessageContents',
-                type: "POST",
-                contentType: false,
-                processData: false,
-                data: formData,
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader("RequestVerificationToken", $('input:hidden[name="__RequestVerificationToken"]').val());
-                },
-                success: function (result) {
+            evArkadasim.services.message.getUserMessageWithContentList(messageId)
+                .done(function (result) {
                     if (result.success) {
                         $('#messageModalContent').empty();
                         $('#templateMessage').tmpl(result.data).appendTo('#messageModalContent');
-                        $(".modal-body").animate({ scrollTop: 9999 }, "slow");
-                        //alert('yes');
-                        //pageLoadAndAfterAlert_Post("imageAlert", AlertType.success, "Profil resminiz başarıyla değiştirildi");
+                        $('.modal-body').animate({ scrollTop: 9999 }, "fast");
+                        selectedMessageId = result.data.messageId;
+                        selectedUserId = result.data.shownUserId;
+
+                        var isUnseenMessage = $('.message-unseen-' + messageId).html();
+                        if (isUnseenMessage) {
+                            //kişiler bölümündeki sayısı resetler
+                            $('.message-unseen-' + messageId).empty();
+                            //Menudeki sayıyı 1 indirir.
+                            var menuUnseenMessageCount = $('.menu-unseen-count').html();
+                            var newUnseenMessageCount = menuUnseenMessageCount - 1;
+                            $('.menu-unseen-count').html(newUnseenMessageCount);
+                            if (newUnseenMessageCount === 0) {
+                                $('.menu-unseen').removeClass('menu-unseen');
+                            }
+                        }
                     }
                     else {
                         toastr.error(result.message)
                     }
-                },
-                error: function (err) {
-                    toastr.error('Bir hata oluştu.')
-                }
-            });
-
+                })
+                .fail(function () {
+                    toastr.error('@L["UnexpectedError"].Value');
+                });
         }
 
-        function deleteOneMessageContents(messageContentId) {
-            toastr.info("<br /><br /><button type='button' id='confirmDeleteMessage' class='btn clear'>Evet</button>", 'Bu mesajı silmek istediğinize emin misiniz?',
+        function deleteMessageContent(messageContentId) {
+            toastr.info("<br /><br /><button type='button' id='confirmDeleteMessage' class='btn clear'>@L["Yes"].Value</button>", '@L["AreYouSureDeleteMessage"].Value',
                 {
                     closeButton: true,
                     allowHtml: true,
-                    showIcon: false,
                     onShown: function (toast) {
                         $("#confirmDeleteMessage").click(function () {
-                            $('#content-hover-' + messageContentId).remove();
-                            toastr.success('@L["MessageSuccessfullyDeleted"]');
+                            evArkadasim.services.message.deleteMessageContent(messageContentId)
+                                .done(function (result) {
+                                    if (result.success) {
+                                        $('#content-hover-' + messageContentId).remove();
+                                        toastr.success(result.message);
+                                    }
+                                    else {
+                                        toastr.error(result.message)
+                                    }
+                                })
+                                .fail(function () {
+                                    toastr.error('@L["UnexpectedError"].Value');
+                                });
                         });
                     }
                 });
@@ -268,10 +418,48 @@
 
         function allowMessage() {
             $('.messageAlert').removeAttr('readonly');
-            $('#message').val('');
+            resetTxtMessage();
         }
 
+        function resetTxtMessage() {
+            $('#txtMessage').val('');
+        }
 
+        $('#txtSearch').on('keyup', function () {
+            var searchVal = $(this).val().toLowerCase();
+            $('.person .person-name').each(function (i) {
+                var personName = $(this).html().toLowerCase();
+                var relatedParent = $(this).closest('.person');
+                if (personName.toLowerCase().indexOf(searchVal) > -1) {
+                    relatedParent.addClass('d-flex');
+                    relatedParent.removeClass('d-none');
+                    relatedParent.next('hr').removeClass('d-none');
+                }
+                else {
+                    relatedParent.removeClass('d-flex');
+                    relatedParent.addClass('d-none');
+                    relatedParent.next('hr').addClass('d-none');
+                }
+            });
+        });
+
+        $('#txtMessage').keypress(function (event) {
+            var keycode = (event.keyCode ? event.keyCode : event.which);
+            if (keycode == '13') {
+                $('#btnSendMessage').trigger('click');
+            }
+        });
+                                                                                                                                                                                                                                                                                //#endregion
 
     </script>
 }
+
+@*5)  MESAJ BLOKLAMA SILME NEGELMME VS*@
+
+@*Blokluyken mutelerse ?
+Bir mesaj silinmiş olsun karşıda ki kişi yazınca resetlenir
+Bir mesaj bloklu olsun bloklayan kişi yazarsa resetleenir.
+
+        BLOKLUYKEN MUTELERSE NE OLACAK YADA SİLMİŞKEN DIGER KULLANICI YAZAR*@
+
+@*Engelledikten sonra yada kaldırdıktan sonra yada muteledekiten sonra reflesh gerekıyor?*@

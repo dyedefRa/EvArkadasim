@@ -16,7 +16,7 @@ namespace EvArkadasim.Dtos.Messages.ViewModels
         public MessageStatus ReceiverStatus { get; set; }
         //public DateTime SenderStatusDate { get; set; }
         //public DateTime ReceiverStatusDate { get; set; }
-        public DateTime CreatedDate { get; set; }
+        //public DateTime CreatedDate { get; set; }
         //public Guid SenderId { get; set; }
         //public AppUserDto Sender { get; set; }
         //public Guid ReceiverId { get; set; }
@@ -24,12 +24,16 @@ namespace EvArkadasim.Dtos.Messages.ViewModels
         //public int CreatedById { get; set; }
         //public int FirstReceivedById { get; set; }
         public MessageType MessageType { get; set; }
-        public Status Status { get; set; }
+        //public Status Status { get; set; }
         //public AppUserDto ShownUser { get; set; }
         public string ShownUserImageUrl { get; set; }
         public string ShownUserFullName { get; set; }
         public string ShownUserZodiacSign { get; set; }
-
+        public string ShownUserLastSeenDate { get; set; }
+        public int UnSeenMessageCount { get; set; }
+        public DateTime LastMessageDate { get; set; }
+        public bool IsBlocked { get; set; } = false;
+        public bool IsMuted { get; set; } = false;
         //public bool IsMainUser { get; set; }
         //public List<MessageContentDto> MessageContents { get; set; }
     }
@@ -46,6 +50,9 @@ namespace EvArkadasim.Dtos.Messages.ViewModels
         public string ShownUserFullName { get; set; }
         public string ShownUserImageUrl { get; set; }
         //public bool LoadMoreMessage { get; set; }
+        public bool IsBlocked { get; set; } = false;
+        public bool IsMuted { get; set; } = false;
+
         public List<MessageContentViewModel> MessageContents { get; set; }
     }
 }

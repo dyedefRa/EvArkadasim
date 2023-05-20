@@ -1,8 +1,10 @@
-﻿@using EvArkadasim.Localization
+﻿@using EvArkadasim.Abstract;
+@using EvArkadasim.Localization
 @using Microsoft.Extensions.Localization
 @using Volo.Abp.Users
 @inject IStringLocalizer<EvArkadasimResource> L
 @inject ICurrentUser CurrentUser
+@inject IMessageAppService _messageAppService
 
 <!--Web Menu-->
 <div class="header-wrap classicHeader animated d-flex">
@@ -65,13 +67,28 @@
                         </li>
                         @if (CurrentUser.IsAuthenticated)
                         {
-                            <li class="lvl1"><a href="/Message"><i class="fa fa-envelope fa-fw"></i> @L["Message"] (2)</a></li>
+                            var unseenMessageCount = _messageAppService.GetUnseenMessageCount();
+
+                            <li class="lvl1">
+                                <a href="/Message">
+                                    <i class="fa fa-envelope fa-fw"></i> @L["Message"]
+                                    @if (unseenMessageCount > 0)
+                                    {
+                                        <span class="menu-unseen">(<span class="menu-unseen-count">@unseenMessageCount</span>)</span>
+                                    }
+                                    else
+                                    {
+                                        <span>(0)</span>
+                                    }
+                                </a>
+                            </li>
+
                             <li class="lvl1 parent dropdown">
                                 <a href="#"><i class="fa fa-user fa-fw"></i> @L["Profile"]<i class="anm anm-angle-down-l"></i></a>
                                 <ul class="dropdown">
-                                   @* <li class="lvl1">
-                                        <img src="/uploads/profile/eecc75a5-bac7-4ef7-bd1f-ab472edf38f1_06-5-2023-04-23-03.png" alt="@L["User"]" id="profileImage" style="cursor: pointer" class="rounded-circle p-1 bg-pink" width="70" height="70">
-                                    </li>*@
+                                    @* <li class="lvl1">
+                                <img src="/uploads/profile/eecc75a5-bac7-4ef7-bd1f-ab472edf38f1_06-5-2023-04-23-03.png" alt="@L["User"]" id="profileImage" style="cursor: pointer" class="rounded-circle p-1 bg-pink" width="70" height="70">
+                                </li>*@
                                     <li><a href="/Account/Manage">@L["MyAccountInformation"]</a></li>
                                     <li><a href="/Account/MyAdvert">@L["MyAdverts"]</a></li>
                                     <li><a href="/Account/Logout">@L["Logout"]</a></li>

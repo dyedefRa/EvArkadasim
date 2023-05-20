@@ -602,9 +602,10 @@ a.add img {
 .time {
     display: block;
     color: #000;
-    font-size: 12px;
+    font-size: 11px;
     line-height: 1.5;
-    font-weight: 400;
+    font-weight: 100;
+    margin-left: 2px;
 }
 
 li.repaly .time {
@@ -868,14 +869,48 @@ button:focus {
 /*-----*/
 .modal-body p {
     position: relative;
-    padding-right:20px !important;
+    padding-right: 20px !important;
 }
 
-    .modal-body p span {
+
+    .modal-body p span.quit {
         position: absolute;
         top: 0px;
         right: 5px;
-        font-weight:100;
-        cursor:pointer;
+        font-weight: 100;
+        cursor: pointer;
+    }
+
+    .modal-body p span.seen {
+        position: absolute;
+        bottom: 4px;
+        left: 8px;
+        font-weight: 100;
     }
 /*MESSAGE <<<<<<<<<<<<<<<<<<<*/
+
+.message-unseen, .menu-unseen {
+    color: forestgreen !important;
+    font-size: 16px !important;
+}
+
+.bg-azure {
+    background-color: azure !important;
+}
+
+.d-none {
+    display: none;
+}
+
+
+.ban-colour {
+    color: darkorange;
+}
+
+.delete-colour {
+    color: red;
+}
+
+.reply-colour {
+    color: green;
+}

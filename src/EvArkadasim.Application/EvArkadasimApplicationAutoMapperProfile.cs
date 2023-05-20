@@ -31,13 +31,14 @@ namespace EvArkadasim
 
             #region Message
             CreateMap<Message, MessageDto>().ReverseMap();
-            CreateMap<Message, MessageViewModel>().ReverseMap();//MessageAppService > GetUserMessageListAsync
+            CreateMap<Message, MessageViewModel>().ReverseMap();              //MessageAppService > GetUserMessageListAsync
 
             #endregion
 
             #region MessageContent 
             CreateMap<MessageContent, MessageContentDto>().ReverseMap();
-            CreateMap<MessageContent, MessageContentViewModel>().ReverseMap();
+            CreateMap<MessageContent, MessageContentViewModel>().ReverseMap(); //MessageAppService > GetUserMessageWithContentListAsync
+            CreateMap<CreateUpdateMessageContentDto, MessageContent>();        //MessageAppService > InsertMessageContentAsync
             #endregion
 
             #region File

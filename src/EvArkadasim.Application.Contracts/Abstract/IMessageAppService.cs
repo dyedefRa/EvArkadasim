@@ -11,6 +11,6 @@ namespace EvArkadasim.Abstract
     public interface IMessageAppService : ICrudAppService<MessageDto, int, PagedAndSortedResultRequestDto, MessageDto, MessageDto>
     {
         Task<IDataResult<List<MessageViewModel>>> GetUserMessageListAsync();
-        Task<IDataResult<List<MessageWithContentViewModel>>> GetUserMessageWithContentListAsync(int messageId);
+        int GetUnseenMessageCount();
     }
 }

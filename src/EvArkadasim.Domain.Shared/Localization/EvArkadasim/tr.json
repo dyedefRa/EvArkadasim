@@ -47,11 +47,13 @@
     "AdminPage": "Admin Ana Sayfa",
     "PageManagement": "Sayfa Yönetimi",
     "MesageManagement": "Mesaj Yönetimi",
-    "MesageManagementSee": "Görme",
+    "MesageManagementSee": "Görme", //Değişecek.
 
     //MESSAGE
-    "Mute": "Sessize Al",
-    "Block": "Blokla",
+    "Mute": "Bildirimleri Kapat",
+    "NoMute": "Bildirimleri Aç",
+    "Block": "Engelle",
+    "NoBlock": "Engeli Kaldır",
     "DeleteMessage": "Mesajı Sil",
     "WriteMessage": "Mesaj yaz..",
     "Send": "Gönder",
@@ -74,19 +76,34 @@
     "ReturnHomePage": "Ana sayfaya dön",
     "NotFoundPage": "Sayfa Bulunamadı",
     "UnauthorizedPageB": "BU SAYFAYA ERİŞİM İZNİNİZ YOK",
-    "YouMustLogin": "Lütfen tekrardan giriş yapınız",
     "NotAllowedProcess": "Bu işlemi yapmaya izniniz yok",
     "UnexpectedErrorPage": "Beklenmedik bir hata oluştu.",
     "SorryAnErrorHasOccurred": "Üzgünüm, bir hata oluştu.",
     "ImageFailedToLoad": "Resim Yüklenemedi.",
     "GeneralIdentityError": "Bir hata oluştu.Lütfen girdilerinizi kontrol ediniz.",
     "GeneralUploadError": "Bir hata oluştu.Lütfen tekrar deneyiniz.",
-    "GeneralError": "Bir hata oluştu.",
-
+    "EntityNotFoundError": "İçerik bulunamadı.",
+    "GeneralError": "Bir hata oluştu.", // Controller tarafındaki bilinmeyen hata
+    "UnexpectedError": "Beklenmedik bir hata oluştu.", //Javascript tarafındaki bilinmeyen hata
 
     //SUCCESS
     "SuccessfullyCompleted": "İşleminiz başarıyla tamamlandı",
-    "MessageSuccessfullyDeleted": "Mesaj başarıyla silindi"
+    "MessageSuccessfullyDeleted": "Mesaj başarıyla silindi",
 
+
+    //INFO
+    "PleaseSelectPerson": "Lütfen kişi seçiniz",
+    "NoPeopleToShow": "Gösterilecek kişi yok",
+    "NoMessagesToShow": "Gösterilecek mesaj yok",
+    "YouMustLogin": "Lütfen tekrardan giriş yapınız",
+    "BlockedMessage": "Bu kullanıcı sizi engellediği için mesaj atamazsınız",
+
+    //Confirm
+    "AreYouSureUndoAction": "Bu işlemi geri almak istediğinize emin misiniz?",
+    "AreYouSureDeleteMessage": "Bu mesajı silmek istediğinize emin misiniz?",
+    "Yes": "Evet",
+    "AreYouSureMuteNotification": "Bu kullanıcından gelecek olan mesajların bildirimini kapamak istediğinize emin misiniz?",
+    "AreYouSureBlockPerson": "Bu kullanıcının size mesaj göndermesini engellemek istediğinize emin misiniz?",
+    "AreYouSureDeleteAllMessage": "Bu kullanıcıyla olan tüm mesaj geçmişinizi silmek istediğinize emin misiniz?"
   }
 }
