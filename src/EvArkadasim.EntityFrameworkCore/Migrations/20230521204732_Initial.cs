@@ -236,40 +236,89 @@ namespace EvArkadasim.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AbpUsers",
+                name: "AppCities",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    TenantId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
-                    NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: true),
-                    Surname = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
-                    NormalizedEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
-                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
-                    PasswordHash = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    SecurityStamp = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
-                    IsExternal = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(16)", maxLength: 16, nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
-                    TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    LockoutEnabled = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
-                    AccessFailedCount = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
-                    ExtraProperties = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: true),
-                    CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatorId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    LastModificationTime = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    LastModifierId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
-                    DeleterId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    DeletionTime = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    CityNo = table.Column<int>(type: "int", nullable: false),
+                    AreaNumber = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AbpUsers", x => x.Id);
+                    table.PrimaryKey("PK_AppCities", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AppFiles",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FileName = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    FileSize = table.Column<long>(type: "bigint", nullable: true),
+                    FilePath = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    FullPath = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    FileType = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AppFiles", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AppLogs",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Message = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MessageTemplate = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Level = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TimeStamp = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Exception = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Properties = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AppLogs", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AppMailTemplates",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Subject = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    MailKey = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    MailTemplateValue = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    InsertedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AppMailTemplates", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AppSentMails",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ToAddress = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    CcAddress = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
+                    BccAddress = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
+                    Subject = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Body = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AppSentMails", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -575,118 +624,72 @@ namespace EvArkadasim.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AbpUserClaims",
+                name: "AppTowns",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    TownNo = table.Column<int>(type: "int", nullable: false),
+                    CityId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AppTowns", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AppTowns_AppCities_CityId",
+                        column: x => x.CityId,
+                        principalTable: "AppCities",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AbpUsers",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     TenantId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ClaimType = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
-                    ClaimValue = table.Column<string>(type: "nvarchar(1024)", maxLength: 1024, nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AbpUserClaims", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_AbpUserClaims_AbpUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AbpUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AbpUserLogins",
-                columns: table => new
-                {
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    LoginProvider = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
-                    TenantId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ProviderKey = table.Column<string>(type: "nvarchar(196)", maxLength: 196, nullable: false),
-                    ProviderDisplayName = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AbpUserLogins", x => new { x.UserId, x.LoginProvider });
-                    table.ForeignKey(
-                        name: "FK_AbpUserLogins_AbpUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AbpUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AbpUserOrganizationUnits",
-                columns: table => new
-                {
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    OrganizationUnitId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    TenantId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: true),
+                    Surname = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    NormalizedEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
+                    PasswordHash = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    SecurityStamp = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    IsExternal = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(16)", maxLength: 16, nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
+                    TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    LockoutEnabled = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
+                    AccessFailedCount = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    BirthDate = table.Column<DateTime>(type: "datetime", nullable: true),
+                    Gender = table.Column<int>(type: "int", nullable: true),
+                    ImageId = table.Column<int>(type: "int", nullable: true),
+                    Status = table.Column<int>(type: "int", nullable: true),
+                    UserType = table.Column<int>(type: "int", nullable: true),
+                    ExtraProperties = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: true),
                     CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatorId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    CreatorId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    LastModificationTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    LastModifierId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
+                    DeleterId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    DeletionTime = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AbpUserOrganizationUnits", x => new { x.OrganizationUnitId, x.UserId });
+                    table.PrimaryKey("PK_AbpUsers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AbpUserOrganizationUnits_AbpOrganizationUnits_OrganizationUnitId",
-                        column: x => x.OrganizationUnitId,
-                        principalTable: "AbpOrganizationUnits",
+                        name: "FK_AbpUsers_AppFiles_ImageId",
+                        column: x => x.ImageId,
+                        principalTable: "AppFiles",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_AbpUserOrganizationUnits_AbpUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AbpUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AbpUserRoles",
-                columns: table => new
-                {
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    RoleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    TenantId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AbpUserRoles", x => new { x.UserId, x.RoleId });
-                    table.ForeignKey(
-                        name: "FK_AbpUserRoles_AbpRoles_RoleId",
-                        column: x => x.RoleId,
-                        principalTable: "AbpRoles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_AbpUserRoles_AbpUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AbpUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AbpUserTokens",
-                columns: table => new
-                {
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    LoginProvider = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
-                    TenantId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    Value = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AbpUserTokens", x => new { x.UserId, x.LoginProvider, x.Name });
-                    table.ForeignKey(
-                        name: "FK_AbpUserTokens_AbpUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AbpUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -1029,6 +1032,302 @@ namespace EvArkadasim.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "AbpUserClaims",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    TenantId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ClaimType = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    ClaimValue = table.Column<string>(type: "nvarchar(1024)", maxLength: 1024, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AbpUserClaims", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AbpUserClaims_AbpUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AbpUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AbpUserLogins",
+                columns: table => new
+                {
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
+                    TenantId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ProviderKey = table.Column<string>(type: "nvarchar(196)", maxLength: 196, nullable: false),
+                    ProviderDisplayName = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AbpUserLogins", x => new { x.UserId, x.LoginProvider });
+                    table.ForeignKey(
+                        name: "FK_AbpUserLogins_AbpUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AbpUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AbpUserOrganizationUnits",
+                columns: table => new
+                {
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    OrganizationUnitId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    TenantId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatorId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AbpUserOrganizationUnits", x => new { x.OrganizationUnitId, x.UserId });
+                    table.ForeignKey(
+                        name: "FK_AbpUserOrganizationUnits_AbpOrganizationUnits_OrganizationUnitId",
+                        column: x => x.OrganizationUnitId,
+                        principalTable: "AbpOrganizationUnits",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AbpUserOrganizationUnits_AbpUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AbpUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AbpUserRoles",
+                columns: table => new
+                {
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    RoleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    TenantId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AbpUserRoles", x => new { x.UserId, x.RoleId });
+                    table.ForeignKey(
+                        name: "FK_AbpUserRoles_AbpRoles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "AbpRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AbpUserRoles_AbpUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AbpUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AbpUserTokens",
+                columns: table => new
+                {
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    TenantId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    Value = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AbpUserTokens", x => new { x.UserId, x.LoginProvider, x.Name });
+                    table.ForeignKey(
+                        name: "FK_AbpUserTokens_AbpUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AbpUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AppAdverts",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ExtraDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    AdvertType = table.Column<int>(type: "int", nullable: false),
+                    AdvertRankType = table.Column<int>(type: "int", nullable: false),
+                    AdvertProcessStatus = table.Column<int>(type: "int", nullable: false),
+                    AllowGenderType = table.Column<int>(type: "int", nullable: false),
+                    IsPersonNeedHome = table.Column<bool>(type: "bit", nullable: false),
+                    IsHomeHaveFurniture = table.Column<bool>(type: "bit", nullable: false),
+                    ImpressionsNumber = table.Column<int>(type: "int", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    LastUpdateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    AdvertValidDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AppAdverts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AppAdverts_AbpUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AbpUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AppMessages",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    SenderStatus = table.Column<int>(type: "int", nullable: false),
+                    ReceiverStatus = table.Column<int>(type: "int", nullable: false),
+                    SenderStatusDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ReceiverStatusDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    SenderId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ReceiverId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    MessageType = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AppMessages", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AppMessages_AbpUsers_ReceiverId",
+                        column: x => x.ReceiverId,
+                        principalTable: "AbpUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_AppMessages_AbpUsers_SenderId",
+                        column: x => x.SenderId,
+                        principalTable: "AbpUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AppAdvertCityTowns",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    AdvertId = table.Column<int>(type: "int", nullable: false),
+                    CityId = table.Column<int>(type: "int", nullable: true),
+                    TownId = table.Column<int>(type: "int", nullable: true),
+                    IsRemovedFromUser = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AppAdvertCityTowns", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AppAdvertCityTowns_AppAdverts_AdvertId",
+                        column: x => x.AdvertId,
+                        principalTable: "AppAdverts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AppAdvertCityTowns_AppCities_CityId",
+                        column: x => x.CityId,
+                        principalTable: "AppCities",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_AppAdvertCityTowns_AppTowns_TownId",
+                        column: x => x.TownId,
+                        principalTable: "AppTowns",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AppAdvertFiles",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    AdvertId = table.Column<int>(type: "int", nullable: false),
+                    FileId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AppAdvertFiles", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AppAdvertFiles_AppAdverts_AdvertId",
+                        column: x => x.AdvertId,
+                        principalTable: "AppAdverts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AppAdvertFiles_AppFiles_FileId",
+                        column: x => x.FileId,
+                        principalTable: "AppFiles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AppAdvertUnitPrices",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    AdvertId = table.Column<int>(type: "int", nullable: false),
+                    AdvertUnitType = table.Column<int>(type: "int", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AppAdvertUnitPrices", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AppAdvertUnitPrices_AppAdverts_AdvertId",
+                        column: x => x.AdvertId,
+                        principalTable: "AppAdverts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AppMessageContents",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    MessageId = table.Column<int>(type: "int", nullable: false),
+                    SenderId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ReceiverId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsSeen = table.Column<bool>(type: "bit", nullable: false),
+                    IsDeletedForSender = table.Column<bool>(type: "bit", nullable: false),
+                    IsDeletedForReceiver = table.Column<bool>(type: "bit", nullable: false),
+                    DeletedDateForSender = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedDateForReceived = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AppMessageContents", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AppMessageContents_AppMessages_MessageId",
+                        column: x => x.MessageId,
+                        principalTable: "AppMessages",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AbpAuditLogActions_AuditLogId",
                 table: "AbpAuditLogActions",
@@ -1167,6 +1466,13 @@ namespace EvArkadasim.Migrations
                 column: "Email");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AbpUsers_ImageId",
+                table: "AbpUsers",
+                column: "ImageId",
+                unique: true,
+                filter: "[ImageId] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_AbpUsers_NormalizedEmail",
                 table: "AbpUsers",
                 column: "NormalizedEmail");
@@ -1180,6 +1486,61 @@ namespace EvArkadasim.Migrations
                 name: "IX_AbpUsers_UserName",
                 table: "AbpUsers",
                 column: "UserName");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AppAdvertCityTowns_AdvertId",
+                table: "AppAdvertCityTowns",
+                column: "AdvertId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AppAdvertCityTowns_CityId",
+                table: "AppAdvertCityTowns",
+                column: "CityId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AppAdvertCityTowns_TownId",
+                table: "AppAdvertCityTowns",
+                column: "TownId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AppAdvertFiles_AdvertId",
+                table: "AppAdvertFiles",
+                column: "AdvertId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AppAdvertFiles_FileId",
+                table: "AppAdvertFiles",
+                column: "FileId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AppAdverts_UserId",
+                table: "AppAdverts",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AppAdvertUnitPrices_AdvertId",
+                table: "AppAdvertUnitPrices",
+                column: "AdvertId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AppMessageContents_MessageId",
+                table: "AppMessageContents",
+                column: "MessageId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AppMessages_ReceiverId",
+                table: "AppMessages",
+                column: "ReceiverId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AppMessages_SenderId",
+                table: "AppMessages",
+                column: "SenderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AppTowns_CityId",
+                table: "AppTowns",
+                column: "CityId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_IdentityServerClients_ClientId",
@@ -1272,6 +1633,27 @@ namespace EvArkadasim.Migrations
                 name: "AbpUserTokens");
 
             migrationBuilder.DropTable(
+                name: "AppAdvertCityTowns");
+
+            migrationBuilder.DropTable(
+                name: "AppAdvertFiles");
+
+            migrationBuilder.DropTable(
+                name: "AppAdvertUnitPrices");
+
+            migrationBuilder.DropTable(
+                name: "AppLogs");
+
+            migrationBuilder.DropTable(
+                name: "AppMailTemplates");
+
+            migrationBuilder.DropTable(
+                name: "AppMessageContents");
+
+            migrationBuilder.DropTable(
+                name: "AppSentMails");
+
+            migrationBuilder.DropTable(
                 name: "IdentityServerApiResourceClaims");
 
             migrationBuilder.DropTable(
@@ -1341,7 +1723,13 @@ namespace EvArkadasim.Migrations
                 name: "AbpRoles");
 
             migrationBuilder.DropTable(
-                name: "AbpUsers");
+                name: "AppTowns");
+
+            migrationBuilder.DropTable(
+                name: "AppAdverts");
+
+            migrationBuilder.DropTable(
+                name: "AppMessages");
 
             migrationBuilder.DropTable(
                 name: "IdentityServerApiResources");
@@ -1357,6 +1745,15 @@ namespace EvArkadasim.Migrations
 
             migrationBuilder.DropTable(
                 name: "AbpAuditLogs");
+
+            migrationBuilder.DropTable(
+                name: "AppCities");
+
+            migrationBuilder.DropTable(
+                name: "AbpUsers");
+
+            migrationBuilder.DropTable(
+                name: "AppFiles");
         }
     }
 }

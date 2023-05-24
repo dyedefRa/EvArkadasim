@@ -23,10 +23,10 @@ namespace EvArkadasim.Entities.Messages
         public DateTime SenderStatusDate { get; set; }
         public DateTime ReceiverStatusDate { get; set; }
         public DateTime CreatedDate { get; set; }
-        public Guid SenderId { get; set; }
+        public Guid? SenderId { get; set; }
         [ForeignKey("SenderId")]
         public virtual AppUser Sender { get; set; }
-        public Guid ReceiverId { get; set; }
+        public Guid? ReceiverId { get; set; }
 
         [ForeignKey("ReceiverId")]
         public virtual AppUser Receiver { get; set; }

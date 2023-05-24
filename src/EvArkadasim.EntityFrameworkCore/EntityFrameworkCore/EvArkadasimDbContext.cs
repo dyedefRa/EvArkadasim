@@ -1,5 +1,7 @@
-﻿using EvArkadasim.Entities.AdvertFiles;
+﻿using EvArkadasim.Entities.AdvertCityTowns;
+using EvArkadasim.Entities.AdvertFiles;
 using EvArkadasim.Entities.Adverts;
+using EvArkadasim.Entities.AdvertUnitPrices;
 using EvArkadasim.Entities.Cities;
 using EvArkadasim.Entities.Files;
 using EvArkadasim.Entities.Logs;
@@ -31,8 +33,11 @@ namespace EvArkadasim.EntityFrameworkCore
         AbpDbContext<EvArkadasimDbContext>
     {
         /* Add DbSet properties for your Aggregate Roots / Entities here. */
+
+        public DbSet<AdvertCityTown> AdvertCityTowns { get; set; }
         public DbSet<AdvertFile> AdvertFiles { get; set; }
         public DbSet<Advert> Adverts { get; set; }
+        public DbSet<AdvertUnitPrice> AdvertUnitPrices { get; set; }
         public DbSet<City> Cities { get; set; }
         public DbSet<File> Files { get; set; }
         public DbSet<Log> Logs { get; set; }

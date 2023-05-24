@@ -21,6 +21,42 @@ namespace EvArkadasim.Migrations
                 .HasAnnotation("ProductVersion", "5.0.17")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("EvArkadasim.Entities.AdvertCityTowns.AdvertCityTown", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AdvertId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CityId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsRemovedFromUser")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("TownId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AdvertId");
+
+                    b.HasIndex("CityId");
+
+                    b.HasIndex("TownId");
+
+                    b.ToTable("AppAdvertCityTowns");
+                });
+
             modelBuilder.Entity("EvArkadasim.Entities.AdvertFiles.AdvertFile", b =>
                 {
                     b.Property<int>("Id")
@@ -43,6 +79,35 @@ namespace EvArkadasim.Migrations
                     b.ToTable("AppAdvertFiles");
                 });
 
+            modelBuilder.Entity("EvArkadasim.Entities.AdvertUnitPrices.AdvertUnitPrice", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AdvertId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("AdvertUnitType")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AdvertId");
+
+                    b.ToTable("AppAdvertUnitPrices");
+                });
+
             modelBuilder.Entity("EvArkadasim.Entities.Adverts.Advert", b =>
                 {
                     b.Property<int>("Id")
@@ -53,6 +118,12 @@ namespace EvArkadasim.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("AdvertProcessStatus")
+                        .HasColumnType("int");
+
+                    b.Property<int>("AdvertRankType")
+                        .HasColumnType("int");
+
                     b.Property<int>("AdvertType")
                         .HasColumnType("int");
 
@@ -62,17 +133,26 @@ namespace EvArkadasim.Migrations
                     b.Property<int>("AllowGenderType")
                         .HasColumnType("int");
 
-                    b.Property<int?>("CityId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<string>("ExtraDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ImpressionsNumber")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsHomeHaveFurniture")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsPersonNeedHome")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("LastUpdateDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -80,17 +160,10 @@ namespace EvArkadasim.Migrations
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("TownId")
-                        .HasColumnType("int");
-
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CityId");
-
-                    b.HasIndex("TownId");
 
                     b.HasIndex("UserId");
 
@@ -278,7 +351,7 @@ namespace EvArkadasim.Migrations
                     b.Property<int>("MessageType")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("ReceiverId")
+                    b.Property<Guid?>("ReceiverId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("ReceiverStatus")
@@ -287,7 +360,7 @@ namespace EvArkadasim.Migrations
                     b.Property<DateTime>("ReceiverStatusDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("SenderId")
+                    b.Property<Guid?>("SenderId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("SenderStatus")
@@ -2455,6 +2528,29 @@ namespace EvArkadasim.Migrations
                     b.ToTable("AbpTenantConnectionStrings");
                 });
 
+            modelBuilder.Entity("EvArkadasim.Entities.AdvertCityTowns.AdvertCityTown", b =>
+                {
+                    b.HasOne("EvArkadasim.Entities.Adverts.Advert", "Advert")
+                        .WithMany("AdvertCityTowns")
+                        .HasForeignKey("AdvertId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EvArkadasim.Entities.Cities.City", "City")
+                        .WithMany()
+                        .HasForeignKey("CityId");
+
+                    b.HasOne("EvArkadasim.Entities.Towns.Town", "Town")
+                        .WithMany()
+                        .HasForeignKey("TownId");
+
+                    b.Navigation("Advert");
+
+                    b.Navigation("City");
+
+                    b.Navigation("Town");
+                });
+
             modelBuilder.Entity("EvArkadasim.Entities.AdvertFiles.AdvertFile", b =>
                 {
                     b.HasOne("EvArkadasim.Entities.Adverts.Advert", "Advert")
@@ -2474,25 +2570,24 @@ namespace EvArkadasim.Migrations
                     b.Navigation("File");
                 });
 
+            modelBuilder.Entity("EvArkadasim.Entities.AdvertUnitPrices.AdvertUnitPrice", b =>
+                {
+                    b.HasOne("EvArkadasim.Entities.Adverts.Advert", "Advert")
+                        .WithMany("AdvertUnitPrices")
+                        .HasForeignKey("AdvertId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Advert");
+                });
+
             modelBuilder.Entity("EvArkadasim.Entities.Adverts.Advert", b =>
                 {
-                    b.HasOne("EvArkadasim.Entities.Cities.City", "City")
-                        .WithMany()
-                        .HasForeignKey("CityId");
-
-                    b.HasOne("EvArkadasim.Entities.Towns.Town", "Town")
-                        .WithMany()
-                        .HasForeignKey("TownId");
-
                     b.HasOne("EvArkadasim.Entities.Users.AppUser", "User")
                         .WithMany("Adverts")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("City");
-
-                    b.Navigation("Town");
 
                     b.Navigation("User");
                 });
@@ -2512,15 +2607,11 @@ namespace EvArkadasim.Migrations
                 {
                     b.HasOne("EvArkadasim.Entities.Users.AppUser", "Receiver")
                         .WithMany()
-                        .HasForeignKey("ReceiverId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ReceiverId");
 
                     b.HasOne("EvArkadasim.Entities.Users.AppUser", "Sender")
                         .WithMany()
-                        .HasForeignKey("SenderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SenderId");
 
                     b.Navigation("Receiver");
 
@@ -2832,7 +2923,11 @@ namespace EvArkadasim.Migrations
 
             modelBuilder.Entity("EvArkadasim.Entities.Adverts.Advert", b =>
                 {
+                    b.Navigation("AdvertCityTowns");
+
                     b.Navigation("AdvertFiles");
+
+                    b.Navigation("AdvertUnitPrices");
                 });
 
             modelBuilder.Entity("EvArkadasim.Entities.Cities.City", b =>
