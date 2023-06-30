@@ -21,8 +21,7 @@ namespace EvArkadasim.Entities.Adverts
         public string ExtraDescription { get; set; }
         public string Address { get; set; }
         public Guid UserId { get; set; }
-        [ForeignKey("UserId")]
-        [Required]
+        //[ForeignKey("UserId")]
         public virtual AppUser User { get; set; }
         public AdvertType AdvertType { get; set; }
         public AdvertRankType AdvertRankType { get; set; } /*= AdvertRankType.Default;*/
@@ -42,6 +41,7 @@ namespace EvArkadasim.Entities.Adverts
         public virtual ICollection<AdvertCityTown> AdvertCityTowns { get; set; }
         public virtual ICollection<AdvertUnitPrice> AdvertUnitPrices { get; set; }
         public virtual ICollection<AdvertFile> AdvertFiles { get; set; }
+
 
     }
 }

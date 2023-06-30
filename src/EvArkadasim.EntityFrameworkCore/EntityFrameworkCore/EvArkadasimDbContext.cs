@@ -15,6 +15,7 @@ using Microsoft.EntityFrameworkCore;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
 using Volo.Abp.Data;
+using Volo.Abp.Domain.Entities;
 using Volo.Abp.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore.Modeling;
 using Volo.Abp.FeatureManagement.EntityFrameworkCore;
@@ -89,8 +90,21 @@ namespace EvArkadasim.EntityFrameworkCore
                 b.Property(a => a.Status).HasColumnName("Status").HasColumnType("int");
                 b.Property(a => a.BirthDate).HasColumnName("BirthDate").HasColumnType("datetime");
                 b.Property(a => a.ImageId).HasColumnName("ImageId").HasColumnType("int");
+
                 b.HasOne<IdentityUser>().WithOne().HasForeignKey<AppUser>(x => x.Id);
+                //b.HasMany<Advert>(x => x.Adverts)
+                //  .WithOne(x => x.User)
+                //  .OnDelete(DeleteBehavior.Cascade);
+                //.IsRequired();
+
+                //b.HasOne(d => d.Image)
+                // .WithMany(p => p.Users)
+                // .HasForeignKey(d => d.ImageId)
+                // .OnDelete(DeleteBehavior.ClientSetNull)
+                // .HasConstraintName("FK_AppFiles_AbpUsers");
             });
+
+            builder.ConfigureEvArkadasim();
 
         }
     }

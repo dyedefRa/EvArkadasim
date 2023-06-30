@@ -256,11 +256,13 @@ namespace EvArkadasim.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FileName = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
-                    FileSize = table.Column<long>(type: "bigint", nullable: true),
-                    FilePath = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    Size = table.Column<long>(type: "bigint", nullable: true),
+                    Path = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
                     FullPath = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
                     FileType = table.Column<int>(type: "int", nullable: false),
+                    Rank = table.Column<int>(type: "int", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -304,21 +306,21 @@ namespace EvArkadasim.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AppSentMails",
+                name: "AppSentMail",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ToAddress = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    ToAddress = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
                     CcAddress = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
                     BccAddress = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
-                    Subject = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Body = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Subject = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Body = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AppSentMails", x => x.Id);
+                    table.PrimaryKey("PK_AppSentMail", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -629,7 +631,7 @@ namespace EvArkadasim.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    Title = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     TownNo = table.Column<int>(type: "int", nullable: false),
                     CityId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -637,11 +639,11 @@ namespace EvArkadasim.Migrations
                 {
                     table.PrimaryKey("PK_AppTowns", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AppTowns_AppCities_CityId",
+                        name: "FK_AppTowns_AppCities",
                         column: x => x.CityId,
                         principalTable: "AppCities",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -1174,11 +1176,11 @@ namespace EvArkadasim.Migrations
                 {
                     table.PrimaryKey("PK_AppAdverts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AppAdverts_AbpUsers_UserId",
+                        name: "FK_AppAdverts_AbpUsers",
                         column: x => x.UserId,
                         principalTable: "AbpUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -1192,8 +1194,8 @@ namespace EvArkadasim.Migrations
                     SenderStatusDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ReceiverStatusDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    SenderId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ReceiverId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    SenderId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ReceiverId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     MessageType = table.Column<int>(type: "int", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false)
                 },
@@ -1201,13 +1203,13 @@ namespace EvArkadasim.Migrations
                 {
                     table.PrimaryKey("PK_AppMessages", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AppMessages_AbpUsers_ReceiverId",
+                        name: "FK_AppMessageContents_AppReceivedMessages",
                         column: x => x.ReceiverId,
                         principalTable: "AbpUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_AppMessages_AbpUsers_SenderId",
+                        name: "FK_AppMessageContents_AppSendedMessages",
                         column: x => x.SenderId,
                         principalTable: "AbpUsers",
                         principalColumn: "Id",
@@ -1221,8 +1223,8 @@ namespace EvArkadasim.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     AdvertId = table.Column<int>(type: "int", nullable: false),
-                    CityId = table.Column<int>(type: "int", nullable: true),
-                    TownId = table.Column<int>(type: "int", nullable: true),
+                    CityId = table.Column<int>(type: "int", nullable: false),
+                    TownId = table.Column<int>(type: "int", nullable: false),
                     IsRemovedFromUser = table.Column<bool>(type: "bit", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false)
@@ -1231,19 +1233,19 @@ namespace EvArkadasim.Migrations
                 {
                     table.PrimaryKey("PK_AppAdvertCityTowns", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AppAdvertCityTowns_AppAdverts_AdvertId",
+                        name: "FK_AppAdvertCityTowns_AppAdverts",
                         column: x => x.AdvertId,
                         principalTable: "AppAdverts",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_AppAdvertCityTowns_AppCities_CityId",
+                        name: "FK_AppAdvertCityTowns_AppCities",
                         column: x => x.CityId,
                         principalTable: "AppCities",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_AppAdvertCityTowns_AppTowns_TownId",
+                        name: "FK_AppAdvertCityTowns_AppTowns",
                         column: x => x.TownId,
                         principalTable: "AppTowns",
                         principalColumn: "Id",
@@ -1263,17 +1265,17 @@ namespace EvArkadasim.Migrations
                 {
                     table.PrimaryKey("PK_AppAdvertFiles", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AppAdvertFiles_AppAdverts_AdvertId",
+                        name: "FK_AppAdvertFiles_AppAdverts",
                         column: x => x.AdvertId,
                         principalTable: "AppAdverts",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_AppAdvertFiles_AppFiles_FileId",
+                        name: "FK_AppAdvertFiles_AppFiles",
                         column: x => x.FileId,
                         principalTable: "AppFiles",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -1292,11 +1294,11 @@ namespace EvArkadasim.Migrations
                 {
                     table.PrimaryKey("PK_AppAdvertUnitPrices", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AppAdvertUnitPrices_AppAdverts_AdvertId",
+                        name: "FK_AppAdvertUnitPrices_AbpUsers",
                         column: x => x.AdvertId,
                         principalTable: "AppAdverts",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -1321,11 +1323,11 @@ namespace EvArkadasim.Migrations
                 {
                     table.PrimaryKey("PK_AppMessageContents", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AppMessageContents_AppMessages_MessageId",
+                        name: "FK_AppMessageContents_AppMessages",
                         column: x => x.MessageId,
                         principalTable: "AppMessages",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -1468,9 +1470,7 @@ namespace EvArkadasim.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_AbpUsers_ImageId",
                 table: "AbpUsers",
-                column: "ImageId",
-                unique: true,
-                filter: "[ImageId] IS NOT NULL");
+                column: "ImageId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AbpUsers_NormalizedEmail",
@@ -1488,52 +1488,52 @@ namespace EvArkadasim.Migrations
                 column: "UserName");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AppAdvertCityTowns_AdvertId",
+                name: "IX_AppAdvertCityTown_AdvertId",
                 table: "AppAdvertCityTowns",
                 column: "AdvertId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AppAdvertCityTowns_CityId",
+                name: "IX_AppAdvertCityTown_CityId",
                 table: "AppAdvertCityTowns",
                 column: "CityId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AppAdvertCityTowns_TownId",
+                name: "IX_AppAdvertCityTown_TownId",
                 table: "AppAdvertCityTowns",
                 column: "TownId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AppAdvertFiles_AdvertId",
+                name: "IX_AppAdvertFile_AdvertId",
                 table: "AppAdvertFiles",
                 column: "AdvertId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AppAdvertFiles_FileId",
+                name: "IX_AppAdvertFile_FileId",
                 table: "AppAdvertFiles",
                 column: "FileId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AppAdverts_UserId",
+                name: "IX_AppAdvert_UserId",
                 table: "AppAdverts",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AppAdvertUnitPrices_AdvertId",
+                name: "IX_AppAdvertUnitPrice_AdvertId",
                 table: "AppAdvertUnitPrices",
                 column: "AdvertId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AppMessageContents_MessageId",
+                name: "IX_AppMessageContent_MessageId",
                 table: "AppMessageContents",
                 column: "MessageId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AppMessages_ReceiverId",
+                name: "IX_AppMessage_ReceiverId",
                 table: "AppMessages",
                 column: "ReceiverId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AppMessages_SenderId",
+                name: "IX_AppMessage_SenderId",
                 table: "AppMessages",
                 column: "SenderId");
 
@@ -1651,7 +1651,7 @@ namespace EvArkadasim.Migrations
                 name: "AppMessageContents");
 
             migrationBuilder.DropTable(
-                name: "AppSentMails");
+                name: "AppSentMail");
 
             migrationBuilder.DropTable(
                 name: "IdentityServerApiResourceClaims");

@@ -1,9 +1,7 @@
 ﻿--------------------------------------------------------------------
 1) Identity Password vs override için projede ara : IDENTITY OPTIONS OVERRIDE
 yada
-
 Şu classlara git
-
 Domain > Settings >
 1 EvArkadasimSettingDefinitionProvider
 2 EvArkadasimSettings
@@ -24,4 +22,18 @@ en son yukardaki guncellemelerı yapıp tekrar migrate update yap
 -------------------------------------------------------
 Message/Index Chat Box >> 
 https://codepen.io/mehedihtml/pen/ZExjpeo yani >> https://mehedihtml.com/chatbox/
+
+Message > Index
+-------------------------------------------------------
+LINQ ILE TABLO İLİŞKİLERİ VE DATA ANNOTIOANS YARATTIK >>
+
+CustomDbContextModelCreatingExtensions >>
+
+1) Eğer ekstra bir özelliği yoksa hiç bir int string bit datetime ı TANIMLAMA
+2) Eğer string bir değeri requeired yapacaksan ; (burada belirt.)
+
+                entity.Property(e => e.Title).IsRequired(true).HasMaxLength(255);
+3) İlişkilerin olduğu Key değerini tanımla ve ilişkisini kur;
+
+
 -------------------------------------------------------

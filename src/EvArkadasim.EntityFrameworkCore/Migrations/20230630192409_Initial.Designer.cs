@@ -11,7 +11,7 @@ using Volo.Abp.EntityFrameworkCore;
 namespace EvArkadasim.Migrations
 {
     [DbContext(typeof(EvArkadasimDbContext))]
-    [Migration("20230521204732_Initial")]
+    [Migration("20230630192409_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,7 +33,7 @@ namespace EvArkadasim.Migrations
                     b.Property<int>("AdvertId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("CityId")
+                    b.Property<int>("CityId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedDate")
@@ -45,16 +45,16 @@ namespace EvArkadasim.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<int?>("TownId")
+                    b.Property<int>("TownId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AdvertId");
+                    b.HasIndex(new[] { "AdvertId" }, "IX_AppAdvertCityTown_AdvertId");
 
-                    b.HasIndex("CityId");
+                    b.HasIndex(new[] { "CityId" }, "IX_AppAdvertCityTown_CityId");
 
-                    b.HasIndex("TownId");
+                    b.HasIndex(new[] { "TownId" }, "IX_AppAdvertCityTown_TownId");
 
                     b.ToTable("AppAdvertCityTowns");
                 });
@@ -74,9 +74,9 @@ namespace EvArkadasim.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AdvertId");
+                    b.HasIndex(new[] { "AdvertId" }, "IX_AppAdvertFile_AdvertId");
 
-                    b.HasIndex("FileId");
+                    b.HasIndex(new[] { "FileId" }, "IX_AppAdvertFile_FileId");
 
                     b.ToTable("AppAdvertFiles");
                 });
@@ -105,7 +105,7 @@ namespace EvArkadasim.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AdvertId");
+                    b.HasIndex(new[] { "AdvertId" }, "IX_AppAdvertUnitPrice_AdvertId");
 
                     b.ToTable("AppAdvertUnitPrices");
                 });
@@ -167,7 +167,7 @@ namespace EvArkadasim.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex(new[] { "UserId" }, "IX_AppAdvert_UserId");
 
                     b.ToTable("AppAdverts");
                 });
@@ -202,18 +202,8 @@ namespace EvArkadasim.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("FileName")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.Property<string>("FilePath")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.Property<long?>("FileSize")
-                        .HasColumnType("bigint");
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("FileType")
                         .HasColumnType("int");
@@ -222,6 +212,22 @@ namespace EvArkadasim.Migrations
                         .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("Path")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<int>("Rank")
+                        .HasColumnType("int");
+
+                    b.Property<long?>("Size")
+                        .HasColumnType("bigint");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -335,7 +341,7 @@ namespace EvArkadasim.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MessageId");
+                    b.HasIndex(new[] { "MessageId" }, "IX_AppMessageContent_MessageId");
 
                     b.ToTable("AppMessageContents");
                 });
@@ -353,7 +359,7 @@ namespace EvArkadasim.Migrations
                     b.Property<int>("MessageType")
                         .HasColumnType("int");
 
-                    b.Property<Guid?>("ReceiverId")
+                    b.Property<Guid>("ReceiverId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("ReceiverStatus")
@@ -362,7 +368,7 @@ namespace EvArkadasim.Migrations
                     b.Property<DateTime>("ReceiverStatusDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("SenderId")
+                    b.Property<Guid>("SenderId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("SenderStatus")
@@ -376,9 +382,9 @@ namespace EvArkadasim.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ReceiverId");
+                    b.HasIndex(new[] { "ReceiverId" }, "IX_AppMessage_ReceiverId");
 
-                    b.HasIndex("SenderId");
+                    b.HasIndex(new[] { "SenderId" }, "IX_AppMessage_SenderId");
 
                     b.ToTable("AppMessages");
                 });
@@ -395,6 +401,7 @@ namespace EvArkadasim.Migrations
                         .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("Body")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CcAddress")
@@ -405,16 +412,16 @@ namespace EvArkadasim.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Subject")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ToAddress")
-                        .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("AppSentMails");
+                    b.ToTable("AppSentMail");
                 });
 
             modelBuilder.Entity("EvArkadasim.Entities.Towns.Town", b =>
@@ -428,6 +435,7 @@ namespace EvArkadasim.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
+                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
@@ -570,9 +578,7 @@ namespace EvArkadasim.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ImageId")
-                        .IsUnique()
-                        .HasFilter("[ImageId] IS NOT NULL");
+                    b.HasIndex("ImageId");
 
                     b.ToTable("AbpUsers");
                 });
@@ -2535,16 +2541,20 @@ namespace EvArkadasim.Migrations
                     b.HasOne("EvArkadasim.Entities.Adverts.Advert", "Advert")
                         .WithMany("AdvertCityTowns")
                         .HasForeignKey("AdvertId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasConstraintName("FK_AppAdvertCityTowns_AppAdverts")
                         .IsRequired();
 
                     b.HasOne("EvArkadasim.Entities.Cities.City", "City")
-                        .WithMany()
-                        .HasForeignKey("CityId");
+                        .WithMany("AdvertCityTowns")
+                        .HasForeignKey("CityId")
+                        .HasConstraintName("FK_AppAdvertCityTowns_AppCities")
+                        .IsRequired();
 
                     b.HasOne("EvArkadasim.Entities.Towns.Town", "Town")
-                        .WithMany()
-                        .HasForeignKey("TownId");
+                        .WithMany("AdvertCityTowns")
+                        .HasForeignKey("TownId")
+                        .HasConstraintName("FK_AppAdvertCityTowns_AppTowns")
+                        .IsRequired();
 
                     b.Navigation("Advert");
 
@@ -2558,13 +2568,13 @@ namespace EvArkadasim.Migrations
                     b.HasOne("EvArkadasim.Entities.Adverts.Advert", "Advert")
                         .WithMany("AdvertFiles")
                         .HasForeignKey("AdvertId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasConstraintName("FK_AppAdvertFiles_AppAdverts")
                         .IsRequired();
 
                     b.HasOne("EvArkadasim.Entities.Files.File", "File")
-                        .WithMany()
+                        .WithMany("AdvertFiles")
                         .HasForeignKey("FileId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasConstraintName("FK_AppAdvertFiles_AppFiles")
                         .IsRequired();
 
                     b.Navigation("Advert");
@@ -2577,7 +2587,7 @@ namespace EvArkadasim.Migrations
                     b.HasOne("EvArkadasim.Entities.Adverts.Advert", "Advert")
                         .WithMany("AdvertUnitPrices")
                         .HasForeignKey("AdvertId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasConstraintName("FK_AppAdvertUnitPrices_AbpUsers")
                         .IsRequired();
 
                     b.Navigation("Advert");
@@ -2588,7 +2598,7 @@ namespace EvArkadasim.Migrations
                     b.HasOne("EvArkadasim.Entities.Users.AppUser", "User")
                         .WithMany("Adverts")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasConstraintName("FK_AppAdverts_AbpUsers")
                         .IsRequired();
 
                     b.Navigation("User");
@@ -2599,7 +2609,7 @@ namespace EvArkadasim.Migrations
                     b.HasOne("EvArkadasim.Entities.Messages.Message", "Message")
                         .WithMany("MessageContents")
                         .HasForeignKey("MessageId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasConstraintName("FK_AppMessageContents_AppMessages")
                         .IsRequired();
 
                     b.Navigation("Message");
@@ -2608,12 +2618,16 @@ namespace EvArkadasim.Migrations
             modelBuilder.Entity("EvArkadasim.Entities.Messages.Message", b =>
                 {
                     b.HasOne("EvArkadasim.Entities.Users.AppUser", "Receiver")
-                        .WithMany()
-                        .HasForeignKey("ReceiverId");
+                        .WithMany("ReceivedMessages")
+                        .HasForeignKey("ReceiverId")
+                        .HasConstraintName("FK_AppMessageContents_AppReceivedMessages")
+                        .IsRequired();
 
                     b.HasOne("EvArkadasim.Entities.Users.AppUser", "Sender")
-                        .WithMany()
-                        .HasForeignKey("SenderId");
+                        .WithMany("SendedMessages")
+                        .HasForeignKey("SenderId")
+                        .HasConstraintName("FK_AppMessageContents_AppSendedMessages")
+                        .IsRequired();
 
                     b.Navigation("Receiver");
 
@@ -2625,7 +2639,7 @@ namespace EvArkadasim.Migrations
                     b.HasOne("EvArkadasim.Entities.Cities.City", "City")
                         .WithMany("Towns")
                         .HasForeignKey("CityId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasConstraintName("FK_AppTowns_AppCities")
                         .IsRequired();
 
                     b.Navigation("City");
@@ -2640,8 +2654,8 @@ namespace EvArkadasim.Migrations
                         .IsRequired();
 
                     b.HasOne("EvArkadasim.Entities.Files.File", "Image")
-                        .WithOne("User")
-                        .HasForeignKey("EvArkadasim.Entities.Users.AppUser", "ImageId");
+                        .WithMany("Users")
+                        .HasForeignKey("ImageId");
 
                     b.Navigation("Image");
                 });
@@ -2934,12 +2948,16 @@ namespace EvArkadasim.Migrations
 
             modelBuilder.Entity("EvArkadasim.Entities.Cities.City", b =>
                 {
+                    b.Navigation("AdvertCityTowns");
+
                     b.Navigation("Towns");
                 });
 
             modelBuilder.Entity("EvArkadasim.Entities.Files.File", b =>
                 {
-                    b.Navigation("User");
+                    b.Navigation("AdvertFiles");
+
+                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("EvArkadasim.Entities.Messages.Message", b =>
@@ -2947,9 +2965,18 @@ namespace EvArkadasim.Migrations
                     b.Navigation("MessageContents");
                 });
 
+            modelBuilder.Entity("EvArkadasim.Entities.Towns.Town", b =>
+                {
+                    b.Navigation("AdvertCityTowns");
+                });
+
             modelBuilder.Entity("EvArkadasim.Entities.Users.AppUser", b =>
                 {
                     b.Navigation("Adverts");
+
+                    b.Navigation("ReceivedMessages");
+
+                    b.Navigation("SendedMessages");
                 });
 
             modelBuilder.Entity("Volo.Abp.AuditLogging.AuditLog", b =>

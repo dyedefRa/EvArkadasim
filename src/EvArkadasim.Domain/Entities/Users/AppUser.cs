@@ -1,5 +1,6 @@
 ﻿using EvArkadasim.Entities.Adverts;
 using EvArkadasim.Entities.Files;
+using EvArkadasim.Entities.Messages;
 using EvArkadasim.Enums;
 using System;
 using System.Collections.Generic;
@@ -32,7 +33,10 @@ namespace EvArkadasim.Entities.Users
         public virtual File Image { get; set; }
         public Status? Status { get; set; }
 
-        public virtual ICollection<Advert> Adverts { get; set; }
 
+        //>>
+        public virtual ICollection<Advert> Adverts { get; set; }
+        public virtual ICollection<Message> SendedMessages { get; set; }
+        public virtual ICollection<Message> ReceivedMessages { get; set; }
     }
 }

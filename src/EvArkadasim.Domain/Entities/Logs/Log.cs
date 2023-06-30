@@ -1,10 +1,8 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations.Schema;
 using Volo.Abp.Domain.Entities;
 
 namespace EvArkadasim.Entities.Logs
 {
-    [Table(EvArkadasimConsts.DbTablePrefix + "Logs")]
     public class Log : Entity<int>
     {
         public string Message { get; set; }

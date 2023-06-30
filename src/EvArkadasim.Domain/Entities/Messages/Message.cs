@@ -3,12 +3,10 @@ using EvArkadasim.Entities.Users;
 using EvArkadasim.Enums;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using Volo.Abp.Domain.Entities;
 
 namespace EvArkadasim.Entities.Messages
 {
-    [Table(EvArkadasimConsts.DbTablePrefix + "Messages")]
     public class Message : Entity<int>
     {
         //Toplam gonderılen mesaj sayısı
@@ -23,13 +21,11 @@ namespace EvArkadasim.Entities.Messages
         public DateTime SenderStatusDate { get; set; }
         public DateTime ReceiverStatusDate { get; set; }
         public DateTime CreatedDate { get; set; }
-        public Guid? SenderId { get; set; }
-        [ForeignKey("SenderId")]
+        public Guid SenderId { get; set; }
         public virtual AppUser Sender { get; set; }
-        public Guid? ReceiverId { get; set; }
-
-        [ForeignKey("ReceiverId")]
+        public Guid ReceiverId { get; set; }
         public virtual AppUser Receiver { get; set; }
+
 
         //ARSIV MI SENDER ARSIV MI REIVECER
         public MessageType MessageType { get; set; }
@@ -38,7 +34,5 @@ namespace EvArkadasim.Entities.Messages
         //Puan olayları buraya 6 lı enum olusturher enum ıcın deger ac
 
         public virtual ICollection<MessageContent> MessageContents { get; set; }
-
-
     }
 }

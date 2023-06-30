@@ -76,6 +76,38 @@ namespace EvArkadasim.Services
             }
         }
 
+        public List<SelectListItem> GetAdvertTypeLookup()
+        {
+            try
+            {
+                var list = ((AdvertType[])Enum.GetValues(typeof(AdvertType))).ToList();
+
+                return list.Select(x => new SelectListItem(x.ToDescription(), x.ToString())).ToList();
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "LookupAppService > GetAdvertTypeLookup has error! ");
+                return null;
+            }
+        }
+
+        public List<SelectListItem> GetAllowGenderTypeLookup()
+        {
+            try
+            {
+                var list = ((AllowGenderType[])Enum.GetValues(typeof(AllowGenderType))).ToList();
+
+                return list.Select(x => new SelectListItem(x.ToDescription(), x.ToString())).ToList();
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "LookupAppService > GetAllowGenderTypeLookup has error! ");
+                return null;
+            }
+        }
+
+
+
         //public async Task<List<SelectListItem>> GetOrganizationLookupAsync()
         //{
         //    try

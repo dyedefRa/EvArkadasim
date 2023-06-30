@@ -106,7 +106,7 @@ namespace EvArkadasim.Web.Pages.Account
             }
             catch (Exception ex)
             {
-                Log.Error(ex, "CompanyRegisterModel > OnPostAsync has error! ");
+                Log.Error(ex, "RegisterModel > OnPostAsync has error! ");
                 Alerts.Danger(L["GeneralIdentityError"].Value);
             }
 
